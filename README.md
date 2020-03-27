@@ -1,2 +1,2 @@
-# mtel
-Modernly Teaching Elementary Language : enseigner la programmation par un langage adapté
+# COSMOS
+Un langage pour apprendre à programmer de manière intuitive et naturelle
