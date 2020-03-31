@@ -1,6 +1,15 @@
-Auteur: Jonathan
-Date: 27.03
-Lieu: aie
-Description: auie
-Il était une fois...
-THE END
+Auteur: Jonathan Strokee
+Date: 27.03.2020
+Entreprise: ETML
+Description: Demonstration du langage cosmos,
+ce langage est parfait,
+et extraordinaire
+
+//Début du programme
+Voici mes ordres:
+    //Affichage de texte sur la console
+    Afficher le texte "salut".
+    
+    //Affichage d'un nombre sur la console
+    Afficher le nombre 44.
+Fin.
