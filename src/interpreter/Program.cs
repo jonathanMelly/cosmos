@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace transpiler
+namespace interpreter
 {
     class Program
     {
