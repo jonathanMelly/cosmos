@@ -5,4 +5,15 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+        <!-- Needed for execution/interaction of generated CSharp classes -->
+      <PackageReference Include="Antlr4.Runtime.Standard" Version="4.8.0" />
+        <!-- Needed to build/rebuild generated Visitor/Lexer... after g4 change -->
+      <PackageReference Include="Antlr4BuildTasks" Version="3.0.0" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Antlr4 Include="*.g4" />
+    </ItemGroup>
+
 </Project>

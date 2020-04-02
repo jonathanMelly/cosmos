@@ -1,6 +1,9 @@
 ﻿//langage de type 'pseudo-code' pour apprendre à programmer
 grammar Cosmos ;
 
+//Removes clscompliant warning on build
+@header {#pragma warning disable 3021}
+
 programme : entete RETCHAR+ (contexte RETCHAR+)? DEBUT RETCHAR+ instruction+  FIN EOF ;
 
 entete : auteur RETCHAR date RETCHAR entreprise RETCHAR description ;
