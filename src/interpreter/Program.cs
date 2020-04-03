@@ -6,7 +6,9 @@ namespace interpreter
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //TODO gérer les options en ligne de commande
+            Interpreter interpreter = new Interpreter(args[0]);
+            interpreter.Execute();
         }
     }
 }

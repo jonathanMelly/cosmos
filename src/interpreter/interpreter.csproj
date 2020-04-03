@@ -5,15 +5,41 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+
     <ItemGroup>
         <!-- Needed for execution/interaction of generated CSharp classes -->
-      <PackageReference Include="Antlr4.Runtime.Standard" Version="4.8.0" />
-        <!-- Needed to build/rebuild generated Visitor/Lexer... after g4 change -->
-      <PackageReference Include="Antlr4BuildTasks" Version="3.0.0" />
+        <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
+        
     </ItemGroup>
     
-    <ItemGroup>
-        <Antlr4 Include="*.g4" />
-    </ItemGroup>
+    <!-- auto generate upon build -->
+    <PropertyGroup>
+        <Grammar>Cosmos.g4</Grammar>
+        <AntlrOut>antlr</AntlrOut>
+    </PropertyGroup>
+
+    <Target Name="GenerateAntlrCode" BeforeTargets="Build" Inputs="$(ProjectDir)$(Grammar)" Outputs="$(ProjectDir)$(AntlrOut)/$(Grammar)">
+        <Exec Command="mono generator/Antlr4.dll -o $(ProjectDir)$(AntlrOut) -Dlanguage=CSharp -visitor -package interpreter.$(AntlrOut) $(ProjectDir)$(Grammar)" />
+        <!-- Copy source grammar for incremental build -->
+        <Copy SourceFiles="$(ProjectDir)$(Grammar)" DestinationFolder="$(ProjectDir)$(AntlrOut)" SkipUnchangedFiles="true" />
+    </Target>
 
 </Project>
