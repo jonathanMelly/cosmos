@@ -21,5 +21,6 @@ steps:
   inputs:
     command: 'test'
     projects: '$(solution_file)'
+    arguments: '--collect "Code coverage"'
     testRunTitle: 'All tests'
 
