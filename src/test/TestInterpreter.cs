@@ -6,13 +6,14 @@ namespace test
 {
     public class TestInterpreter
     {
-        private const string Path = "../../../data/";
+        public const string Path = "../../../data/";
+        public const string ValidProgramFile = Path +"ValidProgram.cosmos";
 
         [Fact]
         public void TestParsingOnValidProgram()
         {
             //Arrange
-            var interpreter = new Interpreter(Path+"ValidProgram.cosmos");
+            var interpreter = new Interpreter(ValidProgramFile);
             
             //Act
             bool hasError = interpreter.Parse();

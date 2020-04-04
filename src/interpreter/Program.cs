@@ -2,9 +2,9 @@
 
 namespace interpreter
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             //TODO gérer les options en ligne de commande
             Interpreter interpreter = new Interpreter(args[0]);
