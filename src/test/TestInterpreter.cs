@@ -1,7 +1,10 @@
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Text;
 using interpreter;
 using Xunit;
+using FluentAssertions;
 
 namespace test
 {
@@ -51,5 +54,46 @@ namespace test
             //Assert
             Assert.Matches(ValidExecutionContent,fakeConsole.ToString());
         }
+        
+        [Fact]
+        //Inspired from https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.outputdatareceived?view=netcore-3.1
+        public void IntegrationTest()
+        {
+        
+            //Arrange
+            var output = new StringBuilder();
+            
+            Process process = new Process();
+            process.StartInfo.FileName = "dotnet";
+            process.StartInfo.Arguments="run --project ../../../../interpreter/interpreter.csproj "+ValidProgramFile;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            
+            var dreh = new DataReceivedEventHandler((sender, e) =>
+            {
+                // Prepend line numbers to each line of the output.
+                if (!String.IsNullOrEmpty(e.Data))
+                {
+                    output.Append(e.Data);
+                }
+            });
+            process.OutputDataReceived += dreh;
+            process.ErrorDataReceived += dreh;
+            
+            //Act
+            process.Start();
+
+            // Asynchronously read the standard output of the spawned process. 
+            // This raises OutputDataReceived events for each line of output.
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit(10000);
+            process.Close();
+
+            //Assert
+            output.ToString().Should().Match(ValidExecutionContent);
+        }
+        
     }
 }
