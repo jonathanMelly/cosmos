@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -55,7 +56,7 @@ namespace test
             Assert.Matches(ValidExecutionContent,fakeConsole.ToString());
         }
         
-        [Fact]
+        [Fact (Skip = "Better done directly on pipeline using process exit code")]
         //Inspired from https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.outputdatareceived?view=netcore-3.1
         public void IntegrationTest()
         {
