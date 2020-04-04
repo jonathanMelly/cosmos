@@ -25,9 +25,13 @@ steps:
     testRunTitle: 'All tests'
 
 #Integration test (retcode indicates if failed)
-- task: DotNetCoreCLI@2
+- task: CmdLine@2
   inputs:
-    command: 'run'
-    projects: 'src/interpreter/interpreter.csproj'
-    arguments: 'src/test/data/ValidProgram.cosmos'
+    script: |
+      echo Starting integration test
+      dotnet run --project src/interpreter/interpreter.csproj src/test/data/ValidProgram.cosmos
+      echo End of integration test
+    failOnStderr: true
+
+
 
