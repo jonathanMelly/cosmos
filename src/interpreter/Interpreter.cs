@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using Antlr4.Runtime;
 using interpreter.antlr;
@@ -26,6 +27,8 @@ namespace interpreter
             parser.AddErrorListener(errorListener);
             
         }
+
+        public List<string> Errors => errorListener.Errors;
 
         public bool Parse()
         {
