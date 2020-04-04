@@ -24,3 +24,10 @@ steps:
     arguments: '--collect "Code coverage"'
     testRunTitle: 'All tests'
 
+#Integration test (retcode indicates if failed)
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'run'
+    projects: 'src/interpreter/interpreter.csproj'
+    arguments: 'src/test/data/ValidProgram.cosmos'
+
