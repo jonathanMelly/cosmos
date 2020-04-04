@@ -11,8 +11,7 @@ pool:
 
 steps:
 - script: dotnet build $(solution_file)
-  displayName: 'Build cosmos solution'
+  displayName: 'Build solution'
 
-- script: |
-    dotnet test $(solution_file)
-  displayName: 'Test cosmos solution'
+- script: dotnet test $(solution_file)
+  displayName: 'Test solution'
