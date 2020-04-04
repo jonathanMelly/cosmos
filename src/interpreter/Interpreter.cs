@@ -33,7 +33,7 @@ namespace interpreter
         public bool Parse()
         {
             context = parser.programme();
-            return errorListener.HadError;
+            return !errorListener.HadError;
         }
 
         public void Execute()

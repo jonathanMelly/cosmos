@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using interpreter;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
 
@@ -24,7 +25,7 @@ namespace test
             interpreter.Program.Main(new[] {TestInterpreter.ValidProgramFile});
             
             //Assert
-            Assert.Matches("",fakeConsole.ToString());
+            Assert.Matches(TestInterpreter.ValidExecutionContent,fakeConsole.ToString());
         }
     }
 }

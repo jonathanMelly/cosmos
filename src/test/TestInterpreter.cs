@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using interpreter;
 using Xunit;
 
@@ -6,6 +7,7 @@ namespace test
 {
     public class TestInterpreter
     {
+        public const string ValidExecutionContent = "salut44";
         public const string Path = "../../../data/";
         public const string ValidProgramFile = Path +"ValidProgram.cosmos";
 
@@ -16,24 +18,38 @@ namespace test
             var interpreter = new Interpreter(ValidProgramFile);
             
             //Act
-            bool hasError = interpreter.Parse();
+            bool success = interpreter.Parse();
             
             //Assert
-            Assert.False(hasError,"There should be no parse error");
+            Assert.True(success,"There should be no parse error");
         }
         
         [Fact]
-        public void TestParsingOnInvalidProgramMissingDate()
+        public void TestInvalidProgramMissingDate()
         {
             //Arrange
             var interpreter = new Interpreter(Path+"MissingDate.cosmos");
             
             //Act
-            interpreter.Parse();
-            
-            
+            interpreter.Execute();
+
             //Assert
             Assert.Contains(interpreter.Errors,error => error.Contains("expecting 'Date:'"));
+        }
+
+        [Fact]
+        public void TestExecuteValidProgram()
+        {
+            //Arrange
+            var interpreter = new Interpreter(ValidProgramFile);
+            var fakeConsole = new StringWriter();
+            Console.SetOut(fakeConsole);
+            
+            //Act
+            interpreter.Execute();
+            
+            //Assert
+            Assert.Matches(ValidExecutionContent,fakeConsole.ToString());
         }
     }
 }
