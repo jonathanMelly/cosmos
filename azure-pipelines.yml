@@ -10,8 +10,19 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: dotnet build $(solution_file)
-  displayName: 'Build solution'
+#- script: dotnet build $(solution_file)
+#  displayName: 'Build solution'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '$(solution_file)'
 
-- script: dotnet test $(solution_file)
-  displayName: 'Test solution'
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    testRunTitle: 'All tests'
