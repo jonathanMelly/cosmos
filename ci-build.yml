@@ -44,13 +44,13 @@ steps:
 
 
 #Integration test (retcode indicates if failed)
-- task: CmdLine@2
-  inputs:
-    script: |
+- script: |
       echo Starting integration test
-      dotnet run -p:RuntimeIdentifier=win-x64 --project src/interpreter/interpreter.csproj src/test/data/ValidProgram.cosmos
+      dotnet run -r win-x64 --project src/interpreter/interpreter.csproj src/test/data/ValidProgram.cosmos
       echo End of integration test
-    failOnStderr: true
+  #workingDirectory: #
+  displayName: 'Integration tests'
+  failOnStderr: true
 
 
 
