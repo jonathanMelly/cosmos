@@ -39,20 +39,16 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)\src\test\'
     otherConsoleOptions: '/Framework:".NETCoreApp,Version=v3.1"'
     testRunTitle: 'VSTests'
+    codeCoverageEnabled: True # Optional
+    publishRunAttachments: true # Optional
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'XUnit'
-    testResultsFiles: '**/TEST-*.xml'
-    searchFolder: '$(Agent.TempDirectory)\TestResults'
-    testRunTitle: 'VSTest deploy'
 
 #Integration test (retcode indicates if failed)
 - task: CmdLine@2
   inputs:
     script: |
       echo Starting integration test
-      dotnet run --project src/interpreter/interpreter.csproj src/test/data/ValidProgram.cosmos
+      dotnet run -p:RuntimeIdentifier=win-x64 --project src/interpreter/interpreter.csproj src/test/data/ValidProgram.cosmos
       echo End of integration test
     failOnStderr: true
 
