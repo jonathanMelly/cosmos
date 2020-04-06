@@ -36,13 +36,15 @@ steps:
       **\*test*.dll
       !**\*TestAdapter.dll
       !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
+    searchFolder: '$(System.DefaultWorkingDirectory)\src\test\'
+    otherConsoleOptions: '--Framework .NETCoreApp,Version=v3.1'
     testRunTitle: 'VSTests'
 
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'XUnit'
     testResultsFiles: '**/TEST-*.xml'
+    searchFolder: '$(Agent.TempDirectory)\TestResults'
     testRunTitle: 'VSTest deploy'
 
 #Integration test (retcode indicates if failed)
