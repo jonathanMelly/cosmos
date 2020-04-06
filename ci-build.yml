@@ -37,7 +37,7 @@ steps:
       !**\*TestAdapter.dll
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)\src\test\'
-    otherConsoleOptions: '--Framework .NETCoreApp,Version=v3.1'
+    otherConsoleOptions: '/Framework:".NETCoreApp,Version=v3.1"'
     testRunTitle: 'VSTests'
 
 - task: PublishTestResults@2
