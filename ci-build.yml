@@ -17,12 +17,33 @@ steps:
     command: 'build'
     projects: '$(solution_file)'
 
-- task: DotNetCoreCLI@2
+#- task: DotNetCoreCLI@2
+#  inputs:
+#    command: 'test'
+#    projects: '$(solution_file)'
+#    arguments: '--collect "Code coverage"'
+#    testRunTitle: 'All tests'
+
+- task: VisualStudioTestPlatformInstaller@1
   inputs:
-    command: 'test'
-    projects: '$(solution_file)'
-    arguments: '--collect "Code coverage"'
-    testRunTitle: 'All tests'
+    packageFeedSelector: 'nugetOrg'
+    versionSelector: 'latestStable'
+
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    testRunTitle: 'VSTests'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'XUnit'
+    testResultsFiles: '**/TEST-*.xml'
+    testRunTitle: 'VSTest deploy'
 
 #Integration test (retcode indicates if failed)
 - task: CmdLine@2
