@@ -1,0 +1,60 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+#- script: dotnet build $(solution_file)
+#  displayName: 'Build solution'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '$(solution_file)'
+
+#- task: DotNetCoreCLI@2
+#  inputs:
+#    command: 'test'
+#    projects: '$(solution_file)'
+#    arguments: '--collect "Code coverage"'
+#    testRunTitle: 'All tests'
+
+- task: VisualStudioTestPlatformInstaller@1
+  inputs:
+    packageFeedSelector: 'nugetOrg'
+    versionSelector: 'latestStable'
+
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)\src\test\'
+    otherConsoleOptions: '/Framework:".NETCoreApp,Version=v3.1"'
+    testRunTitle: 'VSTests'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'XUnit'
+    testResultsFiles: '**/TEST-*.xml'
+    searchFolder: '$(Agent.TempDirectory)\TestResults'
+    testRunTitle: 'VSTest deploy'
+
+#Integration test (retcode indicates if failed)
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Starting integration test
+      dotnet run --project src/interpreter/interpreter.csproj src/test/data/ValidProgram.cosmos
+      echo End of integration test
+    failOnStderr: true
+
+
+
