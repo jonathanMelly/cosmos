@@ -30,6 +30,7 @@ steps:
     dotnet tool install dotnet-reportgenerator-globaltool --tool-path $(tool_path)
     $(tool_path)/reportgenerator -classfilters:"-interpreter.antlr.*" -reports:"$(coverage_summary_file)" -targetdir:"$(coverage_report_folder)" -reporttypes:"HtmlInline_AzurePipelines;Cobertura;Badges"
   failOnStderr: false
+  continueOnError: true
   displayName: 'Unit Tests: generate coverage'
 
 #disable.coverage.autogenerate:true in variables to keep previous report supporting filters
