@@ -17,31 +17,20 @@ steps:
     command: 'build'
     projects: '$(solution_file)'
 
-#- task: DotNetCoreCLI@2
-#  inputs:
-#    command: 'test'
-#    projects: '$(solution_file)'
-#    arguments: '--collect "Code coverage"'
-#    testRunTitle: 'All tests'
-
-- task: VisualStudioTestPlatformInstaller@1
+#Must publish for code coverage dll...
+- task: DotNetCoreCLI@2
   inputs:
-    packageFeedSelector: 'nugetOrg'
-    versionSelector: 'latestStable'
-
-- task: VSTest@2
+    command: 'publish'
+    publishWebProjects: false
+    projects: '$(test_project)'
+    zipAfterPublish: false
+- task: DotNetCoreCLI@2
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\test.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)\src\test\'
-    otherConsoleOptions: '/Framework:".NETCoreApp,Version=v3.1"'
-    testRunTitle: 'VSTests'
-    codeCoverageEnabled: True # Optional
-    publishRunAttachments: true # Optional
-
+    command: 'test'
+    projects: '$(test_project)'
+    arguments: '--collect:"Xplat Code Coverage"'
+    publishTestResults: true
+    testRunTitle: 'All tests'
 
 #Integration test (retcode indicates if failed)
 - script: |
