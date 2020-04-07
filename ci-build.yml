@@ -23,7 +23,7 @@ steps:
     command: 'test'
     projects: '$(test_project)'
     arguments: '--collect:"Xplat Code Coverage"'
-    publishTestResults: false
+    publishTestResults: true
     testRunTitle: 'All tests'
 
 - script: |
