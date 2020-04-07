@@ -40,6 +40,7 @@ steps:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(coverage_report_folder)Cobertura.xml'
     reportDirectory: '$(coverage_report_folder)'
+    failIfCoverageEmpty: false
 
 
 #Integration test (retcode indicates if failed)
