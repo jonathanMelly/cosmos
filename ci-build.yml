@@ -18,7 +18,7 @@ steps:
     projects: '$(solution_file)'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Unit Tests'
+  displayName: 'Unit Tests: run'
   inputs:
     command: 'test'
     projects: '$(test_project)'
@@ -28,12 +28,12 @@ steps:
 
 - script: |
     dotnet tool install -g dotnet-reportgenerator-globaltool
-    dotnet reportgenerator -classfilters:"-interpreter.antlr.*" -reports:$(coverage_summary_file) -targetdir:$(coverage_report_folder) -reporttypes:HtmlInline_AzurePipelines
+    reportgenerator -classfilters:"-interpreter.antlr.*" -reports:$(coverage_summary_file) -targetdir:$(coverage_report_folder) -reporttypes:HtmlInline_AzurePipelines
   failOnStderr: false
-  displayName: 'Generate coverage'
+  displayName: 'Unit Tests: generate coverage'
 
 - task: PublishCodeCoverageResults@1
-  displayName: 'Publish coverage'
+  displayName: 'Unit Tests: publish coverage'
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(coverage_summary_file)'
@@ -46,7 +46,7 @@ steps:
       dotnet run -r win-x64 --project src/interpreter/interpreter.csproj src/test/data/ValidProgram.cosmos
       echo End of integration test
   #workingDirectory: #
-  displayName: 'Integration tests'
+  displayName: 'Integration tests: run'
   failOnStderr: true
 
 
