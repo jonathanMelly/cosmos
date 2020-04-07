@@ -10,27 +10,35 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
-#- script: dotnet build $(solution_file)
-#  displayName: 'Build solution'
+
 - task: DotNetCoreCLI@2
+  displayName: 'Build'
   inputs:
     command: 'build'
     projects: '$(solution_file)'
 
-#Must publish for code coverage dll...
 - task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: false
-    projects: '$(test_project)'
-    zipAfterPublish: false
-- task: DotNetCoreCLI@2
+  displayName: 'Unit Tests'
   inputs:
     command: 'test'
     projects: '$(test_project)'
     arguments: '--collect:"Xplat Code Coverage"'
-    publishTestResults: true
+    publishTestResults: false
     testRunTitle: 'All tests'
+
+- script: |
+    dotnet tool install -g dotnet-reportgenerator-globaltool
+    dotnet reportgenerator -classfilters:"-interpreter.antlr.*" -reports:$(coverage_summary_file) -targetdir:$(coverage_report_folder) -reporttypes:HtmlInline_AzurePipelines
+  failOnStderr: false
+  displayName: 'Generate coverage'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish coverage'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(coverage_summary_file)'
+    reportDirectory: '$(coverage_report_folder)'
+
 
 #Integration test (retcode indicates if failed)
 - script: |
