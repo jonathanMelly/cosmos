@@ -2,14 +2,20 @@ Auteur: Jonathan Strokee
 Date: 27.03.2020
 Entreprise: ETML
 Description: Demonstration du langage cosmos,
-ce langage est parfait,
-et extraordinaire
+ce langage est extraordinaire
 
 //Début du programme
 Voici mes ordres:
-    //Affichage de texte sur la console
-    Afficher le texte "salut".
-    
-    //Affichage d'un nombre sur la console
-    Afficher le nombre 44.
+	//Affichage de texte sur la console
+	Afficher le texte "salut chef\n".
+	
+	//Condition
+	Si 1 est différent de 2 alors
+	    Afficher le texte "1 n'est pas égal à 2",
+	    Afficher le texte "\n"
+	.
+	
+	//Affichage d'un nombre sur la console
+	Afficher le nombre 44.
+	Afficher "\n".
 Fin.

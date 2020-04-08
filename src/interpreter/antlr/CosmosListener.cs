@@ -110,15 +110,92 @@ public interface ICosmosListener : IParseTreeListener {
 	void ExitContexte([NotNull] CosmosParser.ContexteContext context);
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.instruction"/>.
+	/// Enter a parse tree produced by <see cref="CosmosParser.instruction_isolee"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterInstruction([NotNull] CosmosParser.InstructionContext context);
+	void EnterInstruction_isolee([NotNull] CosmosParser.Instruction_isoleeContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.instruction"/>.
+	/// Exit a parse tree produced by <see cref="CosmosParser.instruction_isolee"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitInstruction([NotNull] CosmosParser.InstructionContext context);
+	void ExitInstruction_isolee([NotNull] CosmosParser.Instruction_isoleeContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.instruction_integree"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInstruction_integree([NotNull] CosmosParser.Instruction_integreeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.instruction_integree"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInstruction_integree([NotNull] CosmosParser.Instruction_integreeContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.instruction_simple_base"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInstruction_simple_base([NotNull] CosmosParser.Instruction_simple_baseContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.instruction_simple_base"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInstruction_simple_base([NotNull] CosmosParser.Instruction_simple_baseContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.instruction_simple_isolee"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInstruction_simple_isolee([NotNull] CosmosParser.Instruction_simple_isoleeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.instruction_simple_isolee"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInstruction_simple_isolee([NotNull] CosmosParser.Instruction_simple_isoleeContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.instruction_simple_integree"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInstruction_simple_integree([NotNull] CosmosParser.Instruction_simple_integreeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.instruction_simple_integree"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInstruction_simple_integree([NotNull] CosmosParser.Instruction_simple_integreeContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.instruction_complexe_base"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInstruction_complexe_base([NotNull] CosmosParser.Instruction_complexe_baseContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.instruction_complexe_base"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInstruction_complexe_base([NotNull] CosmosParser.Instruction_complexe_baseContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.instruction_complexe_isolee"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInstruction_complexe_isolee([NotNull] CosmosParser.Instruction_complexe_isoleeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.instruction_complexe_isolee"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInstruction_complexe_isolee([NotNull] CosmosParser.Instruction_complexe_isoleeContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.instruction_complexe_integree"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInstruction_complexe_integree([NotNull] CosmosParser.Instruction_complexe_integreeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.instruction_complexe_integree"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInstruction_complexe_integree([NotNull] CosmosParser.Instruction_complexe_integreeContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.afficher"/>.
@@ -130,5 +207,60 @@ public interface ICosmosListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitAfficher([NotNull] CosmosParser.AfficherContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.selection"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSelection([NotNull] CosmosParser.SelectionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.selection"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSelection([NotNull] CosmosParser.SelectionContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.condition"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterCondition([NotNull] CosmosParser.ConditionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.condition"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitCondition([NotNull] CosmosParser.ConditionContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.expression_valeur"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterExpression_valeur([NotNull] CosmosParser.Expression_valeurContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.expression_valeur"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitExpression_valeur([NotNull] CosmosParser.Expression_valeurContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.expression_textuelle"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterExpression_textuelle([NotNull] CosmosParser.Expression_textuelleContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.expression_textuelle"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitExpression_textuelle([NotNull] CosmosParser.Expression_textuelleContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.expression_numeraire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterExpression_numeraire([NotNull] CosmosParser.Expression_numeraireContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.expression_numeraire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitExpression_numeraire([NotNull] CosmosParser.Expression_numeraireContext context);
 }
 } // namespace interpreter.antlr

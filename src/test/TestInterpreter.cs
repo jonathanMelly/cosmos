@@ -11,7 +11,7 @@ namespace test
 {
     public class TestInterpreter
     {
-        public const string ValidExecutionContent = "salut44";
+        public const string ValidExecutionContent = "salut chef\n1 n'est pas égal à 2\n44";
         public const string Path = "../../../data/";
         public const string ValidProgramFile = Path +"ValidProgram.cosmos";
 

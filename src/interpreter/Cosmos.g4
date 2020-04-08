@@ -4,7 +4,7 @@ grammar Cosmos ;
 //Removes clscompliant warning on build
 @header {#pragma warning disable 3021}
 
-programme : entete RETCHAR+ (contexte RETCHAR+)? DEBUT RETCHAR+ instruction+  FIN EOF ;
+programme : entete RETCHAR+ (contexte RETCHAR+)? DEBUT RETCHAR+ instruction_isolee+  FIN EOF ;
 
 entete : auteur RETCHAR date RETCHAR entreprise RETCHAR description ;
 
@@ -29,21 +29,38 @@ CONTEXTE : 'Contexte:' ESPACE? MOT+ ;
 DEBUT : 'Voici mes ordres:' ;
 FIN   : 'Fin.' ;
 
-//commentaire : COMMENTAIRE_DEBUT  ;
-COMMENTAIRE_LIGNE: (TAB? | TAB+) '//' ~[\r\n]* -> skip ;
-COMMENTAIRE : '/*' .*? '*/' -> skip ;
+instruction_isolee : (instruction_simple_isolee | instruction_complexe_isolee) ;
+instruction_integree : (instruction_simple_integree | instruction_complexe_integree) ;
 
-NOOP : TAB+ RETCHAR -> skip ;
+instruction_simple_base   : TAB+ (afficher)  ;
+instruction_simple_isolee   : instruction_simple_base POINT RETCHAR ;
+instruction_simple_integree   : instruction_simple_base VIRGULE? RETCHAR ;
 
-instruction : TAB+ (afficher) POINT RETCHAR+ ;
+instruction_complexe_base : TAB+ (selection) ;
+instruction_complexe_isolee : instruction_complexe_base TAB+ POINT RETCHAR ;
+instruction_complexe_integree : instruction_complexe_base TAB+ VIRGULE? RETCHAR ;
 
-afficher : FONCTION_AFFICHER (LE_TEXTE? VALEUR_TEXTE | LE_NOMBRE? VALEUR_NOMBRE) ;
+afficher : FONCTION_AFFICHER  expression_valeur;
 FONCTION_AFFICHER : 'Afficher';
 
-LE_TEXTE : 'le' ESPACE+ 'texte' ;
-LE_NOMBRE : 'le' ESPACE+ 'nombre' ;
+selection : DEBUT_CONDITION condition SUITE_CONDITION RETCHAR instruction_integree+ ;
+DEBUT_CONDITION : 'Si' ;
+SUITE_CONDITION : 'alors' ;
+ALTERNATIVE_CONDITION : 'sinon' ;
 
-VALEUR_TEXTE : '"' MOT '"' ;
+condition : expression_valeur OPERATEUR expression_valeur ;
+OPERATEUR : (OPERATEUR_EGAL | OPERATEUR_DIFFERENT) ;
+OPERATEUR_EGAL : 'vaut' | 'est égal à' ;
+OPERATEUR_DIFFERENT : 'est différent de' ;
+
+expression_valeur : (expression_textuelle | expression_numeraire) ;
+
+expression_textuelle : LE_TEXTE? VALEUR_TEXTE ;
+LE_TEXTE : 'le texte' ;
+VALEUR_TEXTE : '"' ~["]* '"' ;
+
+expression_numeraire : LE_NOMBRE? VALEUR_NOMBRE ;
+LE_NOMBRE : 'le' ESPACE+ 'nombre' ;
 VALEUR_NOMBRE : CHIFFRE+ ;
 
 //fragment LIGNE_DE_TEXTE : MOT (' ' MOT)* ;
@@ -58,14 +75,17 @@ fragment SYMBOLES_LETTRE : '-' ;
 fragment LETTRE : MINUSCULE | MAJUSCULE | SYMBOLES_LETTRE ;
 
 VIRGULE : ',' ;
+POINT: '.' ;
 
 TAB : '\t' | '    ' ;
 RETCHAR : '\r'? '\n' ;
 
 //fragment CARACTERE : ~[."\\\r\n ] ;
 
-POINT: '.' ;
 ESPACE: ' '+ -> skip ;
+COMMENTAIRE_LIGNE: (TAB? | TAB+) '//' ~[\n]* RETCHAR -> skip ;
+COMMENTAIRE : '/*' .*? '*/' -> skip ;
+NOOP : TAB+ RETCHAR -> skip ;
 
 //WS: [ \t\r\n\u000C]+ -> channel(HIDDEN);
 //WS : [ \r\n\t] + -> skip ;

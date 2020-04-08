@@ -6,7 +6,7 @@ namespace interpreter
     {
         public static void Main(string[] args)
         {
-            //TODO gérer les options en ligne de commande
+            //TODO gérer les options en ligne de commande (compilation, éxécution, ...)
             Interpreter interpreter = new Interpreter(args[0]);
             interpreter.Execute();
         }
