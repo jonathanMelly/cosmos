@@ -1,18 +1,22 @@
 using System;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using interpreter;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
+using Xunit.Abstractions;
+using Console = System.Console;
 
 namespace test
 {
     public class TestProgram
     {
-        private readonly StringWriter fakeConsole = new StringWriter();
+        private readonly TestConsole fakeConsole;
         
-        public TestProgram()
+        public TestProgram(ITestOutputHelper helper)
         {
+            fakeConsole = new TestConsole(helper);
             Console.SetOut(fakeConsole);
         }
         
@@ -25,7 +29,9 @@ namespace test
             interpreter.Program.Main(new[] {TestInterpreter.ValidProgramFile});
             
             //Assert
-            Assert.Matches(TestInterpreter.ValidExecutionContent,fakeConsole.ToString());
+            Assert.Matches(TestInterpreter.ValidExecutionContent,fakeConsole.Content);
         }
     }
+
+    
 }

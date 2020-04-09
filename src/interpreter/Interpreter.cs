@@ -7,16 +7,38 @@ namespace interpreter
 {
     public class Interpreter
     {
-        private readonly CosmosParser parser;
-        private readonly ErrorListener errorListener;
+        private string codeFile;
+        private string code;
+        private CosmosParser parser;
+        private ErrorListener errorListener;
 
         private CosmosParser.ProgrammeContext context;
-        
 
-        public Interpreter(string file)
+        private Console console;
+        
+        public List<string> Errors => errorListener.Errors;
+
+        public Interpreter ForFile(string file)
         {
-            var code = File.ReadAllText(file);
-            
+            codeFile = file;
+            code = File.ReadAllText(file);
+            return this;
+        }
+        
+        public Interpreter ForSnippet(string snippet)
+        {
+            code = snippet;
+            return this;
+        }
+        
+        public Interpreter WithConsole(Console console)
+        {
+            this.console = console;
+            return this;
+        }
+
+        public bool Parse()
+        {
             var antlrInputStream = new AntlrInputStream(code);
             var lexer = new CosmosLexer(antlrInputStream);
             var tokens = new CommonTokenStream(lexer);
@@ -26,12 +48,6 @@ namespace interpreter
             parser.RemoveErrorListeners();
             parser.AddErrorListener(errorListener);
             
-        }
-
-        public List<string> Errors => errorListener.Errors;
-
-        public bool Parse()
-        {
             context = parser.programme();
             return !errorListener.HadError;
         }
@@ -40,7 +56,7 @@ namespace interpreter
         {
             if (!Parse()) return;
             
-            var visitor = new ExecutorVisitor();
+            var visitor = new ExecutorVisitor().WithConsole(console);
             visitor.Visit(context);
         }
     }

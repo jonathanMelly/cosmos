@@ -6,9 +6,24 @@ namespace interpreter
 {
     public class ExecutorVisitor : CosmosBaseVisitor<string>
     {
-        //TODO : console wrapper pour les tests et plus si affinité...
-        
+        private Console executionConsole;
         private const char StringDelimiter = '\"';
+        
+        /// <summary>
+        /// Set customized output
+        /// </summary>
+        /// <param name="console"></param>
+        public ExecutorVisitor WithConsole(Console console)
+        {
+            this.executionConsole = console;
+            return this;
+        }
+
+        public override string VisitProgramme(CosmosParser.ProgrammeContext context)
+        {
+            this.executionConsole = executionConsole ?? new DefaultConsole();
+            return base.VisitProgramme(context);
+        }
 
         public override string VisitAfficher(CosmosParser.AfficherContext context)
         {
@@ -24,7 +39,7 @@ namespace interpreter
                 content = valueContext.expression_numeraire().VALEUR_NOMBRE().ToString();
             }
             
-            Console.Write(content);
+            executionConsole.Write(content);
 
             return $"Console.Write(\"{content}\")";
         }

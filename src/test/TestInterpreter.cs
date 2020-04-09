@@ -6,20 +6,28 @@ using System.Text;
 using interpreter;
 using Xunit;
 using FluentAssertions;
+using Xunit.Abstractions;
+using Console = System.Console;
 
 namespace test
 {
     public class TestInterpreter
     {
+        private TestConsole testConsole;
         public const string ValidExecutionContent = "salut chef\n1 n'est pas égal à 2\n44";
         public const string Path = "../../../data/";
         public const string ValidProgramFile = Path +"ValidProgram.cosmos";
+
+        public TestInterpreter(ITestOutputHelper helper)
+        {
+            testConsole = new TestConsole(helper);
+        }
 
         [Fact]
         public void TestParsingOnValidProgram()
         {
             //Arrange
-            var interpreter = new Interpreter(ValidProgramFile);
+            var interpreter = BuildFileInterpreter(ValidProgramFile);
             
             //Act
             bool success = interpreter.Parse();
@@ -32,7 +40,7 @@ namespace test
         public void TestInvalidProgramMissingDate()
         {
             //Arrange
-            var interpreter = new Interpreter(Path+"MissingDate.cosmos");
+            var interpreter = BuildFileInterpreter(Path+"MissingDate.cosmos");
             
             //Act
             interpreter.Execute();
@@ -45,15 +53,23 @@ namespace test
         public void TestExecuteValidProgram()
         {
             //Arrange
-            var interpreter = new Interpreter(ValidProgramFile);
-            var fakeConsole = new StringWriter();
-            Console.SetOut(fakeConsole);
-            
+            var interpreter = BuildFileInterpreter(ValidProgramFile);
+
             //Act
             interpreter.Execute();
             
             //Assert
-            Assert.Matches(ValidExecutionContent,fakeConsole.ToString());
+            Assert.Matches(ValidExecutionContent,testConsole.Content);
+        }
+
+        private Interpreter BuildFileInterpreter(string file)
+        {
+            return new Interpreter().ForFile(file).WithConsole(testConsole);
+        }
+        
+        private Interpreter BuildSnippetInterpreter(string file)
+        {
+            return new Interpreter().ForSnippet(file).WithConsole(testConsole);
         }
 
     }
