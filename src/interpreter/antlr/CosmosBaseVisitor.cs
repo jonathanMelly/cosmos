@@ -234,6 +234,17 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	public virtual Result VisitCondition([NotNull] CosmosParser.ConditionContext context) { return VisitChildren(context); }
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.operateur_comparaison"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitOperateur_comparaison([NotNull] CosmosParser.Operateur_comparaisonContext context) { return VisitChildren(context); }
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.expression_valeur"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>

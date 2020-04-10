@@ -15,6 +15,11 @@ Voici mes ordres:
 	    Afficher le texte "\n"
 	.
 	
+	Si 1 vaut 2 alors
+    	    Afficher le texte "1 vaut 2",
+    	    Afficher le texte "\n"
+    	.
+	
 	//Affichage d'un nombre sur la console
 	Afficher le nombre 44.
 	Afficher "\n".

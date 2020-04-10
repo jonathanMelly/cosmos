@@ -271,6 +271,19 @@ public partial class CosmosBaseListener : ICosmosListener {
 	public virtual void ExitCondition([NotNull] CosmosParser.ConditionContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.operateur_comparaison"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterOperateur_comparaison([NotNull] CosmosParser.Operateur_comparaisonContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.operateur_comparaison"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitOperateur_comparaison([NotNull] CosmosParser.Operateur_comparaisonContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.expression_valeur"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

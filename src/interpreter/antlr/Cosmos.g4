@@ -48,8 +48,8 @@ DEBUT_CONDITION : 'Si' ;
 SUITE_CONDITION : 'alors' ;
 ALTERNATIVE_CONDITION : 'sinon' ;
 
-condition : expression_valeur OPERATEUR expression_valeur ;
-OPERATEUR : (OPERATEUR_EGAL | OPERATEUR_DIFFERENT) ;
+condition : left=expression_valeur operateur_comparaison right=expression_valeur ;
+operateur_comparaison : (OPERATEUR_EGAL | OPERATEUR_DIFFERENT) ;
 OPERATEUR_EGAL : 'vaut' | 'est égal à' ;
 OPERATEUR_DIFFERENT : 'est différent de' ;
 

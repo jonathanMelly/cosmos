@@ -231,6 +231,17 @@ public interface ICosmosListener : IParseTreeListener {
 	void ExitCondition([NotNull] CosmosParser.ConditionContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.operateur_comparaison"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterOperateur_comparaison([NotNull] CosmosParser.Operateur_comparaisonContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.operateur_comparaison"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitOperateur_comparaison([NotNull] CosmosParser.Operateur_comparaisonContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.expression_valeur"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
