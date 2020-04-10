@@ -62,7 +62,7 @@
         <AntlrOut>antlr</AntlrOut>
     </PropertyGroup>
 
-    <Target Name="GenerateAntlrCode" BeforeTargets="Build" Inputs="$(ProjectDir)$(Grammar)" Outputs="$(ProjectDir)$(AntlrOut)/$(Grammar)">
+    <Target Name="GenerateAntlrCode" BeforeTargets="BeforeBuild" Inputs="$(ProjectDir)$(Grammar)" Outputs="$(ProjectDir)$(AntlrOut)/$(Grammar)">
         <Exec Command="mono generator/Antlr4.dll -o $(ProjectDir)$(AntlrOut) -Dlanguage=CSharp -visitor -package interpreter.$(AntlrOut) $(ProjectDir)$(Grammar)" />
         <!-- Copy source grammar for incremental build -->
         <Copy SourceFiles="$(ProjectDir)$(Grammar)" DestinationFolder="$(ProjectDir)$(AntlrOut)" SkipUnchangedFiles="true" />
