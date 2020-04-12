@@ -1,22 +1,24 @@
-using System;
-using System.Configuration;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
+using FluentAssertions;
 using interpreter;
 using Xunit;
-using FluentAssertions;
 using Xunit.Abstractions;
-using Console = System.Console;
 
 namespace test
 {
     public class TestInterpreter
     {
         private TestConsole testConsole;
-        public const string ValidExecutionContent = "salut chef\n1 n'est pas égal à 2\n44";
+        public const string ValidExecutionContent = 
+            "En programmant avec cosmos, on peut\n" +
+            "->Éxécuter du code avec une condition\n" +
+            "-->dans laquelle on peut aussi avoir une condition (et ainsi de suite)\n" +
+            "-->pour laquelle on peut avoir une alternative spécifique\n" +
+            "-->pour laquelle on peut avoir une alternative si aucune condition préalable n'est vraie\n" +
+            "->Afficher un nombre, par exemple quarante-quatre : 44";
+        
         public const string Path = "../../../data/";
         public const string ValidProgramFile = Path +"ValidProgram.cosmos";
+        public const string InvalidDateProgramFile = Path + "MissingDate.cosmos";
 
         public TestInterpreter(ITestOutputHelper helper)
         {
@@ -40,13 +42,15 @@ namespace test
         public void TestInvalidProgramMissingDate()
         {
             //Arrange
-            var interpreter = BuildFileInterpreter(Path+"MissingDate.cosmos");
+            var interpreter = BuildFileInterpreter(InvalidDateProgramFile);
+            string dateError = "expecting 'Date:'";
             
             //Act
             interpreter.Execute();
 
             //Assert
-            Assert.Contains(interpreter.Errors,error => error.Contains("expecting 'Date:'"));
+            Assert.Contains(interpreter.Errors,error => error.Contains(dateError));
+            testConsole.ErrorContent.Should().Contain(dateError);//this could go into ErrorListener test...
         }
 
         [Fact]
@@ -59,7 +63,9 @@ namespace test
             interpreter.Execute();
             
             //Assert
-            Assert.Matches(ValidExecutionContent,testConsole.Content);
+            interpreter.Errors.Should().BeEmpty();
+            testConsole.Content.Should().Match(ValidExecutionContent);
+
         }
 
         private Interpreter BuildFileInterpreter(string file)

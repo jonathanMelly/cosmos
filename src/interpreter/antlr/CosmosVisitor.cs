@@ -83,60 +83,25 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitContexte([NotNull] CosmosParser.ContexteContext context);
 
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.instruction_isolee"/>.
+	/// Visit a parse tree produced by <see cref="CosmosParser.instruction"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitInstruction_isolee([NotNull] CosmosParser.Instruction_isoleeContext context);
+	Result VisitInstruction([NotNull] CosmosParser.InstructionContext context);
 
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.instruction_integree"/>.
+	/// Visit a parse tree produced by <see cref="CosmosParser.instruction_simple"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitInstruction_integree([NotNull] CosmosParser.Instruction_integreeContext context);
+	Result VisitInstruction_simple([NotNull] CosmosParser.Instruction_simpleContext context);
 
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.instruction_simple_base"/>.
+	/// Visit a parse tree produced by <see cref="CosmosParser.instruction_complexe"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitInstruction_simple_base([NotNull] CosmosParser.Instruction_simple_baseContext context);
-
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.instruction_simple_isolee"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitInstruction_simple_isolee([NotNull] CosmosParser.Instruction_simple_isoleeContext context);
-
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.instruction_simple_integree"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitInstruction_simple_integree([NotNull] CosmosParser.Instruction_simple_integreeContext context);
-
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.instruction_complexe_base"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitInstruction_complexe_base([NotNull] CosmosParser.Instruction_complexe_baseContext context);
-
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.instruction_complexe_isolee"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitInstruction_complexe_isolee([NotNull] CosmosParser.Instruction_complexe_isoleeContext context);
-
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.instruction_complexe_integree"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitInstruction_complexe_integree([NotNull] CosmosParser.Instruction_complexe_integreeContext context);
+	Result VisitInstruction_complexe([NotNull] CosmosParser.Instruction_complexeContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.afficher"/>.
@@ -151,6 +116,20 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitSelection([NotNull] CosmosParser.SelectionContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.sinon_si"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSinon_si([NotNull] CosmosParser.Sinon_siContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.sinon"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSinon([NotNull] CosmosParser.SinonContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.condition"/>.

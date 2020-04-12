@@ -44,7 +44,7 @@ namespace interpreter
             var tokens = new CommonTokenStream(lexer);
             parser = new CosmosParser(tokens);
             
-            errorListener = new ErrorListener();
+            errorListener = new ErrorListener(console);
             parser.RemoveErrorListeners();
             parser.AddErrorListener(errorListener);
             
@@ -52,12 +52,14 @@ namespace interpreter
             return !errorListener.HadError;
         }
 
-        public void Execute()
+        public bool Execute()
         {
-            if (!Parse()) return;
+            if (!Parse()) return false;
             
             var visitor = new ExecutorVisitor().WithConsole(console);
             visitor.Visit(context);
+
+            return true;
         }
     }
 }

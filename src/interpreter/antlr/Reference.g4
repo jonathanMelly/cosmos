@@ -4,7 +4,7 @@ grammar Cosmos ;
 //Removes clscompliant warning on build
 @header {#pragma warning disable 3021}
 
-programme : entete RETCHAR+ (contexte RETCHAR+)? DEBUT RETCHAR+ instruction_isolee+  FIN EOF ;
+programme : entete RETCHAR+ (contexte RETCHAR+)? DEBUT RETCHAR+ instruction+  FIN EOF ;
 
 entete : auteur RETCHAR date RETCHAR entreprise RETCHAR description ;
 
@@ -29,29 +29,32 @@ CONTEXTE : 'Contexte:' ESPACE? MOT+ ;
 DEBUT : 'Voici mes ordres:' ;
 FIN   : 'Fin.' ;
 
-instruction_isolee : (instruction_simple_isolee | instruction_complexe_isolee) ;
-instruction_integree : (instruction_simple_integree | instruction_complexe_integree) ;
+instruction : (instruction_simple | instruction_complexe) ;
 
-instruction_simple_base   : TAB+ (afficher)  ;
-instruction_simple_isolee   : instruction_simple_base POINT RETCHAR ;
-instruction_simple_integree   : instruction_simple_base VIRGULE? RETCHAR ;
+instruction_simple   : TAB+ (afficher) POINT RETCHAR ; //terminaison identique pour chaque
+instruction_complexe : TAB+ (selection) ; //terminaison spécifique pour chaque
 
-instruction_complexe_base : TAB+ (selection) ;
-instruction_complexe_isolee : instruction_complexe_base TAB+ POINT RETCHAR ;
-instruction_complexe_integree : instruction_complexe_base TAB+ VIRGULE? RETCHAR ;
+afficher : 'Afficher'  expression_valeur;
 
-afficher : FONCTION_AFFICHER  expression_valeur;
-FONCTION_AFFICHER : 'Afficher';
+selection : 
+    'Si' si=condition ALORS RETCHAR instruction+ 
+        sinon_si* 
+        sinon? 
+     TAB+ POINT_INTERROGATION RETCHAR ;
+ 
+ALORS : 'alors' ;
+sinon_si : TAB+ 'sinon si' condition ALORS RETCHAR instruction+ ;
+sinon : TAB+ 'et sinon' RETCHAR instruction+ ;
 
-selection : DEBUT_CONDITION condition SUITE_CONDITION RETCHAR instruction_integree+ ;
-DEBUT_CONDITION : 'Si' ;
-SUITE_CONDITION : 'alors' ;
-ALTERNATIVE_CONDITION : 'sinon' ;
-
-condition : left=expression_valeur operateur_comparaison right=expression_valeur ;
+condition : left=expression_valeur operateur_comparaison right=expression_valeur (OPERATEUR_BOOLEEN condition)* ;
 operateur_comparaison : (OPERATEUR_EGAL | OPERATEUR_DIFFERENT) ;
 OPERATEUR_EGAL : 'vaut' | 'est égal à' ;
-OPERATEUR_DIFFERENT : 'est différent de' ;
+OPERATEUR_DIFFERENT : 'est différent de' | 'n\'est pas égal à' ;
+
+OPERATEUR_BOOLEEN : (ET | OU | OU_EXCLUSIF) ;
+fragment ET: 'et';
+fragment OU: 'ou';
+fragment OU_EXCLUSIF: 'ou au contraire';
 
 expression_valeur : (expression_textuelle | expression_numeraire) ;
 
@@ -76,6 +79,8 @@ fragment LETTRE : MINUSCULE | MAJUSCULE | SYMBOLES_LETTRE ;
 
 VIRGULE : ',' ;
 POINT: '.' ;
+POINT_INTERROGATION: '?' ;
+SUIVANT : '>>';
 
 TAB : '\t' | '    ' ;
 RETCHAR : '\r'? '\n' ;

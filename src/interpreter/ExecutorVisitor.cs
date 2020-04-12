@@ -1,18 +1,15 @@
 using System;
-using System.Diagnostics;
-using System.Text;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using interpreter.antlr;
 
 namespace interpreter
 {
-    public class ExecutorVisitor : CosmosBaseVisitor<string>
+    public class ExecutorVisitor : CosmosBaseVisitor<CosmosData>
     {
         private Console executionConsole;
         private const char StringDelimiter = '\"';
         
-        private readonly StringBuilder csharpSource = new StringBuilder();
         
         /// <summary>
         /// Set customized output
@@ -24,52 +21,69 @@ namespace interpreter
             return this;
         }
 
-        public override string VisitProgramme(CosmosParser.ProgrammeContext context)
+        public override CosmosData VisitProgramme(CosmosParser.ProgrammeContext context)
         {
             this.executionConsole = executionConsole ?? new DefaultConsole();
             return base.VisitProgramme(context);
         }
 
-        public override string VisitSelection(CosmosParser.SelectionContext context)
+        public override CosmosData VisitSelection(CosmosParser.SelectionContext context)
         {
-            //TODO : ajouter le code même si condition fausse ?
-            var snippet = new StringBuilder(); 
-                
-            var result = ComputeCondition(context.condition());
-            if (result.Item2)
+            CosmosData result = new CosmosData();
+            
+            var evaluation = ComputeCondition(context.si);
+            if (evaluation.Item2)
             {
-                foreach (var instructionIntegree in context.instruction_integree())
+                foreach (var instructionIntegree in context.instruction())
                 {
-                    snippet.Append(Visit(instructionIntegree));
+                    AggregateResult(result,Visit(instructionIntegree));
                 }
-                
-                snippet.Append(result.Item1);
+            }
+            else if (context.sinon_si() != null)
+            {
+                foreach (var elsif in context.sinon_si())
+                {
+                    if(ComputeCondition(elsif.condition()).Item2)
+                    {
+                        foreach (var instructionIntegree in elsif.instruction())
+                        {
+                            AggregateResult(result,(Visit(instructionIntegree)));
+                        }
+                        return result;//only 1 elsif branch
+                    }
+                }
+            }
+            
+            if (context.sinon() != null)
+            {
+                foreach (var instructionIntegree in context.sinon().instruction())
+                {
+                    AggregateResult(result,(Visit(instructionIntegree)));
+                }
             }
 
-            
-            return snippet.ToString();
+            return result;
         }
 
-        public Tuple<string,bool> ComputeCondition(CosmosParser.ConditionContext context)
+        private Tuple<string,bool> ComputeCondition(CosmosParser.ConditionContext context)
         {
-            bool test=false;
-            object left = ComputeValue(context.left);
-            object right = ComputeValue(context.right);
+            var left = ComputeValue(context.left);
+            var right = ComputeValue(context.right);
 
-            //https://stackoverflow.com/questions/33198762/how-can-i-determine-which-alternative-node-was-chosen-in-antlr/33207750 ??
-            ITerminalNode operatorType = context.operateur_comparaison().GetChild(0) as ITerminalNode;
-            Debug.Assert(operatorType != null, nameof(operatorType) + " != null");
-            switch (operatorType.Symbol.Type)
+            var test = GetLexerType(context.operateur_comparaison()) switch
             {
-                case CosmosLexer.OPERATEUR_EGAL:
-                    test = left.Equals(right);
-                    break;
-                case CosmosLexer.OPERATEUR_DIFFERENT:
-                    test = !left.Equals(right);
-                    break;
-            }
+                CosmosLexer.OPERATEUR_EGAL => left.Equals(right),
+                CosmosLexer.OPERATEUR_DIFFERENT => !left.Equals(right),
+                _ => false
+            };
 
-            return Tuple.Create(left.ToString()+context.operateur_comparaison().ToString()+right.ToString(),test);
+            return Tuple.Create("if ("+left+"=="+right+"){",test);
+        }
+
+        private int GetLexerType(ParserRuleContext parserRuleContext)
+        {
+            if (parserRuleContext == null) throw new ArgumentNullException(nameof(parserRuleContext));
+            return ((ITerminalNode) parserRuleContext.GetChild(0)).Symbol.Type;
         }
 
         private object ComputeValue(CosmosParser.Expression_valeurContext context)
@@ -84,27 +98,9 @@ namespace interpreter
             return context.expression_textuelle().VALEUR_TEXTE().ToString();
         }
 
-        /// <summary>
-        /// Executes the function
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public override string VisitInstruction_simple_base(CosmosParser.Instruction_simple_baseContext context)
+        public override CosmosData VisitAfficher(CosmosParser.AfficherContext context)
         {
-            string result=null;
-            ParserRuleContext functionContext;
-            if ((functionContext = context.afficher()) != null)
-            {
-                result = VisitAfficher((CosmosParser.AfficherContext) functionContext);
-                csharpSource.Append(result);
-
-            }
-
-            return result;
-        }
-
-        public override string VisitAfficher(CosmosParser.AfficherContext context)
-        {
+            
             string content;
             var valueContext = context.expression_valeur();
             if (valueContext.expression_textuelle() != null)
@@ -119,7 +115,28 @@ namespace interpreter
             
             executionConsole.Write(content);
 
-            return $"Console.Write(\"{content}\")";
+            
+            return CosmosData.WithKeyValue(CosmosData.Type.CsharpCode,$"Console.Write(\"{content}\")");
+        }
+
+        protected override CosmosData AggregateResult(CosmosData aggregate, CosmosData nextResult)
+        {
+            if (aggregate == null)
+            {
+                if (nextResult == null)
+                {
+                    return new CosmosData();
+                }
+                else
+                {
+                    return nextResult;
+                }
+            }
+            else
+            {
+                return aggregate.Merge(nextResult);
+            }
+            
         }
     }
 }

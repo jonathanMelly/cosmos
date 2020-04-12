@@ -60,12 +60,13 @@
     <PropertyGroup>
         <Grammar>Cosmos.g4</Grammar>
         <AntlrOut>antlr</AntlrOut>
+        <ReferenceGrammar>Reference.g4</ReferenceGrammar>
     </PropertyGroup>
 
-    <Target Name="GenerateAntlrCode" BeforeTargets="BeforeBuild" Inputs="$(ProjectDir)$(Grammar)" Outputs="$(ProjectDir)$(AntlrOut)/$(Grammar)">
+    <Target Name="GenerateAntlrCode" BeforeTargets="BeforeBuild" Inputs="$(ProjectDir)$(Grammar)" Outputs="$(ProjectDir)$(AntlrOut)/$(ReferenceGrammar)">
         <Exec Command="mono generator/Antlr4.dll -o $(ProjectDir)$(AntlrOut) -Dlanguage=CSharp -visitor -package interpreter.$(AntlrOut) $(ProjectDir)$(Grammar)" />
         <!-- Copy source grammar for incremental build -->
-        <Copy SourceFiles="$(ProjectDir)$(Grammar)" DestinationFolder="$(ProjectDir)$(AntlrOut)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="$(ProjectDir)$(Grammar)" DestinationFiles="$(ProjectDir)$(AntlrOut)/$(ReferenceGrammar)" SkipUnchangedFiles="true" />
     </Target>
 
 </Project>

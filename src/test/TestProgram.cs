@@ -1,9 +1,5 @@
-using System;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
+using FluentAssertions;
 using interpreter;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
 using Xunit.Abstractions;
 using Console = System.Console;
@@ -18,18 +14,35 @@ namespace test
         {
             fakeConsole = new TestConsole(helper);
             Console.SetOut(fakeConsole);
+            Console.SetError(fakeConsole);
         }
         
         [Fact]
         public void TestProgramWithValidFile()
         {
             //Arrange
+            int exitCode;
 
             //Act
-            interpreter.Program.Main(new[] {TestInterpreter.ValidProgramFile});
+            exitCode = Program.Main(new[] {TestInterpreter.ValidProgramFile});
             
             //Assert
-            Assert.Matches(TestInterpreter.ValidExecutionContent,fakeConsole.Content);
+            exitCode.Should().Be((int) Program.ExitCode.Success);
+            fakeConsole.Content.Should().Match(TestInterpreter.ValidExecutionContent);
+        }
+        
+        [Fact]
+        public void TestProgramWithInvalidFile()
+        {
+            //Arrange
+            int exitCode;
+
+            //Act
+            exitCode = Program.Main(new[] {TestInterpreter.InvalidDateProgramFile});
+            
+            //Assert
+            exitCode.Should().Be((int) Program.ExitCode.CompileError);
+            fakeConsole.Content.Should().Contain("expecting 'Date:'");
         }
     }
 
