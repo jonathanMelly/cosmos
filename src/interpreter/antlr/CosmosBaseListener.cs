@@ -115,17 +115,30 @@ public partial class CosmosBaseListener : ICosmosListener {
 	public virtual void ExitDescription([NotNull] CosmosParser.DescriptionContext context) { }
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.contexte"/>.
+	/// Enter a parse tree produced by <see cref="CosmosParser.mainStart"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterContexte([NotNull] CosmosParser.ContexteContext context) { }
+	public virtual void EnterMainStart([NotNull] CosmosParser.MainStartContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.contexte"/>.
+	/// Exit a parse tree produced by <see cref="CosmosParser.mainStart"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitContexte([NotNull] CosmosParser.ContexteContext context) { }
+	public virtual void ExitMainStart([NotNull] CosmosParser.MainStartContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.mainEnd"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterMainEnd([NotNull] CosmosParser.MainEndContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.mainEnd"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitMainEnd([NotNull] CosmosParser.MainEndContext context) { }
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.instruction"/>.

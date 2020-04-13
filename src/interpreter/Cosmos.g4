@@ -4,7 +4,7 @@ grammar Cosmos ;
 //Removes clscompliant warning on build
 @header {#pragma warning disable 3021}
 
-programme : entete RETCHAR+ (contexte RETCHAR+)? DEBUT RETCHAR+ instruction+  FIN EOF ;
+programme : entete RETCHAR+ mainStart RETCHAR+ instruction+  mainEnd EOF ;
 
 entete : auteur RETCHAR date RETCHAR entreprise RETCHAR description ;
 
@@ -21,13 +21,12 @@ ENTREPRISE_ENTETE : 'Entreprise:' ;
 description : DESCRIPTION_ENTETE MOT+ (VIRGULE RETCHAR MOT+)* ;
 DESCRIPTION_ENTETE : 'Description:' ;
 
-//optionnel
-contexte : CONTEXTE RETCHAR+ TITRE ;
-TITRE : 'Titre:' ESPACE? MOT ;
-CONTEXTE : 'Contexte:' ESPACE? MOT+ ;
-
-DEBUT : 'Voici mes ordres:' ;
-FIN   : 'Fin.' ;
+mainStart: DEBUT nomDuProgramme=MOT (BIBLIOTHEQUE bibliotheque=MOT)? DEUX_POINT ;
+mainEnd: FIN DE_LA_TRANSMISSION? POINT;
+DEBUT : 'Voici les ordres du programme' ;
+BIBLIOTHEQUE: 'à classer dans la bibliothèque' ;
+FIN   : 'Fin' ;
+DE_LA_TRANSMISSION : 'de la transmission' ;
 
 instruction : (instruction_simple | instruction_complexe) ;
 
@@ -74,13 +73,14 @@ fragment CHIFFRE : '0'..'9' ;
 
 fragment MINUSCULE : 'a'..'z' ;
 fragment MAJUSCULE : 'A'..'Z' ;
-fragment SYMBOLES_LETTRE : '-' ;
+fragment SYMBOLES_LETTRE : [-_] ;
 fragment LETTRE : MINUSCULE | MAJUSCULE | SYMBOLES_LETTRE ;
 
 VIRGULE : ',' ;
 POINT: '.' ;
 POINT_INTERROGATION: '?' ;
-SUIVANT : '>>';
+SUIVANT : '>>' ;
+DEUX_POINT: ':' ;
 
 TAB : '\t' | '    ' ;
 RETCHAR : '\r'? '\n' ;

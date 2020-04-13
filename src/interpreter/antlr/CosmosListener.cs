@@ -99,15 +99,26 @@ public interface ICosmosListener : IParseTreeListener {
 	void ExitDescription([NotNull] CosmosParser.DescriptionContext context);
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.contexte"/>.
+	/// Enter a parse tree produced by <see cref="CosmosParser.mainStart"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterContexte([NotNull] CosmosParser.ContexteContext context);
+	void EnterMainStart([NotNull] CosmosParser.MainStartContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.contexte"/>.
+	/// Exit a parse tree produced by <see cref="CosmosParser.mainStart"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitContexte([NotNull] CosmosParser.ContexteContext context);
+	void ExitMainStart([NotNull] CosmosParser.MainStartContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.mainEnd"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterMainEnd([NotNull] CosmosParser.MainEndContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.mainEnd"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitMainEnd([NotNull] CosmosParser.MainEndContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.instruction"/>.

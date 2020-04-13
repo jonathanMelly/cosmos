@@ -5,7 +5,8 @@ Description: Demonstration du langage cosmos,
 ce langage est extraordinaire
 
 //Début du programme
-Voici mes ordres:
+Voici les ordres du programme DEMO_COSMOS à classer dans la bibliothèque DEMONSTRATION :
+
 	//Affichage de texte sur la console
 	Afficher le texte "En programmant avec cosmos, on peut\n".
 	
@@ -40,4 +41,5 @@ Voici mes ordres:
 	Afficher le texte "->Afficher un nombre, par exemple quarante-quatre : ".
 	Afficher le nombre 44.
 	Afficher "\n".
-Fin.
+	
+Fin de la transmission.

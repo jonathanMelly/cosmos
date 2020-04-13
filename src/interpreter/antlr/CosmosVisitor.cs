@@ -76,11 +76,18 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitDescription([NotNull] CosmosParser.DescriptionContext context);
 
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.contexte"/>.
+	/// Visit a parse tree produced by <see cref="CosmosParser.mainStart"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitContexte([NotNull] CosmosParser.ContexteContext context);
+	Result VisitMainStart([NotNull] CosmosParser.MainStartContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.mainEnd"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMainEnd([NotNull] CosmosParser.MainEndContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.instruction"/>.
