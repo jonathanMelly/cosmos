@@ -3,11 +3,11 @@ using System.IO;
 using System.Text;
 using interpreter;
 using Xunit.Abstractions;
-using static interpreter.Console;
+using static interpreter.IConsole;
 
 namespace test
 {
-    public class TestConsole : TextWriter, Console
+    public class TestConsole : TextWriter, IConsole
     {
         private readonly IDictionary<Channel,StringBuilder> content = 
             new Dictionary<Channel, StringBuilder>() {[Channel.Standard]=new StringBuilder(),[Channel.Error]=new StringBuilder()};

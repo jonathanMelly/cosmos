@@ -5,12 +5,12 @@ namespace interpreter
 {
     public class ErrorListener : BaseErrorListener
     {
-        private readonly Console console;
+        private readonly IConsole console;
 
         public bool HadError => Errors.Count>0;
         public List<string> Errors { get; } = new List<string>();
 
-        public ErrorListener(Console console=null)
+        public ErrorListener(IConsole console=null)
         {
             this.console = console ?? new DefaultConsole();
         }
@@ -21,7 +21,7 @@ namespace interpreter
             string message = $"line {line}:{charPositionInLine} {msg}";
             Errors.Add(message);
             
-            console.WriteLine(message,Console.Channel.Error);
+            console.WriteLine(message,IConsole.Channel.Error);
 
         }
     }

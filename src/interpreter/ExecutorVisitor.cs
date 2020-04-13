@@ -7,7 +7,7 @@ namespace interpreter
 {
     public class ExecutorVisitor : CosmosBaseVisitor<CosmosData>
     {
-        private Console executionConsole;
+        private IConsole executionConsole;
         private const char StringDelimiter = '\"';
         
         
@@ -15,7 +15,7 @@ namespace interpreter
         /// Set customized output
         /// </summary>
         /// <param name="console"></param>
-        public ExecutorVisitor WithConsole(Console console)
+        public ExecutorVisitor WithConsole(IConsole console)
         {
             this.executionConsole = console;
             return this;

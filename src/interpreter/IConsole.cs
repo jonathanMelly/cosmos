@@ -1,6 +1,6 @@
 namespace interpreter
 {
-    public interface Console
+    public interface IConsole
     {
         public enum Channel
         {

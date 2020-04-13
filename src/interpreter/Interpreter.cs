@@ -14,7 +14,7 @@ namespace interpreter
 
         private CosmosParser.ProgrammeContext context;
 
-        private Console console;
+        private IConsole console;
         
         public List<string> Errors => errorListener.Errors;
 
@@ -31,7 +31,7 @@ namespace interpreter
             return this;
         }
         
-        public Interpreter WithConsole(Console console)
+        public Interpreter WithConsole(IConsole console)
         {
             this.console = console;
             return this;
