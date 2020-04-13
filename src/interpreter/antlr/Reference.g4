@@ -45,15 +45,17 @@ ALORS : 'alors' ;
 sinon_si : TAB+ 'sinon si' condition ALORS RETCHAR instruction+ ;
 sinon : TAB+ 'et sinon' RETCHAR instruction+ ;
 
-condition : left=expression_valeur operateur_comparaison right=expression_valeur (OPERATEUR_BOOLEEN condition)* ;
+condition : left=expression_valeur operateur_comparaison right=expression_valeur postcondition* ;
+postcondition: operateur_booleen condition ;
+
 operateur_comparaison : (OPERATEUR_EGAL | OPERATEUR_DIFFERENT) ;
 OPERATEUR_EGAL : 'vaut' | 'est égal à' ;
 OPERATEUR_DIFFERENT : 'est différent de' | 'n\'est pas égal à' ;
 
-OPERATEUR_BOOLEEN : (ET | OU | OU_EXCLUSIF) ;
-fragment ET: 'et';
-fragment OU: 'ou';
-fragment OU_EXCLUSIF: 'ou au contraire';
+operateur_booleen : (ET | OU | OU_EXCLUSIF) ;
+ET: 'et';
+OU: 'ou';
+OU_EXCLUSIF: 'ou au contraire';
 
 expression_valeur : (expression_textuelle | expression_numeraire) ;
 

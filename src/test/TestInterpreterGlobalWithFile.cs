@@ -5,9 +5,9 @@ using Xunit.Abstractions;
 
 namespace test
 {
-    public class TestInterpreter
+    public class TestInterpreterGlobalWithFile : AbstractInterpreterTest
     {
-        private TestConsole testConsole;
+        
         public const string ValidExecutionContent = 
             "En programmant avec cosmos, on peut\n" +
             "->Éxécuter du code avec une condition\n" +
@@ -16,20 +16,21 @@ namespace test
             "-->pour laquelle on peut avoir une alternative si aucune condition préalable n'est vraie\n" +
             "->Afficher un nombre, par exemple quarante-quatre : 44";
         
-        public const string Path = "../../../data/";
+        private const string Path = "../../../data/";
         public const string ValidProgramFile = Path +"ValidProgram.cosmos";
         public const string InvalidDateProgramFile = Path + "MissingDate.cosmos";
 
-        public TestInterpreter(ITestOutputHelper helper)
+        public TestInterpreterGlobalWithFile(ITestOutputHelper helper) : base(helper)
         {
-            testConsole = new TestConsole(helper);
+            //
         }
+
 
         [Fact]
         public void TestParsingOnValidProgram()
         {
             //Arrange
-            var interpreter = BuildFileInterpreter(ValidProgramFile);
+            BuildFileInterpreter(ValidProgramFile);
             
             //Act
             bool success = interpreter.Parse();
@@ -42,7 +43,7 @@ namespace test
         public void TestInvalidProgramMissingDate()
         {
             //Arrange
-            var interpreter = BuildFileInterpreter(InvalidDateProgramFile);
+            BuildFileInterpreter(InvalidDateProgramFile);
             string dateError = "expecting 'Date:'";
             
             //Act
@@ -57,7 +58,7 @@ namespace test
         public void TestExecuteValidProgram()
         {
             //Arrange
-            var interpreter = BuildFileInterpreter(ValidProgramFile);
+            BuildFileInterpreter(ValidProgramFile);
 
             //Act
             interpreter.Execute();
@@ -68,15 +69,7 @@ namespace test
 
         }
 
-        private Interpreter BuildFileInterpreter(string file)
-        {
-            return new Interpreter().ForFile(file).WithConsole(testConsole);
-        }
         
-        private Interpreter BuildSnippetInterpreter(string file)
-        {
-            return new Interpreter().ForSnippet(file).WithConsole(testConsole);
-        }
 
     }
 }

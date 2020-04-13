@@ -245,6 +245,19 @@ public partial class CosmosBaseListener : ICosmosListener {
 	public virtual void ExitCondition([NotNull] CosmosParser.ConditionContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.postcondition"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterPostcondition([NotNull] CosmosParser.PostconditionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.postcondition"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitPostcondition([NotNull] CosmosParser.PostconditionContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.operateur_comparaison"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -256,6 +269,19 @@ public partial class CosmosBaseListener : ICosmosListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitOperateur_comparaison([NotNull] CosmosParser.Operateur_comparaisonContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.operateur_booleen"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterOperateur_booleen([NotNull] CosmosParser.Operateur_booleenContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.operateur_booleen"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitOperateur_booleen([NotNull] CosmosParser.Operateur_booleenContext context) { }
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.expression_valeur"/>.

@@ -32,7 +32,7 @@ namespace interpreter
             CosmosData result = new CosmosData();
             
             var evaluation = ComputeCondition(context.si);
-            if (evaluation.Item2)
+            if (evaluation)
             {
                 foreach (var instructionIntegree in context.instruction())
                 {
@@ -43,7 +43,7 @@ namespace interpreter
             {
                 foreach (var elsif in context.sinon_si())
                 {
-                    if(ComputeCondition(elsif.condition()).Item2)
+                    if(ComputeCondition(elsif.condition()))
                     {
                         foreach (var instructionIntegree in elsif.instruction())
                         {
@@ -65,7 +65,7 @@ namespace interpreter
             return result;
         }
 
-        private Tuple<string,bool> ComputeCondition(CosmosParser.ConditionContext context)
+        private bool ComputeCondition(CosmosParser.ConditionContext context)
         {
             var left = ComputeValue(context.left);
             var right = ComputeValue(context.right);
@@ -76,8 +76,46 @@ namespace interpreter
                 CosmosLexer.OPERATEUR_DIFFERENT => !left.Equals(right),
                 _ => false
             };
+            
+            //Multiple conditions
+            if (context.postcondition() != null)
+            {
+                foreach (var condition in context.postcondition())
+                {
+                    switch (GetLexerType(condition.operateur_booleen()))
+                    {
+                        case CosmosLexer.ET:
+                            if (test)
+                            {
+                                test = ComputeCondition(condition.condition());
+                            }
+                            else
+                            {
+                                //Short-circuit and
+                                return false;
+                            }
+                            
+                            break;
+                        case  CosmosLexer.OU:
+                            if (test)
+                            {
+                                //short-circuit true
+                                return true;
+                            }
+                            else
+                            {
+                                test = ComputeCondition(condition.condition());
+                            }
+                            break;
+                        case CosmosLexer.OU_EXCLUSIF:
+                            test ^= ComputeCondition(condition.condition());
+                            break;
+                    }
+                }
+                
+            }
 
-            return Tuple.Create("if ("+left+"=="+right+"){",test);
+            return test;
         }
 
         private int GetLexerType(ParserRuleContext parserRuleContext)

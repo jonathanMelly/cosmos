@@ -146,11 +146,25 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitCondition([NotNull] CosmosParser.ConditionContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.postcondition"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPostcondition([NotNull] CosmosParser.PostconditionContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.operateur_comparaison"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitOperateur_comparaison([NotNull] CosmosParser.Operateur_comparaisonContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.operateur_booleen"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOperateur_booleen([NotNull] CosmosParser.Operateur_booleenContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.expression_valeur"/>.

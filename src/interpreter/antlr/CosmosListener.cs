@@ -209,6 +209,17 @@ public interface ICosmosListener : IParseTreeListener {
 	void ExitCondition([NotNull] CosmosParser.ConditionContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.postcondition"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterPostcondition([NotNull] CosmosParser.PostconditionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.postcondition"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitPostcondition([NotNull] CosmosParser.PostconditionContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.operateur_comparaison"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -218,6 +229,17 @@ public interface ICosmosListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitOperateur_comparaison([NotNull] CosmosParser.Operateur_comparaisonContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.operateur_booleen"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterOperateur_booleen([NotNull] CosmosParser.Operateur_booleenContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.operateur_booleen"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitOperateur_booleen([NotNull] CosmosParser.Operateur_booleenContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.expression_valeur"/>.

@@ -1,8 +1,8 @@
+using System;
 using FluentAssertions;
 using interpreter;
 using Xunit;
 using Xunit.Abstractions;
-using Console = System.Console;
 
 namespace test
 {
@@ -24,11 +24,11 @@ namespace test
             int exitCode;
 
             //Act
-            exitCode = Program.Main(new[] {TestInterpreter.ValidProgramFile});
+            exitCode = Program.Main(new[] {TestInterpreterGlobalWithFile.ValidProgramFile});
             
             //Assert
             exitCode.Should().Be((int) Program.ExitCode.Success);
-            fakeConsole.Content.Should().Match(TestInterpreter.ValidExecutionContent);
+            fakeConsole.Content.Should().Match(TestInterpreterGlobalWithFile.ValidExecutionContent);
         }
         
         [Fact]
@@ -38,7 +38,7 @@ namespace test
             int exitCode;
 
             //Act
-            exitCode = Program.Main(new[] {TestInterpreter.InvalidDateProgramFile});
+            exitCode = Program.Main(new[] {TestInterpreterGlobalWithFile.InvalidDateProgramFile});
             
             //Assert
             exitCode.Should().Be((int) Program.ExitCode.CompileError);
