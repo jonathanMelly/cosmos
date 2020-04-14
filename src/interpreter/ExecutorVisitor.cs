@@ -5,11 +5,17 @@ using interpreter.antlr;
 
 namespace interpreter
 {
-    public class ExecutorVisitor : CosmosBaseVisitor<CosmosData>
+    public class ExecutorVisitor : CosmosBaseVisitor<object>
     {
         private IConsole executionConsole;
         private const char StringDelimiter = '\"';
-        
+
+        private Interpreter interpreter;
+
+        public ExecutorVisitor(Interpreter interpreter)
+        {
+            this.interpreter = interpreter;
+        }
         
         /// <summary>
         /// Set customized output
@@ -21,35 +27,34 @@ namespace interpreter
             return this;
         }
 
-        public override CosmosData VisitProgramme(CosmosParser.ProgrammeContext context)
+        public override object VisitProgramme(CosmosParser.ProgrammeContext context)
         {
             this.executionConsole = executionConsole ?? new DefaultConsole();
             return base.VisitProgramme(context);
         }
 
-        public override CosmosData VisitSelection(CosmosParser.SelectionContext context)
+        public override object VisitSelection(CosmosParser.SelectionContext context)
         {
-            CosmosData result = new CosmosData();
             
-            var evaluation = ComputeCondition(context.si);
+            var evaluation = EvaluateCondition(context.si);
             if (evaluation)
             {
                 foreach (var instructionIntegree in context.instruction())
                 {
-                    AggregateResult(result,Visit(instructionIntegree));
+                    Visit(instructionIntegree);
                 }
             }
             else if (context.sinon_si() != null)
             {
                 foreach (var elsif in context.sinon_si())
                 {
-                    if(ComputeCondition(elsif.condition()))
+                    if(EvaluateCondition(elsif.condition()))
                     {
                         foreach (var instructionIntegree in elsif.instruction())
                         {
-                            AggregateResult(result,(Visit(instructionIntegree)));
+                            Visit(instructionIntegree);
                         }
-                        return result;//only 1 elsif branch
+                        return null;//only 1 elsif branch
                     }
                 }
             }
@@ -58,21 +63,21 @@ namespace interpreter
             {
                 foreach (var instructionIntegree in context.sinon().instruction())
                 {
-                    AggregateResult(result,(Visit(instructionIntegree)));
+                    Visit(instructionIntegree);
                 }
             }
 
-            return result;
+            return null;
         }
 
-        private bool ComputeCondition(CosmosParser.ConditionContext context)
+        private bool EvaluateCondition(CosmosParser.ConditionContext context)
         {
-            var left = ComputeValue(context.left);
-            var right = ComputeValue(context.right);
+            var left = Encode(context.left);
+            var right = Encode(context.right);
 
             var test = GetLexerType(context.operateur_comparaison()) switch
             {
-                CosmosLexer.OPERATEUR_EGAL => left.Equals(right),
+                CosmosLexer.OPERATEUR_COMPARAISON_EGAL => left.Equals(right),
                 CosmosLexer.OPERATEUR_DIFFERENT => !left.Equals(right),
                 _ => false
             };
@@ -87,7 +92,7 @@ namespace interpreter
                         case CosmosLexer.ET:
                             if (test)
                             {
-                                test = ComputeCondition(condition.condition());
+                                test = EvaluateCondition(condition.condition());
                             }
                             else
                             {
@@ -104,11 +109,11 @@ namespace interpreter
                             }
                             else
                             {
-                                test = ComputeCondition(condition.condition());
+                                test = EvaluateCondition(condition.condition());
                             }
                             break;
                         case CosmosLexer.OU_EXCLUSIF:
-                            test ^= ComputeCondition(condition.condition());
+                            test ^= EvaluateCondition(condition.condition());
                             break;
                     }
                 }
@@ -124,7 +129,7 @@ namespace interpreter
             return ((ITerminalNode) parserRuleContext.GetChild(0)).Symbol.Type;
         }
 
-        private object ComputeValue(CosmosParser.Expression_valeurContext context)
+        private object Encode(CosmosParser.Expression_valeurContext context)
         {
             CosmosParser.Expression_numeraireContext numericContext;
             if ((numericContext = context.expression_numeraire()) != null)
@@ -132,11 +137,21 @@ namespace interpreter
                 //TODO : types plus fins ?
                 return Convert.ToDecimal(numericContext.VALEUR_NOMBRE().ToString());
             }
+            else if (context.expression_textuelle() != null)
+            {
+                return context.expression_textuelle().VALEUR_TEXTE().ToString();
+            }
+            //TODO variable non définie
+            else if (context.expression_variable() != null)
+            {
+                return interpreter.Variables[context.expression_variable().VARIABLE().GetText()];
+            }
+            //TODO else
 
             return context.expression_textuelle().VALEUR_TEXTE().ToString();
         }
 
-        public override CosmosData VisitAfficher(CosmosParser.AfficherContext context)
+        public override object VisitAfficher(CosmosParser.AfficherContext context)
         {
             
             string content;
@@ -153,28 +168,28 @@ namespace interpreter
             
             executionConsole.Write(content);
 
-            
-            return CosmosData.WithKeyValue(CosmosData.Type.CsharpCode,$"Console.Write(\"{content}\")");
+
+            return null;
         }
 
-        protected override CosmosData AggregateResult(CosmosData aggregate, CosmosData nextResult)
+        public override object VisitAllouer(CosmosParser.AllouerContext context)
         {
-            if (aggregate == null)
+            Variable variable = Encode(context);
+            interpreter.Variables[variable.Name] = variable;            
+
+            return null;
+        }
+
+        Variable Encode(CosmosParser.AllouerContext context)
+        {
+            var variable = new Variable(context.zone_memoire().VARIABLE().GetText());
+
+            if (context.expression_valeur() != null)
             {
-                if (nextResult == null)
-                {
-                    return new CosmosData();
-                }
-                else
-                {
-                    return nextResult;
-                }
-            }
-            else
-            {
-                return aggregate.Merge(nextResult);
+                variable.Value = Encode(context.expression_valeur());
             }
             
+            return variable;
         }
     }
 }

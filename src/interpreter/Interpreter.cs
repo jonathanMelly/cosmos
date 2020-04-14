@@ -18,6 +18,9 @@ namespace interpreter
         
         public List<string> Errors => errorListener.Errors;
 
+        public IDictionary<string,Variable> Variables => variables;
+        private readonly IDictionary<string,Variable> variables = new Dictionary<string, Variable>();
+
         public Interpreter ForFile(string file)
         {
             codeFile = file;
@@ -56,7 +59,7 @@ namespace interpreter
         {
             if (!Parse()) return false;
             
-            var visitor = new ExecutorVisitor().WithConsole(console);
+            var visitor = new ExecutorVisitor(this).WithConsole(console);
             visitor.Visit(context);
 
             return true;

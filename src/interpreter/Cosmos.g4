@@ -4,7 +4,7 @@ grammar Cosmos ;
 //Removes clscompliant warning on build
 @header {#pragma warning disable 3021}
 
-programme : entete RETCHAR+ mainStart RETCHAR+ instruction+  mainEnd EOF ;
+programme : entete RETCHAR+ mainStart RETCHAR+ instruction+ RETCHAR? RETCHAR? RETCHAR? mainEnd .*? EOF ;
 
 entete : auteur RETCHAR date RETCHAR entreprise RETCHAR description ;
 
@@ -30,10 +30,15 @@ DE_LA_TRANSMISSION : 'de la transmission' ;
 
 instruction : (instruction_simple | instruction_complexe) ;
 
-instruction_simple   : TAB+ (afficher) POINT RETCHAR ; //terminaison identique pour chaque
+instruction_simple   : TAB+ (afficher|allouer|affecter) POINT RETCHAR ; //terminaison identique pour chaque
 instruction_complexe : TAB+ (selection) ; //terminaison spécifique pour chaque
 
 afficher : 'Afficher'  expression_valeur;
+allouer : 'Allouer' zone_memoire ('avec' expression_valeur)? ;
+affecter : ('Copier' expression_valeur 'dans' zone_memoire) | (expression_variable OPERATEUR_EGAL expression_valeur ) ;
+
+zone_memoire : ZONE? VARIABLE ;
+ZONE : 'la zone mémoire' ;
 
 selection : 
     'Si' si=condition ALORS RETCHAR instruction+ 
@@ -45,26 +50,34 @@ ALORS : 'alors' ;
 sinon_si : TAB+ 'sinon si' condition ALORS RETCHAR instruction+ ;
 sinon : TAB+ 'et sinon' RETCHAR instruction+ ;
 
-condition : left=expression_valeur operateur_comparaison right=expression_valeur postcondition* ;
+condition : ((left=expression_valeur operateur_comparaison right=expression_valeur) | (VARIABLE EST VRAI|FAUX)) postcondition* ;
 postcondition: operateur_booleen condition ;
 
-operateur_comparaison : (OPERATEUR_EGAL | OPERATEUR_DIFFERENT) ;
-OPERATEUR_EGAL : 'vaut' | 'est égal à' ;
-OPERATEUR_DIFFERENT : 'est différent de' | 'n\'est pas égal à' ;
+operateur_comparaison : (OPERATEUR_COMPARAISON_EGAL | OPERATEUR_DIFFERENT) ;
+OPERATEUR_COMPARAISON_EGAL : 'vaut' | 'est égal à' | '==' ;
+OPERATEUR_DIFFERENT : 'est différent de' | 'n\'est pas égal à' | '!=' | '<>' ;
+VRAI: 'vrai' ;
+FAUX: 'faux' ;
 
 operateur_booleen : (ET | OU | OU_EXCLUSIF) ;
 ET: 'et';
 OU: 'ou';
 OU_EXCLUSIF: 'ou au contraire';
+EST: 'est' ;
 
-expression_valeur : (expression_textuelle | expression_numeraire) ;
+OPERATEUR_EGAL : '=' ;
+VARIABLE : '#' (MOT|VALEUR_NOMBRE) ;
+
+expression_valeur : (expression_textuelle | expression_numeraire | expression_variable) ;
+
+expression_variable : ('la valeur de')? VARIABLE;
 
 expression_textuelle : LE_TEXTE? VALEUR_TEXTE ;
 LE_TEXTE : 'le texte' ;
 VALEUR_TEXTE : '"' ~["]* '"' ;
 
 expression_numeraire : LE_NOMBRE? VALEUR_NOMBRE ;
-LE_NOMBRE : 'le' ESPACE+ 'nombre' ;
+LE_NOMBRE : 'le nombre' ;
 VALEUR_NOMBRE : CHIFFRE+ ;
 
 //fragment LIGNE_DE_TEXTE : MOT (' ' MOT)* ;

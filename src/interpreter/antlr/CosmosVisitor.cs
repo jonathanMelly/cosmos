@@ -118,6 +118,27 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitAfficher([NotNull] CosmosParser.AfficherContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.allouer"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAllouer([NotNull] CosmosParser.AllouerContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.affecter"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAffecter([NotNull] CosmosParser.AffecterContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.zone_memoire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitZone_memoire([NotNull] CosmosParser.Zone_memoireContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.selection"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -172,6 +193,13 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitExpression_valeur([NotNull] CosmosParser.Expression_valeurContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.expression_variable"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitExpression_variable([NotNull] CosmosParser.Expression_variableContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.expression_textuelle"/>.

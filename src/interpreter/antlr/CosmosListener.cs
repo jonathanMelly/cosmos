@@ -165,6 +165,39 @@ public interface ICosmosListener : IParseTreeListener {
 	void ExitAfficher([NotNull] CosmosParser.AfficherContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.allouer"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterAllouer([NotNull] CosmosParser.AllouerContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.allouer"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitAllouer([NotNull] CosmosParser.AllouerContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.affecter"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterAffecter([NotNull] CosmosParser.AffecterContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.affecter"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitAffecter([NotNull] CosmosParser.AffecterContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.zone_memoire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterZone_memoire([NotNull] CosmosParser.Zone_memoireContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.zone_memoire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitZone_memoire([NotNull] CosmosParser.Zone_memoireContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.selection"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -251,6 +284,17 @@ public interface ICosmosListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitExpression_valeur([NotNull] CosmosParser.Expression_valeurContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.expression_variable"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterExpression_variable([NotNull] CosmosParser.Expression_variableContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.expression_variable"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitExpression_variable([NotNull] CosmosParser.Expression_variableContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.expression_textuelle"/>.
