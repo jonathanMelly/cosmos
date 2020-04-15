@@ -22,7 +22,6 @@
         <!--        <PublishReadyToRun>true</PublishReadyToRun>-->
         <PublishReadyToRunShowWarnings>true</PublishReadyToRunShowWarnings>
 
-
         <!-- COMMAND LINES -->
         <!-- TODO, use nuke ? -->
         <!-- publish -c Release -r osx-x64 -p:PublishReadyToRun=true -->
@@ -53,6 +52,7 @@
     <ItemGroup>
         <!-- Needed for execution/interaction of generated CSharp classes -->
         <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
+        <PackageReference Include="DynamicExpresso.Core" Version="2.3.1" />
         
     </ItemGroup>
     

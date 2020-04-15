@@ -275,15 +275,37 @@ public interface ICosmosListener : IParseTreeListener {
 	void ExitOperateur_booleen([NotNull] CosmosParser.Operateur_booleenContext context);
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.expression_valeur"/>.
+	/// Enter a parse tree produced by <see cref="CosmosParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterExpression_valeur([NotNull] CosmosParser.Expression_valeurContext context);
+	void EnterExpression([NotNull] CosmosParser.ExpressionContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.expression_valeur"/>.
+	/// Exit a parse tree produced by <see cref="CosmosParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitExpression_valeur([NotNull] CosmosParser.Expression_valeurContext context);
+	void ExitExpression([NotNull] CosmosParser.ExpressionContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.expression_calculable"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterExpression_calculable([NotNull] CosmosParser.Expression_calculableContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.expression_calculable"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitExpression_calculable([NotNull] CosmosParser.Expression_calculableContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.expression_representant_numeraire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterExpression_representant_numeraire([NotNull] CosmosParser.Expression_representant_numeraireContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.expression_representant_numeraire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitExpression_representant_numeraire([NotNull] CosmosParser.Expression_representant_numeraireContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.expression_variable"/>.
@@ -317,5 +339,16 @@ public interface ICosmosListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitExpression_numeraire([NotNull] CosmosParser.Expression_numeraireContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.operateur_mathematique"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterOperateur_mathematique([NotNull] CosmosParser.Operateur_mathematiqueContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.operateur_mathematique"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitOperateur_mathematique([NotNull] CosmosParser.Operateur_mathematiqueContext context);
 }
 } // namespace interpreter.antlr

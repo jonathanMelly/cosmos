@@ -13,7 +13,11 @@ LABEL_AUTEUR : 'Auteur:' ;
 
 date : LABEL_DATE CONTENU_DATE ; 
 LABEL_DATE : 'Date:' ;
-CONTENU_DATE :  CHIFFRE+ POINT CHIFFRE+ (POINT CHIFFRE+)? ;
+CONTENU_DATE :  CHIFFRE CHIFFRE? //jour
+                POINT 
+                CHIFFRE CHIFFRE? //mois
+                POINT 
+                CHIFFRE CHIFFRE (CHIFFRE CHIFFRE)? ; //année
 
 entreprise : ENTREPRISE_ENTETE MOT ;
 ENTREPRISE_ENTETE : 'Entreprise:' ;
@@ -33,9 +37,9 @@ instruction : (instruction_simple | instruction_complexe) ;
 instruction_simple   : TAB+ (afficher|allouer|affecter) POINT RETCHAR ; //terminaison identique pour chaque
 instruction_complexe : TAB+ (selection) ; //terminaison spécifique pour chaque
 
-afficher : 'Afficher'  expression_valeur;
-allouer : 'Allouer' zone_memoire ('avec' expression_valeur)? ;
-affecter : ('Copier' expression_valeur 'dans' zone_memoire) | (expression_variable OPERATEUR_EGAL expression_valeur ) ;
+afficher : 'Afficher'  expression;
+allouer : 'Allouer' zone_memoire ('avec' expression)? ;
+affecter : ('Copier' expression 'dans' zone_memoire) | (expression_variable OPERATEUR_EGAL expression ) ;
 
 zone_memoire : ZONE? VARIABLE ;
 ZONE : 'la zone mémoire' ;
@@ -50,7 +54,7 @@ ALORS : 'alors' ;
 sinon_si : TAB+ 'sinon si' condition ALORS RETCHAR instruction+ ;
 sinon : TAB+ 'et sinon' RETCHAR instruction+ ;
 
-condition : ((left=expression_valeur operateur_comparaison right=expression_valeur) | (VARIABLE EST VRAI|FAUX)) postcondition* ;
+condition : ((left=expression operateur_comparaison right=expression) | (VARIABLE EST VRAI|FAUX)) postcondition* ;
 postcondition: operateur_booleen condition ;
 
 operateur_comparaison : (OPERATEUR_COMPARAISON_EGAL | OPERATEUR_DIFFERENT) ;
@@ -68,7 +72,16 @@ EST: 'est' ;
 OPERATEUR_EGAL : '=' ;
 VARIABLE : '#' (MOT|VALEUR_NOMBRE) ;
 
-expression_valeur : (expression_textuelle | expression_numeraire | expression_variable) ;
+expression : expression_textuelle | expression_calculable ;
+
+expression_calculable : (expression_representant_numeraire | PARENTHESE_GAUCHE expression_calculable PARENTHESE_DROITE)
+                        (operateur_mathematique expression_calculable)* ;
+
+
+expression_representant_numeraire : expression_numeraire | expression_variable ;
+
+PARENTHESE_GAUCHE : '(' ;
+PARENTHESE_DROITE : ')' ;
 
 expression_variable : ('la valeur de')? VARIABLE;
 
@@ -78,9 +91,14 @@ VALEUR_TEXTE : '"' ~["]* '"' ;
 
 expression_numeraire : LE_NOMBRE? VALEUR_NOMBRE ;
 LE_NOMBRE : 'le nombre' ;
-VALEUR_NOMBRE : CHIFFRE+ ;
+VALEUR_NOMBRE : CHIFFRE+ (POINT CHIFFRE+)? ;
 
 //fragment LIGNE_DE_TEXTE : MOT (' ' MOT)* ;
+operateur_mathematique : OPERATEUR_PLUS | OPERATEUR_MOINS | OPERATEUR_FOIS | OPERATEUR_DIVISE ;
+OPERATEUR_PLUS : '+' | 'plus' ;
+OPERATEUR_MOINS : '-' | 'moins' ;
+OPERATEUR_FOIS : '*' | 'fois' ;
+OPERATEUR_DIVISE : '/' | 'divisé par';
 
 MOT : LETTRE+ ;
 

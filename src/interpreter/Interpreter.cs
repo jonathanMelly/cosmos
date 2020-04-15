@@ -9,16 +9,20 @@ namespace interpreter
     {
         private string codeFile;
         private string code;
-        private CosmosParser parser;
+        
         private ErrorListener errorListener;
 
         private CosmosParser.ProgrammeContext context;
 
         private IConsole console;
         
+        //Keep redirection because we may have more listeners in the future...
         public List<string> Errors => errorListener.Errors;
 
         public IDictionary<string,Variable> Variables => variables;
+
+        public ErrorListener ErrorListener => errorListener;
+
         private readonly IDictionary<string,Variable> variables = new Dictionary<string, Variable>();
 
         public Interpreter ForFile(string file)
@@ -45,7 +49,7 @@ namespace interpreter
             var antlrInputStream = new AntlrInputStream(code);
             var lexer = new CosmosLexer(antlrInputStream);
             var tokens = new CommonTokenStream(lexer);
-            parser = new CosmosParser(tokens);
+            var parser = new CosmosParser(tokens);
             
             errorListener = new ErrorListener(console);
             parser.RemoveErrorListeners();

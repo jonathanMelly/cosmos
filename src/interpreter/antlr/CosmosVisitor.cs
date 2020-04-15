@@ -188,11 +188,25 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitOperateur_booleen([NotNull] CosmosParser.Operateur_booleenContext context);
 
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.expression_valeur"/>.
+	/// Visit a parse tree produced by <see cref="CosmosParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitExpression_valeur([NotNull] CosmosParser.Expression_valeurContext context);
+	Result VisitExpression([NotNull] CosmosParser.ExpressionContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.expression_calculable"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitExpression_calculable([NotNull] CosmosParser.Expression_calculableContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.expression_representant_numeraire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitExpression_representant_numeraire([NotNull] CosmosParser.Expression_representant_numeraireContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.expression_variable"/>.
@@ -214,5 +228,12 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitExpression_numeraire([NotNull] CosmosParser.Expression_numeraireContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.operateur_mathematique"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOperateur_mathematique([NotNull] CosmosParser.Operateur_mathematiqueContext context);
 }
 } // namespace interpreter.antlr

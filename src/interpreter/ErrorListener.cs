@@ -18,11 +18,20 @@ namespace interpreter
         public override void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg,
             RecognitionException e)
         {
-            string message = $"line {line}:{charPositionInLine} {msg}";
-            Errors.Add(message);
-            
-            console.WriteLine(message,IConsole.Channel.Error);
-
+            Error(line,charPositionInLine,msg);
         }
+
+        public void UnknownVariableError(int line, int column, string variableNane)
+        {
+            Error(line,column,$"Espace mémoire {variableNane} inconnu. Il manque probablement la ligne : Allouer {variableNane}.");
+        }
+
+        public void Error(int line, int column, string message)
+        {
+            string finalMessage = $"ligne {line}:{column} {message}";
+            Errors.Add(finalMessage);
+            console.WriteLine(finalMessage,IConsole.Channel.Error);
+        }
+        
     }
 }

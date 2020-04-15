@@ -48,7 +48,7 @@ namespace test
             using (var scope = new AssertionScope())
             {
                 interpreter.Parse().Should().BeTrue();
-                interpreter.Errors.Should().BeEmpty();
+                interpreter.ErrorListener.Errors.Should().BeEmpty();
             }
             
         }

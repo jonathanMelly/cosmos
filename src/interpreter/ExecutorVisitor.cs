@@ -1,4 +1,6 @@
 using System;
+using System.Text;
+using System.Text.RegularExpressions;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using interpreter.antlr;
@@ -10,7 +12,14 @@ namespace interpreter
         private IConsole executionConsole;
         private const char StringDelimiter = '\"';
 
-        private Interpreter interpreter;
+        private readonly Interpreter interpreter;
+        
+        
+        //Used to sanitize value expressions that can be prefixed by some semantic text...
+        private readonly Regex noSemanticPrefixRegex = new Regex(@"^[^#\d\(]*(.*)$");
+        
+        //As dynamicExpresso is used, i parse again the code looking for variables instead of using the visitor...
+        private readonly Regex varRegex = new Regex("#\\w+");
 
         public ExecutorVisitor(Interpreter interpreter)
         {
@@ -72,8 +81,8 @@ namespace interpreter
 
         private bool EvaluateCondition(CosmosParser.ConditionContext context)
         {
-            var left = Encode(context.left);
-            var right = Encode(context.right);
+            var left = ConvertToCsharpType(context.left);
+            var right = ConvertToCsharpType(context.right);
 
             var test = GetLexerType(context.operateur_comparaison()) switch
             {
@@ -128,65 +137,75 @@ namespace interpreter
             if (parserRuleContext == null) throw new ArgumentNullException(nameof(parserRuleContext));
             return ((ITerminalNode) parserRuleContext.GetChild(0)).Symbol.Type;
         }
+        
 
-        private object Encode(CosmosParser.Expression_valeurContext context)
+        private object ConvertToCsharpType(CosmosParser.ExpressionContext context)
         {
-            CosmosParser.Expression_numeraireContext numericContext;
-            if ((numericContext = context.expression_numeraire()) != null)
+            
+            var computableContext= context.expression_calculable();
+            if (computableContext != null)
             {
-                //TODO : types plus fins ?
-                return Convert.ToDecimal(numericContext.VALEUR_NOMBRE().ToString());
+                string expressionText = computableContext.GetText();
+                string cleanedExpression = noSemanticPrefixRegex.Replace(expressionText, "$1");
+                
+                var expressionInterpreter = new DynamicExpresso.Interpreter();
+                var expressoExpression = new StringBuilder(cleanedExpression);
+                
+                //TODO try catch with mixing var types for example !! + test ?
+                foreach (Match match in varRegex.Matches(cleanedExpression))
+                {
+                    string variableName = match.Value;
+                    string cleanedName = variableName.Substring(1);
+                    //removes # (incompatible with expresso)
+                    expressoExpression.Replace(variableName, cleanedName);
+                    if (interpreter.Variables.ContainsKey(variableName))
+                    {
+                        expressionInterpreter.SetVariable(cleanedName,interpreter.Variables[variableName].Value);
+                    }
+                    else
+                    {
+                        interpreter.ErrorListener.UnknownVariableError(context.start.Line,context.start.Column,variableName);
+                    }
+
+                }
+
+                return expressionInterpreter.Eval<Decimal>(expressoExpression.ToString());
+
             }
             else if (context.expression_textuelle() != null)
             {
-                return context.expression_textuelle().VALEUR_TEXTE().ToString();
+                //TODO regex ?
+                return context.expression_textuelle().VALEUR_TEXTE().ToString().
+                    TrimStart(StringDelimiter).TrimEnd(StringDelimiter).
+                    Replace(@"\n", '\n'.ToString());
             }
-            //TODO variable non définie
-            else if (context.expression_variable() != null)
-            {
-                return interpreter.Variables[context.expression_variable().VARIABLE().GetText()];
-            }
-            //TODO else
+            
 
-            return context.expression_textuelle().VALEUR_TEXTE().ToString();
+            return null;
         }
 
         public override object VisitAfficher(CosmosParser.AfficherContext context)
         {
-            
-            string content;
-            var valueContext = context.expression_valeur();
-            if (valueContext.expression_textuelle() != null)
-            {
-                content = valueContext.expression_textuelle().VALEUR_TEXTE().ToString().TrimStart(StringDelimiter).TrimEnd(StringDelimiter);
-                content = content.Replace(@"\n", '\n'.ToString());
-            }
-            else
-            {
-                content = valueContext.expression_numeraire().VALEUR_NOMBRE().ToString();
-            }
-            
-            executionConsole.Write(content);
-
+            executionConsole.Write(ConvertToCsharpType(context.expression()).ToString());
 
             return null;
         }
 
         public override object VisitAllouer(CosmosParser.AllouerContext context)
         {
-            Variable variable = Encode(context);
+            Variable variable = ConvertToVariable(context);
             interpreter.Variables[variable.Name] = variable;            
 
             return null;
         }
 
-        Variable Encode(CosmosParser.AllouerContext context)
+        Variable ConvertToVariable(CosmosParser.AllouerContext context)
         {
             var variable = new Variable(context.zone_memoire().VARIABLE().GetText());
 
-            if (context.expression_valeur() != null)
+            if (context.expression() != null)
             {
-                variable.Value = Encode(context.expression_valeur());
+                variable.Value = ConvertToCsharpType(context.expression());
             }
             
             return variable;
