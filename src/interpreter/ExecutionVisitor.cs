@@ -7,7 +7,7 @@ using interpreter.antlr;
 
 namespace interpreter
 {
-    public class ExecutorVisitor : CosmosBaseVisitor<object>
+    public class ExecutorVisitor : CosmosBaseVisitor<ExecutionContext>
     {
         private IConsole executionConsole;
         private const char StringDelimiter = '\"';
@@ -36,13 +36,13 @@ namespace interpreter
             return this;
         }
 
-        public override object VisitProgramme(CosmosParser.ProgrammeContext context)
+        public override ExecutionContext VisitProgramme(CosmosParser.ProgrammeContext context)
         {
             this.executionConsole = executionConsole ?? new DefaultConsole();
             return base.VisitProgramme(context);
         }
 
-        public override object VisitSelection(CosmosParser.SelectionContext context)
+        public override ExecutionContext VisitSelection(CosmosParser.SelectionContext context)
         {
             
             var evaluation = EvaluateCondition(context.si);
@@ -184,14 +184,14 @@ namespace interpreter
             return null;
         }
 
-        public override object VisitAfficher(CosmosParser.AfficherContext context)
+        public override ExecutionContext VisitAfficher(CosmosParser.AfficherContext context)
         {
             executionConsole.Write(ConvertToCsharpType(context.expression()).ToString());
 
             return null;
         }
 
-        public override object VisitAllouer(CosmosParser.AllouerContext context)
+        public override ExecutionContext VisitAllouer(CosmosParser.AllouerContext context)
         {
             Variable variable = ConvertToVariable(context);
             interpreter.Variables[variable.Name] = variable;            
