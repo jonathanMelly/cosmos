@@ -1,4 +1,4 @@
-﻿//langage de type 'pseudo-code' pour apprendre à programmer
+﻿﻿﻿//langage de type 'pseudo-code' pour apprendre à programmer
 grammar Cosmos ;
 
 //Removes clscompliant warning on build
@@ -37,68 +37,107 @@ instruction : (instruction_simple | instruction_complexe) ;
 instruction_simple   : TAB+ (afficher|allouer|affecter) POINT RETCHAR ; //terminaison identique pour chaque
 instruction_complexe : TAB+ (selection) ; //terminaison spécifique pour chaque
 
-afficher : 'Afficher'  expression;
+afficher : 'Afficher' expression;
 allouer : 'Allouer' zone_memoire ('avec' expression)? ;
-affecter : ('Copier' expression 'dans' zone_memoire) | (expression_variable OPERATEUR_EGAL expression ) ;
+affecter : ('Copier' expression 'dans' zone_memoire) | (variable OPERATEUR_MATH_EGAL expression ) ;
 
 zone_memoire : ZONE? VARIABLE ;
 ZONE : 'la zone mémoire' ;
 
 selection : 
-    'Si' si=condition ALORS RETCHAR instruction+ 
-        sinon_si* 
-        sinon? 
-     TAB+ POINT_INTERROGATION RETCHAR ;
+    'Si' base_si 
+    sinon_si* 
+    sinon? 
+    TAB+ POINT_INTERROGATION RETCHAR ;
  
-ALORS : 'alors' ;
-sinon_si : TAB+ 'sinon si' condition ALORS RETCHAR instruction+ ;
+base_si : condition=expression_booleenne 'alors' RETCHAR instruction+ ;
+sinon_si : TAB+ 'sinon si' base_si ;
 sinon : TAB+ 'et sinon' RETCHAR instruction+ ;
 
-condition : ((left=expression operateur_comparaison right=expression) | (VARIABLE EST VRAI|FAUX)) postcondition* ;
-postcondition: operateur_booleen condition ;
+OPERATEUR_COMPARAISON_EQUIVALENT : 'vaut' | 'est égal à' | '==' ;
+OPERATEUR_COMPARAISON_DIFFERENT : 'est différent de' | 'n\'est pas égal à' | '!=' | '<>' ;
+OPERATEUR_COMPARAISON_PLUS_GRAND : 'est plus grand que' | '>' ;
+OPERATEUR_COMPARAISON_PLUS_PETIT : 'est plus petit que' | '<';
+OPERATEUR_COMPARAISON_PLUS_GRAND_OU_EGAL : 'est plus grand ou égal à' | '>=' ;
+OPERATEUR_COMPARAISON_PLUS_PETIT_OU_EGAL : 'est plus petit ou égal à' | '<=';
 
-operateur_comparaison : (OPERATEUR_COMPARAISON_EGAL | OPERATEUR_DIFFERENT) ;
-OPERATEUR_COMPARAISON_EGAL : 'vaut' | 'est égal à' | '==' ;
-OPERATEUR_DIFFERENT : 'est différent de' | 'n\'est pas égal à' | '!=' | '<>' ;
-VRAI: 'vrai' ;
-FAUX: 'faux' ;
+VRAI: 'vrai'|'OK' ;
+FAUX: 'faux'|'KO' ;
 
-operateur_booleen : (ET | OU | OU_EXCLUSIF) ;
-ET: 'et';
-OU: 'ou';
-OU_EXCLUSIF: 'ou au contraire';
-EST: 'est' ;
+OPERATEUR_LOGIQUE_ET: 'et' | '&&' ;
+OPERATEUR_LOGIQUE_OU: 'ou' | '||' ;
+OPERATEUR_LOGIQUE_OU_EXCLUSIF: 'ou au contraire' | 'xor' ;
+OPERATEUR_LOGIQUE_EST : 'est' ;
+OPERATEUR_LOGIQUE_NON : 'l\'inverse de' | '!' | 'not' ;
 
-OPERATEUR_EGAL : '=' ;
-VARIABLE : '#' (MOT|VALEUR_NOMBRE) ;
+OPERATEUR_MATH_EGAL : '=' ;
+VARIABLE : PREFIXE_VARIABLE (MOT|VALEUR_NOMBRE) ;
+PREFIXE_VARIABLE : '#' ;
 
-expression : expression_textuelle | expression_calculable ;
+expression 
+        : expression_non_booleenne
+        | expression_booleenne
+        | variable
+        ;
 
-expression_calculable : (expression_representant_numeraire | PARENTHESE_GAUCHE expression_calculable PARENTHESE_DROITE)
-                        (operateur_mathematique expression_calculable)* ;
+expression_non_booleenne 
+        : expression_textuelle 
+        | expression_numerique 
+        ;
 
+//Exprimée dans l'ordre de priorité des opérateurs
+expression_booleenne 
+        : gauche=expression_booleenne operateur=OPERATEUR_LOGIQUE_OU droite=expression_booleenne 
+        | gauche=expression_booleenne operateur=(OPERATEUR_LOGIQUE_ET|OPERATEUR_LOGIQUE_OU_EXCLUSIF) droite=expression_booleenne //priorité différente ?
+        | gaucheNb=expression_non_booleenne 
+            operateurNb=(  OPERATEUR_COMPARAISON_EQUIVALENT 
+                         | OPERATEUR_COMPARAISON_DIFFERENT
+                         | OPERATEUR_COMPARAISON_PLUS_GRAND
+                         | OPERATEUR_COMPARAISON_PLUS_GRAND_OU_EGAL
+                         | OPERATEUR_COMPARAISON_PLUS_PETIT
+                         | OPERATEUR_COMPARAISON_PLUS_PETIT_OU_EGAL) 
+         droiteNb=expression_non_booleenne
+        | gauche=expression_booleenne operateur=(OPERATEUR_COMPARAISON_EQUIVALENT | OPERATEUR_COMPARAISON_DIFFERENT) droite=expression_booleenne
+        | gauche=expression_booleenne operateur=OPERATEUR_LOGIQUE_EST (VRAI|FAUX) //construction sympa ;-)
+        | OPERATEUR_LOGIQUE_NON sousExpression=expression_booleenne
+        | (VRAI | FAUX)
+        | PARENTHESE_GAUCHE sousExpression=expression_booleenne PARENTHESE_DROITE
+        ;
 
-expression_representant_numeraire : expression_numeraire | expression_variable ;
+//Exprimée dans l'ordre de priorité des opérateurs
+expression_numerique 
+        : gauche=expression_numerique operateur=(OPERATEUR_MATH_PUISSANCE | OPERATEUR_MATH_RACINE_CARREE) droite=expression_numerique
+        | gauche=expression_numerique operateur=(OPERATEUR_MATH_FOIS | OPERATEUR_MATH_DIVISE) droite=expression_numerique
+        | gauche=expression_numerique operateur=(OPERATEUR_MATH_PLUS | OPERATEUR_MATH_MOINS) droite=expression_numerique
+        | atome_numerique
+        | operateur=(OPERATEUR_MATH_PLUS | OPERATEUR_MATH_MOINS) sousExpression=expression_numerique
+        | PARENTHESE_GAUCHE sousExpression=expression_numerique PARENTHESE_DROITE
+        ;
+
+expression_textuelle : atome_textuel ; //todo ou concaténation ... ?
+
+atome_textuel : chaine_de_caractere ;
+atome_numerique : nombre ;
 
 PARENTHESE_GAUCHE : '(' ;
 PARENTHESE_DROITE : ')' ;
 
-expression_variable : ('la valeur de')? VARIABLE;
+variable : ('la valeur de')? VARIABLE;
 
-expression_textuelle : LE_TEXTE? VALEUR_TEXTE ;
+chaine_de_caractere : LE_TEXTE? VALEUR_TEXTE ;
 LE_TEXTE : 'le texte' ;
 VALEUR_TEXTE : '"' ~["]* '"' ;
 
-expression_numeraire : LE_NOMBRE? VALEUR_NOMBRE ;
+nombre : LE_NOMBRE? VALEUR_NOMBRE ;
 LE_NOMBRE : 'le nombre' ;
 VALEUR_NOMBRE : CHIFFRE+ (POINT CHIFFRE+)? ;
 
-//fragment LIGNE_DE_TEXTE : MOT (' ' MOT)* ;
-operateur_mathematique : OPERATEUR_PLUS | OPERATEUR_MOINS | OPERATEUR_FOIS | OPERATEUR_DIVISE ;
-OPERATEUR_PLUS : '+' | 'plus' ;
-OPERATEUR_MOINS : '-' | 'moins' ;
-OPERATEUR_FOIS : '*' | 'fois' ;
-OPERATEUR_DIVISE : '/' | 'divisé par';
+OPERATEUR_MATH_PLUS : '+' | 'plus' ;
+OPERATEUR_MATH_MOINS : '-' | 'moins' ;
+OPERATEUR_MATH_FOIS : '*' | 'fois' ;
+OPERATEUR_MATH_DIVISE : '/' | 'divisé par';
+OPERATEUR_MATH_PUISSANCE : '^' | 'élevé '? 'à la puissance';
+OPERATEUR_MATH_RACINE_CARREE : 'racine carrée de' ;
 
 MOT : LETTRE+ ;
 
@@ -116,7 +155,7 @@ SUIVANT : '>>' ;
 DEUX_POINT: ':' ;
 
 TAB : '\t' | '    ' ;
-RETCHAR : '\r'? '\n' ;
+RETCHAR : '\r'? '\n' ; 
 
 //fragment CARACTERE : ~[."\\\r\n ] ;
 

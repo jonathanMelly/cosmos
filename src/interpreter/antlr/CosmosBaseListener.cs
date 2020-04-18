@@ -245,6 +245,19 @@ public partial class CosmosBaseListener : ICosmosListener {
 	public virtual void ExitSelection([NotNull] CosmosParser.SelectionContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.base_si"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterBase_si([NotNull] CosmosParser.Base_siContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.base_si"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitBase_si([NotNull] CosmosParser.Base_siContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.sinon_si"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -271,58 +284,6 @@ public partial class CosmosBaseListener : ICosmosListener {
 	public virtual void ExitSinon([NotNull] CosmosParser.SinonContext context) { }
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.condition"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterCondition([NotNull] CosmosParser.ConditionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.condition"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitCondition([NotNull] CosmosParser.ConditionContext context) { }
-
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.postcondition"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterPostcondition([NotNull] CosmosParser.PostconditionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.postcondition"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitPostcondition([NotNull] CosmosParser.PostconditionContext context) { }
-
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.operateur_comparaison"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterOperateur_comparaison([NotNull] CosmosParser.Operateur_comparaisonContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.operateur_comparaison"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitOperateur_comparaison([NotNull] CosmosParser.Operateur_comparaisonContext context) { }
-
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.operateur_booleen"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterOperateur_booleen([NotNull] CosmosParser.Operateur_booleenContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.operateur_booleen"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitOperateur_booleen([NotNull] CosmosParser.Operateur_booleenContext context) { }
-
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -336,43 +297,43 @@ public partial class CosmosBaseListener : ICosmosListener {
 	public virtual void ExitExpression([NotNull] CosmosParser.ExpressionContext context) { }
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.expression_calculable"/>.
+	/// Enter a parse tree produced by <see cref="CosmosParser.expression_non_booleenne"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterExpression_calculable([NotNull] CosmosParser.Expression_calculableContext context) { }
+	public virtual void EnterExpression_non_booleenne([NotNull] CosmosParser.Expression_non_booleenneContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.expression_calculable"/>.
+	/// Exit a parse tree produced by <see cref="CosmosParser.expression_non_booleenne"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitExpression_calculable([NotNull] CosmosParser.Expression_calculableContext context) { }
+	public virtual void ExitExpression_non_booleenne([NotNull] CosmosParser.Expression_non_booleenneContext context) { }
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.expression_representant_numeraire"/>.
+	/// Enter a parse tree produced by <see cref="CosmosParser.expression_booleenne"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterExpression_representant_numeraire([NotNull] CosmosParser.Expression_representant_numeraireContext context) { }
+	public virtual void EnterExpression_booleenne([NotNull] CosmosParser.Expression_booleenneContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.expression_representant_numeraire"/>.
+	/// Exit a parse tree produced by <see cref="CosmosParser.expression_booleenne"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitExpression_representant_numeraire([NotNull] CosmosParser.Expression_representant_numeraireContext context) { }
+	public virtual void ExitExpression_booleenne([NotNull] CosmosParser.Expression_booleenneContext context) { }
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.expression_variable"/>.
+	/// Enter a parse tree produced by <see cref="CosmosParser.expression_numerique"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterExpression_variable([NotNull] CosmosParser.Expression_variableContext context) { }
+	public virtual void EnterExpression_numerique([NotNull] CosmosParser.Expression_numeriqueContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.expression_variable"/>.
+	/// Exit a parse tree produced by <see cref="CosmosParser.expression_numerique"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitExpression_variable([NotNull] CosmosParser.Expression_variableContext context) { }
+	public virtual void ExitExpression_numerique([NotNull] CosmosParser.Expression_numeriqueContext context) { }
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.expression_textuelle"/>.
@@ -388,30 +349,69 @@ public partial class CosmosBaseListener : ICosmosListener {
 	public virtual void ExitExpression_textuelle([NotNull] CosmosParser.Expression_textuelleContext context) { }
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.expression_numeraire"/>.
+	/// Enter a parse tree produced by <see cref="CosmosParser.atome_textuel"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterExpression_numeraire([NotNull] CosmosParser.Expression_numeraireContext context) { }
+	public virtual void EnterAtome_textuel([NotNull] CosmosParser.Atome_textuelContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.expression_numeraire"/>.
+	/// Exit a parse tree produced by <see cref="CosmosParser.atome_textuel"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitExpression_numeraire([NotNull] CosmosParser.Expression_numeraireContext context) { }
+	public virtual void ExitAtome_textuel([NotNull] CosmosParser.Atome_textuelContext context) { }
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.operateur_mathematique"/>.
+	/// Enter a parse tree produced by <see cref="CosmosParser.atome_numerique"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterOperateur_mathematique([NotNull] CosmosParser.Operateur_mathematiqueContext context) { }
+	public virtual void EnterAtome_numerique([NotNull] CosmosParser.Atome_numeriqueContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.operateur_mathematique"/>.
+	/// Exit a parse tree produced by <see cref="CosmosParser.atome_numerique"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitOperateur_mathematique([NotNull] CosmosParser.Operateur_mathematiqueContext context) { }
+	public virtual void ExitAtome_numerique([NotNull] CosmosParser.Atome_numeriqueContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.variable"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterVariable([NotNull] CosmosParser.VariableContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.variable"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitVariable([NotNull] CosmosParser.VariableContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.chaine_de_caractere"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterChaine_de_caractere([NotNull] CosmosParser.Chaine_de_caractereContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.chaine_de_caractere"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitChaine_de_caractere([NotNull] CosmosParser.Chaine_de_caractereContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.nombre"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNombre([NotNull] CosmosParser.NombreContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.nombre"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNombre([NotNull] CosmosParser.NombreContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

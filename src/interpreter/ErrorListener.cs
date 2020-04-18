@@ -7,31 +7,32 @@ namespace interpreter
     {
         private readonly IConsole console;
 
-        public bool HadError => Errors.Count>0;
-        public List<string> Errors { get; } = new List<string>();
-
-        public ErrorListener(IConsole console=null)
+        public ErrorListener(IConsole console = null)
         {
             this.console = console ?? new DefaultConsole();
         }
 
-        public override void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg,
+        public bool HadError => Errors.Count > 0;
+        public List<string> Errors { get; } = new List<string>();
+
+        public override void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line,
+            int charPositionInLine, string msg,
             RecognitionException e)
         {
-            Error(line,charPositionInLine,msg);
+            Error(line, charPositionInLine, msg);
         }
 
         public void UnknownVariableError(int line, int column, string variableNane)
         {
-            Error(line,column,$"Espace mémoire {variableNane} inconnu. Il manque probablement la ligne : Allouer {variableNane}.");
+            Error(line, column,
+                $"Espace mémoire {variableNane} inconnu. Il manque probablement la ligne : Allouer {variableNane}.");
         }
 
         public void Error(int line, int column, string message)
         {
-            string finalMessage = $"ligne {line}:{column} {message}";
+            var finalMessage = $"ligne {line}:{column} {message}";
             Errors.Add(finalMessage);
-            console.WriteLine(finalMessage,IConsole.Channel.Error);
+            console.WriteLine(finalMessage, IConsole.Channel.Error);
         }
-        
     }
 }
