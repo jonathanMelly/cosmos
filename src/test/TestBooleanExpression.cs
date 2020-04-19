@@ -1,133 +1,118 @@
+using FluentAssertions;
+using FluentAssertions.Execution;
+using interpreter;
+using interpreter.extensions;
+using test.extension;
+using Xunit;
 using Xunit.Abstractions;
+using static  test.Tokens;
 
 namespace test
 {
     public class TestBooleanExpression : AbstractInterpreterTest
     {
+        
+        
         public TestBooleanExpression(ITestOutputHelper helper) : base(helper)
         {
             //
         }
+        
 
-        //TODO tests
-/*
+        
         [Fact]
-        public void TestIfTrueAnd()
+        public void TestAndAllTrue()
         {
-            //Arrange
-            BuildSnippetInterpreter(BuildIfStatement(Tuple.Create("4 vaut 4 et 5 vaut 5","1")));
-            
-            //Act
-            interpreter.Execute();
-            
-            //Assert
-            testConsole.Content.Should().Match("1");
+            TestBoolean(True.And().True2().And().True3(),true);
         }
         
         [Fact]
-        public void TestIfTrueAnd2()
+        public void TestAndAllFalse()
         {
-            //Arrange
-            BuildSnippetInterpreter(BuildIfStatement(Tuple.Create("4 vaut 4 et 5 vaut 5 et 6 vaut 6","1")));
-            
-            //Act
-            interpreter.Execute();
-            
-            //Assert
-            testConsole.Content.Should().Match("1");
+            TestBoolean(False.And().False2().And().False3(),false);
         }
         
         [Fact]
-        public void TestIfFalseAnd()
+        public void TestFalseAndMixedFirstFalse()
         {
-            //Arrange
-            BuildSnippetInterpreter(BuildIfStatement(Tuple.Create("4 vaut 4 et 5 vaut 5 et 6 vaut 7","0")));
-            
-            //Act
-            interpreter.Execute();
-            
-            //Assert
-            testConsole.Content.Should().BeEmpty();
+            TestBoolean(False.And().True().And().True2(),false);
         }
         
         [Fact]
-        public void TestIfOrTrue1()
+        public void TestFalseAndMixedFirstTrue()
         {
-            //Arrange
-            BuildSnippetInterpreter(BuildIfStatement(Tuple.Create("4 vaut 4 ou 5 vaut 5 ou 6 vaut 7","1")));
-            
-            //Act
-            interpreter.Execute();
-            
-            //Assert
-            testConsole.Content.Should().Match("1");
+            TestBoolean(True.And().True2().And().False3(),false);
         }
         
         [Fact]
-        public void TestIfOrTrue2()
+        public void TestOrAllTrue()
         {
-            //Arrange
-            BuildSnippetInterpreter(BuildIfStatement(Tuple.Create("4 vaut 5 ou 5 vaut 3 ou 7 vaut 7","1")));
-            
-            //Act
-            interpreter.Execute();
-            
-            //Assert
-            testConsole.Content.Should().Match("1");
+            TestBoolean(True.Or().Group(True2.Or().True3()),true);
         }
         
         [Fact]
-        public void TestIfOrFalse()
+        public void TestOrAllFalse()
         {
-            //Arrange
-            BuildSnippetInterpreter(BuildIfStatement(Tuple.Create("4 vaut 5 ou 5 vaut 3 ou 6 vaut 7","1")));
-            
-            //Act
-            interpreter.Execute();
-            
-            //Assert
-            testConsole.Content.Should().BeEmpty();
+            TestBoolean(False.Or().Group(False2.Or().False3()),false);
         }
         
         [Fact]
-        public void TestIfXor()
+        public void TestOrFirstTrue()
         {
-            //Arrange
-            BuildSnippetInterpreter(BuildIfStatement(Tuple.Create("4 vaut 3 ou au contraire 5 vaut 5","1")));
-            
-            //Act
-            interpreter.Execute();
-            
-            //Assert
-            testConsole.Content.Should().Match("1");
+            TestBoolean(True.Or().False2().Or().False3(),true);
+            TestBoolean("vrai ou KO ou (2 == 1)",true);
         }
         
         [Fact]
-        public void TestIfAndOrMixedNaturalOrder()
+        public void TestOrFirstFalse()
         {
-            //Arrange
-            BuildSnippetInterpreter(BuildIfStatement(Tuple.Create("4 vaut 3 ou 5 vaut 5 et 0 vaut 1","0")));
-            
-            //Act
-            interpreter.Execute();
-            
-            //Assert
-            testConsole.Content.Should().BeEmpty();
+            TestBoolean(False.Or().False2().Or().True3(),true);
+        }
+
+        [Fact]
+        public void TestXorTrue()
+        {
+            TestBoolean(True.Xor().False(),true);
         }
         
         [Fact]
-        public void TestIfAndOrMixedBadOrder()
+        public void TestXorFalse()
         {
-            //Arrange
-            BuildSnippetInterpreter(BuildIfStatement(Tuple.Create("4 vaut 3 et 5 vaut 4 ou 1 vaut 1","0")));
-            
-            //Act
-            interpreter.Execute();
-            
-            //Assert
-            testConsole.Content.Should().BeEmpty();
+            TestBoolean(True.Xor().True(),false);
         }
         
-        */
+        [Fact]
+        public void TestAndOrMixed1()
+        {
+            TestBoolean("".Group(False.Or().True()).And().False(),false);
+        }
+        
+        [Fact]
+        public void TestAndOrMixed2()
+        {
+            TestBoolean("".Group(False.Or().True()).And().True(),true);
+        }
+        
+        
+        public void TestBoolean(string expression, bool expectedResult)
+        {
+            //Arrange
+            var variable = new CosmosVariable($"#test",expectedResult.AsCosmosBoolean());
+            BuildSnippetInterpreter(BuildAllocationSnippet(variable.Name,expression));
+            
+            //Act
+            using (new AssertionScope())
+            {
+                interpreter.Execute().Should().BeTrue();
+                interpreter.Errors.Should().BeEmpty();
+            }
+            
+            
+            //Assert
+            interpreter.Variables.
+                Should().ContainKey(variable.Name).
+                WhichValue.Should().BeEquivalentTo(variable,expression+" should be "+expectedResult);
+        }
+        
     }
 }

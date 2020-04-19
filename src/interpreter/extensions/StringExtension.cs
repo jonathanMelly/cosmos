@@ -11,5 +11,6 @@ namespace interpreter.extensions
         {
             return new CosmosVariable(subject, value);
         }
+        
     }
 }

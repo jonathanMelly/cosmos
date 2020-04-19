@@ -22,6 +22,10 @@ namespace test
 
         protected const string TrueCondition = "1 vaut 1";
         protected const string FalseCondition = "2 vaut 3";
+        
+        protected const string Allocation = "Allouer la zone mémoire ";
+        
+        
         private readonly ITestOutputHelper helper;
         protected Interpreter interpreter;
         protected TestConsole testConsole;
@@ -74,6 +78,22 @@ namespace test
             //helper.WriteLine(resultString);
 
             return resultString;
+        }
+        
+        protected string BuildAllocationSnippet(string variableName, string variableExpression,
+            string variablePrefix = "")
+        {
+            var result =
+                $"{Allocation} {variableName} {(variableExpression != null ? $"avec {variablePrefix} {variableExpression}" : "")}.\n";
+            return result;
+        }
+
+        protected string BuildAllocationSnippet(CosmosVariable variable)
+        {
+            string value = null;
+            if (variable.Value != null) value = variable.Value.ToString();
+
+            return BuildAllocationSnippet(variable.Name, value);
         }
     }
 }

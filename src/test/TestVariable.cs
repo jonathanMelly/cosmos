@@ -14,7 +14,7 @@ namespace test
             //Todo : affectation
         }
 
-        private const string Allocation = "Allouer la zone mémoire ";
+        
 
         private void TestValidAllocationWithValue(string variableExpression, CosmosTypedValue expectedValue,
             string variablePrefix = "")
@@ -44,21 +44,7 @@ namespace test
             interpreter.Execute().Should().BeFalse();
         }
 
-        private static string BuildAllocationSnippet(string variableName, string variableExpression,
-            string variablePrefix = "")
-        {
-            var result =
-                $"{Allocation} {variableName} {(variableExpression != null ? $"avec {variablePrefix} {variableExpression}" : "")}.\n";
-            return result;
-        }
-
-        private static string BuildAllocationSnippet(CosmosVariable variable)
-        {
-            string value = null;
-            if (variable.Value != null) value = variable.Value.ToString();
-
-            return BuildAllocationSnippet(variable.Name, value);
-        }
+        
 
         [Fact]
         public void TestEmptyAllocationNumbered()
