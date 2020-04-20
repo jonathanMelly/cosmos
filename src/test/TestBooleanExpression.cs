@@ -60,7 +60,6 @@ namespace test
         public void TestOrFirstTrue()
         {
             TestBoolean(True.Or().False2().Or().False3(),true);
-            TestBoolean("vrai ou KO ou (2 == 1)",true);
         }
         
         [Fact]
@@ -92,9 +91,89 @@ namespace test
         {
             TestBoolean("".Group(False.Or().True()).And().True(),true);
         }
+
+        [Fact]
+        public void TestEqual()
+        {
+            for (var i = 0; i < Tokens.IsEqual.Length; i++)
+            {
+                TestBoolean(True.IsEqualTo(i).True(),true);
+                TestBoolean(False.IsEqualTo(i).False(),true);
+                TestBoolean(False.IsEqualTo(i).True(),false);
+            }
+            
+        }
+        
+        [Fact]
+        public void TestDifferentBool()
+        {
+            for (var i = 0; i < Tokens.IsDifferent.Length; i++)
+            {
+                TestBoolean(True.IsDifferentThan(True,i), false);
+                TestBoolean(False.IsDifferentThan(False,i), false);
+                TestBoolean(False.IsDifferentThan(True,i), true);
+            }
+        }
+        
+        [Fact]
+        public void TestDifferentString()
+        {
+            TestBoolean("\"5\"".IsDifferentThan("\"6\""), true);
+        }
+        
+        [Fact]
+        public void TestDifferentNumber()
+        {
+            TestBoolean("5".IsDifferentThan("6"), true);
+        }
+        
+        [Fact]
+        public void TestBigger()
+        {
+            for (var i = 0; i < Tokens.Gt.Length; i++)
+            {
+                TestBoolean("5".Gt("1",i), true);
+                TestBoolean("1".Gt("5",i), false);
+                TestBoolean("5".Gt("5",i), false);
+            }
+        }
+        
+        [Fact]
+        public void TestLower()
+        {
+            for (var i = 0; i < Tokens.Lt.Length; i++)
+            {
+                TestBoolean("5".Lt("1",i), false);
+                TestBoolean("1".Lt("5",i), true);
+                TestBoolean("5".Lt("5",i), false);
+            }
+        }
+        
+        [Fact]
+        public void TestBiggerEquals()
+        {
+            for (var i = 0; i < Tokens.Gte.Length; i++)
+            {
+                TestBoolean("5".Gte("1",i), true);
+                TestBoolean("1".Gte("5",i), false);
+                TestBoolean("5".Gte("5",i), true);
+            }
+        }
+        
+        [Fact]
+        public void TestLowerEquals()
+        {
+            for (var i = 0; i < Tokens.Lte.Length; i++)
+            {
+                TestBoolean("5".Lte("1",i), false);
+                TestBoolean("1".Lte("5",i), true);
+                TestBoolean("5".Lte("5",i), true);
+            }
+        }
         
         
-        public void TestBoolean(string expression, bool expectedResult)
+        
+        private void TestBoolean(string expression, bool expectedResult)
         {
             //Arrange
             var variable = new CosmosVariable($"#test",expectedResult.AsCosmosBoolean());

@@ -21,20 +21,19 @@ namespace interpreter
                 case CosmosParser.Expression_booleenneContext _:
                     var left = Visit(context.gauche).Boolean().Value;
                     var right = context.droite;
-
-                    switch (context.operateur.Type)
+                    
+                    var resultb = context.operateur.Type switch
                     {
-                        case OPERATEUR_LOGIQUE_OU:
-                            return (left || Visit(right).Boolean().Value).AsCosmosBoolean();
+                        OPERATEUR_LOGIQUE_OU => left || Visit(right).Boolean().Value,
+                        OPERATEUR_LOGIQUE_ET => left && Visit(right).Boolean().Value,
+                        OPERATEUR_LOGIQUE_OU_EXCLUSIF => left ^ Visit(right).Boolean().Value,
+                        OPERATEUR_COMPARAISON_EQUIVALENT => left == Visit(right).Boolean().Value,
+                        OPERATEUR_COMPARAISON_DIFFERENT => left != Visit(right).Boolean().Value,
 
-                        case OPERATEUR_LOGIQUE_ET:
-                            return (left && Visit(right).Boolean().Value).AsCosmosBoolean();
+                        _ => throw new MissingTokenHandlerException(context.operateurNb)
+                    };
 
-                        case OPERATEUR_LOGIQUE_OU_EXCLUSIF:
-                            return (left ^ Visit(right).Boolean().Value).AsCosmosBoolean();
-                    }
-
-                    break;
+                    return resultb.AsCosmosBoolean();
 
                 case CosmosParser.Expression_non_booleenneContext _:
                     var leftNb = expressionVisitor.Visit(context.gaucheNb);

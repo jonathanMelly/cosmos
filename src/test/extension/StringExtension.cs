@@ -23,9 +23,39 @@ namespace test.extension
             return Append(subject, Tokens.Xor);
         }
         
-        public static string True(this string subject)
+        public static string Gt(this string subject,string tocompare,int variant=0)
         {
-            return Append(subject, Tokens.True);
+            return Append(subject, Tokens.Gt[variant]+" "+tocompare);
+        }
+        
+        public static string Lt(this string subject,string toCompare,int variant=0)
+        {
+            return Append(subject, Tokens.Lt[variant]+" "+toCompare);
+        }
+        
+        public static string Gte(this string subject,string toCompare,int variant=0)
+        {
+            return Append(subject, Tokens.Gte[variant]+" "+toCompare);
+        }
+        
+        public static string Lte(this string subject,string toCompare,int variant=0)
+        {
+            return Append(subject, Tokens.Lte[variant]+" "+toCompare);
+        }
+        
+        public static string IsEqualTo(this string subject,int variant=0)
+        {
+            return Append(subject, Tokens.IsEqual[variant]);
+        }
+        
+        public static string IsDifferentThan(this string subject,string toCompare =null,int variant=0)
+        {
+            return Append(subject, Tokens.IsDifferent[variant]+" "+(toCompare??""));
+        }
+        
+        public static string True(this string subject,string append=null)
+        {
+            return Append(subject, Tokens.True)+" "+(append??"");
         }
         
         public static string True2(this string subject)
