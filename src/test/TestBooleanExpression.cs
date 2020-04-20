@@ -161,6 +161,19 @@ namespace test
         }
         
         [Fact]
+        public void TestBiggerEqualsWrong()
+        {
+            //Arrange
+            BuildSnippetInterpreter(BuildAllocationSnippet("#wrong",True.Gte("1")),false);
+            
+            //Act
+            interpreter.Execute().Should().BeFalse();
+            
+            //Assert
+            interpreter.Errors.Should().HaveCount(1).And.ContainMatch($"*élément invalide '{Tokens.Gte[0]}'*");
+        }
+        
+        [Fact]
         public void TestLowerEquals()
         {
             for (var i = 0; i < Tokens.Lte.Length; i++)

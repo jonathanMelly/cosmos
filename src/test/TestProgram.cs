@@ -28,7 +28,7 @@ namespace test
 
             //Assert
             exitCode.Should().Be((int) Program.ExitCode.CompileError);
-            fakeConsole.Content.Should().Contain("expecting 'Date:'");
+            fakeConsole.Content.Should().Contain("attendu 'Date:'");
         }
 
         [Fact]

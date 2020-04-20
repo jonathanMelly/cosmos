@@ -30,9 +30,16 @@ namespace interpreter
 
         public void Error(int line, int column, string message)
         {
-            var finalMessage = $"ligne {line}:{column} {message}";
+            var finalMessage = $"ligne {line}:{column} {Translate(message)}";
             Errors.Add(finalMessage);
             console.WriteLine(finalMessage, IConsole.Channel.Error);
+        }
+
+        private string Translate(string message)
+        {
+            return message.
+                Replace("mismatched input", "élément invalide").
+                Replace("expecting", "attendu");
         }
     }
 }

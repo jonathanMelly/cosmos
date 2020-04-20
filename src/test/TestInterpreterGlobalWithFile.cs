@@ -42,7 +42,7 @@ namespace test
         {
             //Arrange
             BuildFileInterpreter(InvalidDateProgramFile);
-            var dateError = "expecting 'Date:'";
+            var dateError = "attendu 'Date:'";
 
             //Act
             interpreter.Execute();

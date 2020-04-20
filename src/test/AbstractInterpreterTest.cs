@@ -42,20 +42,27 @@ namespace test
             interpreter = new Interpreter().ForFile(file).WithConsole(testConsole);
         }
 
-        protected virtual void BuildSnippetInterpreter(string content, bool assertParsing = true)
+        protected virtual void BuildSnippetInterpreter(string content, bool expectedParseResult = true)
         {
             var program = $"{ValidHeaderSnippet}\n{ValidStartSnippet}\n\t{content}\n{ValidEnd}";
 
             helper.WriteLine(program);
 
             interpreter = new Interpreter().ForSnippet(program).WithConsole(testConsole);
-
-            if (assertParsing)
-                using (var scope = new AssertionScope())
+            
+            using (var scope = new AssertionScope())
+            {
+                interpreter.Parse().Should().Be(expectedParseResult);
+                if (expectedParseResult)
                 {
-                    interpreter.Parse().Should().BeTrue();
                     interpreter.ErrorListener.Errors.Should().BeEmpty();
                 }
+                else
+                {
+                    interpreter.ErrorListener.Errors.Should().HaveCountGreaterThan(0);
+                }
+                
+            }
         }
 
         protected string BuildIfStatement(bool condition, List<bool> elsifs = null, bool? elsee = null)
