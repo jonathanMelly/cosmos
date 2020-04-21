@@ -17,7 +17,7 @@ steps:
     command: 'restore'
     projects: '$(solution_file)'
     feedsToUse: 'select'
-    includeNuGetOrg: true
+    verbosityRestore: 'Minimal'
 
 - task: DotNetCoreCLI@2
   displayName: 'Build'
