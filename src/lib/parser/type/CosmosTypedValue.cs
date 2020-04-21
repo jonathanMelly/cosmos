@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using lib.parser.exception;
 
-namespace lib
+namespace lib.parser.type
 {
     public abstract class CosmosTypedValue : IComparable<CosmosTypedValue>, IComparable
     {

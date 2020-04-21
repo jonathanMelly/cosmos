@@ -1,33 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        
-        <RuntimeIdentifier>osx-x64</RuntimeIdentifier>
-        <RuntimeIdentifiers>win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
-
-        <!-- optimize published package : put only required deps -->
-        <PublishTrimmed>true</PublishTrimmed> <!-- equivalent cmd -p:PublishTrimmed=true -->
-        
-        <!-- Big auto zip -->
-        <PublishSingleFile>true</PublishSingleFile> <!-- equivalent cmd -p:PublishSingleFile=true -->
-        
-        <!-- Includes .NET -->
-        <SelfContained>true</SelfContained> <!-- equivalent cmd minusminus-self-contained=true -->
-        
-        <!-- READY TO RUN -->
-        <!-- No Cross compiling -->
-        <!-- bug : https://github.com/dotnet/runtime/issues/13645 ? -->
-        <!--        <PublishReadyToRun>true</PublishReadyToRun>-->
-        <PublishReadyToRunShowWarnings>true</PublishReadyToRunShowWarnings>
-
-        <!-- COMMAND LINES -->
-        <!-- TODO, use nuke ? -->
-        <!-- publish -c Release -r osx-x64 -p:PublishReadyToRun=true -->
-        <!-- publish -c Release -r linux-x64 -p:PublishReadyToRun=false -->
-        <!-- publish -c Release -r windows-x64 -p:PublishReadyToRun=true -->
-        
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -57,15 +31,24 @@
     
     <!-- auto generate upon build -->
     <PropertyGroup>
-        <Grammar>Cosmos.g4</Grammar>
-        <AntlrOut>antlr</AntlrOut>
-        <ReferenceGrammar>Reference.g4</ReferenceGrammar>
+        <Grammar>$(SolutionDir)/grammar/Cosmos.g4</Grammar>
+        <Antlr>antlr</Antlr>
+        <Generator>$(SolutionDir)/../bin/generator/Antlr4.dll</Generator>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <AntlrOut>$(ProjectDir)$(Antlr)</AntlrOut>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <ReferenceGrammar>$(AntlrOut)/Reference.g4</ReferenceGrammar>
+        <Package>lib.$(AntlrOut)</Package>
     </PropertyGroup>
 
-    <Target Name="GenerateAntlrCode" BeforeTargets="BeforeBuild" Inputs="$(ProjectDir)$(Grammar)" Outputs="$(ProjectDir)$(AntlrOut)/$(ReferenceGrammar)">
-        <Exec Command="mono generator/Antlr4.dll -o $(ProjectDir)$(AntlrOut) -Dlanguage=CSharp -visitor -package interpreter.$(AntlrOut) $(ProjectDir)$(Grammar)" />
+    <Target Name="GenerateAntlrCode" BeforeTargets="BeforeBuild" Inputs="$(Grammar)" Outputs="$(ReferenceGrammar)">
+        <Exec Command="mono $(Generator) -o $(AntlrOut) -Dlanguage=CSharp -visitor -package $(Package) $(Grammar)" />
         <!-- Copy source grammar for incremental build -->
-        <Copy SourceFiles="$(ProjectDir)$(Grammar)" DestinationFiles="$(ProjectDir)$(AntlrOut)/$(ReferenceGrammar)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="$(Grammar)" DestinationFiles="$(ReferenceGrammar)" SkipUnchangedFiles="true" />
     </Target>
 
 </Project>

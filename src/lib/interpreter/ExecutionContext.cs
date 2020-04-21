@@ -1,4 +1,4 @@
-namespace lib
+namespace lib.interpreter
 {
     public class ExecutionContext
     {

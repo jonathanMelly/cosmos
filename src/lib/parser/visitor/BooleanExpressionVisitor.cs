@@ -1,8 +1,10 @@
 using lib.antlr;
-using lib.extensions;
+using lib.extension;
+using lib.parser.exception;
+using lib.parser.type;
 using static lib.antlr.CosmosLexer;
 
-namespace lib
+namespace lib.parser.visitor
 {
     public class BooleanExpressionVisitor : CosmosBaseVisitor<CosmosBoolean>
     {

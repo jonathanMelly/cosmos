@@ -1,6 +1,8 @@
 using lib.antlr;
+using lib.interpreter;
+using lib.parser.type;
 
-namespace lib
+namespace lib.parser.visitor
 {
     public class ExpressionVisitor : CosmosBaseVisitor<CosmosTypedValue>
     {

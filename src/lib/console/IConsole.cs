@@ -1,4 +1,4 @@
-namespace lib
+namespace lib.console
 {
     public interface IConsole
     {

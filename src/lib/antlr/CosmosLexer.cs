@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from /Volumes/nFo/data/etml/codespace/csharp/cosmos/src/interpreter/Cosmos.g4 by ANTLR 4.6.6
+// Generated from /Volumes/nFo/data/etml/codespace/csharp/cosmos/src//grammar/Cosmos.g4 by ANTLR 4.6.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -467,4 +467,4 @@ public partial class CosmosLexer : Lexer {
 	public static readonly ATN _ATN =
 		new ATNDeserializer().Deserialize(_serializedATN.ToCharArray());
 }
-} // namespace interpreter.antlr
+} // namespace lib.antlr

@@ -1,4 +1,4 @@
-namespace lib
+namespace lib.parser.type
 {
     /// <summary>
     ///     Immutable variable

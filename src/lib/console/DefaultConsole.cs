@@ -1,6 +1,6 @@
 using System;
 
-namespace lib
+namespace lib.console
 {
     /// <summary>
     ///     Redirects to .NET System.Console

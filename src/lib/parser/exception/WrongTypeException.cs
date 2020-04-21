@@ -1,6 +1,6 @@
 using System;
 
-namespace lib
+namespace lib.parser.exception
 {
     public class WrongTypeException : InvalidCastException
     {

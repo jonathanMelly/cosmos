@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from /Volumes/nFo/data/etml/codespace/csharp/cosmos/src/interpreter/Cosmos.g4 by ANTLR 4.6.6
+// Generated from /Volumes/nFo/data/etml/codespace/csharp/cosmos/src//grammar/Cosmos.g4 by ANTLR 4.6.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -759,7 +759,6 @@ public partial class CosmosParser : Parser {
 				State = 144; instruction_simple();
 				}
 				break;
-
 			case 2:
 				{
 				State = 145; instruction_complexe();
@@ -1548,14 +1547,12 @@ public partial class CosmosParser : Parser {
 				State = 240; expression_non_booleenne();
 				}
 				break;
-
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
 				State = 241; expression_booleenne(0);
 				}
 				break;
-
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
@@ -1736,14 +1733,12 @@ public partial class CosmosParser : Parser {
 				State = 252; _localctx.droiteNb = expression_non_booleenne();
 				}
 				break;
-
 			case 2:
 				{
 				State = 254; Match(OPERATEUR_LOGIQUE_NON);
 				State = 255; _localctx.sousExpression = expression_booleenne(3);
 				}
 				break;
-
 			case 3:
 				{
 				State = 256;
@@ -1760,7 +1755,6 @@ public partial class CosmosParser : Parser {
 				}
 				}
 				break;
-
 			case 4:
 				{
 				State = 257; Match(PARENTHESE_GAUCHE);
@@ -1792,7 +1786,6 @@ public partial class CosmosParser : Parser {
 						State = 265; _localctx.droite = expression_booleenne(9);
 						}
 						break;
-
 					case 2:
 						{
 						_localctx = new Expression_booleenneContext(_parentctx, _parentState);
@@ -1816,7 +1809,6 @@ public partial class CosmosParser : Parser {
 						State = 268; _localctx.droite = expression_booleenne(8);
 						}
 						break;
-
 					case 3:
 						{
 						_localctx = new Expression_booleenneContext(_parentctx, _parentState);
@@ -1840,7 +1832,6 @@ public partial class CosmosParser : Parser {
 						State = 271; _localctx.droite = expression_booleenne(6);
 						}
 						break;
-
 					case 4:
 						{
 						_localctx = new Expression_booleenneContext(_parentctx, _parentState);
@@ -2015,7 +2006,6 @@ public partial class CosmosParser : Parser {
 						State = 292; _localctx.droite = expression_numerique(7);
 						}
 						break;
-
 					case 2:
 						{
 						_localctx = new Expression_numeriqueContext(_parentctx, _parentState);
@@ -2039,7 +2029,6 @@ public partial class CosmosParser : Parser {
 						State = 295; _localctx.droite = expression_numerique(6);
 						}
 						break;
-
 					case 3:
 						{
 						_localctx = new Expression_numeriqueContext(_parentctx, _parentState);
@@ -2382,7 +2371,6 @@ public partial class CosmosParser : Parser {
 	public override bool Sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
 		case 21: return expression_booleenne_sempred((Expression_booleenneContext)_localctx, predIndex);
-
 		case 22: return expression_numerique_sempred((Expression_numeriqueContext)_localctx, predIndex);
 		}
 		return true;
@@ -2390,11 +2378,8 @@ public partial class CosmosParser : Parser {
 	private bool expression_booleenne_sempred(Expression_booleenneContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0: return Precpred(_ctx, 8);
-
 		case 1: return Precpred(_ctx, 7);
-
 		case 2: return Precpred(_ctx, 5);
-
 		case 3: return Precpred(_ctx, 4);
 		}
 		return true;
@@ -2402,9 +2387,7 @@ public partial class CosmosParser : Parser {
 	private bool expression_numerique_sempred(Expression_numeriqueContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 4: return Precpred(_ctx, 6);
-
 		case 5: return Precpred(_ctx, 5);
-
 		case 6: return Precpred(_ctx, 4);
 		}
 		return true;
@@ -2543,4 +2526,4 @@ public partial class CosmosParser : Parser {
 	public static readonly ATN _ATN =
 		new ATNDeserializer().Deserialize(_serializedATN.ToCharArray());
 }
-} // namespace interpreter.antlr
+} // namespace lib.antlr

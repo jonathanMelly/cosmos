@@ -6,7 +6,7 @@ grammar Cosmos ;
 
 programme : entete RETCHAR+ mainStart RETCHAR+ instruction+ RETCHAR? RETCHAR? RETCHAR? mainEnd .*? EOF ;
 
-entete : auteur RETCHAR date RETCHAR entreprise RETCHAR description ;
+entete : auteur RETCHAR date RETCHAR entreprise RETCHAR description ; 
 
 auteur : LABEL_AUTEUR MOT MOT? ;
 LABEL_AUTEUR : 'Auteur:' ;

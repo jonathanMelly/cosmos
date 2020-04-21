@@ -1,6 +1,6 @@
 using Antlr4.Runtime;
 
-namespace lib
+namespace lib.parser.exception
 {
     public class MissingTokenHandlerException : CosmosException
     {

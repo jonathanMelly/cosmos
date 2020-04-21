@@ -1,4 +1,4 @@
-namespace lib
+namespace lib.parser.exception
 {
     public class InvalidComparisonException : CosmosException
     {

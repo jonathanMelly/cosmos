@@ -1,6 +1,7 @@
 using System;
+using lib.parser.exception;
 
-namespace lib
+namespace lib.parser.type
 {
     public class CosmosString : CosmosTypedValue
     {

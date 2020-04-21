@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\commandline-tool\commandline-tool.csproj" />
     <ProjectReference Include="..\lib\lib.csproj" />
   </ItemGroup>
 

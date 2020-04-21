@@ -2,8 +2,11 @@ using System.Collections.Generic;
 using System.IO;
 using Antlr4.Runtime;
 using lib.antlr;
+using lib.console;
+using lib.parser.listener;
+using lib.parser.type;
 
-namespace lib
+namespace lib.interpreter
 {
     public class Interpreter
     {

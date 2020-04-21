@@ -1,7 +1,9 @@
 using lib.antlr;
-using lib.extensions;
+using lib.extension;
+using lib.parser.exception;
+using lib.parser.type;
 
-namespace lib
+namespace lib.parser.visitor
 {
     public class StringExpressionVisitor : CosmosBaseVisitor<CosmosString>
     {

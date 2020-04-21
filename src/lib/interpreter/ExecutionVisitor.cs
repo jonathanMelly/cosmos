@@ -1,6 +1,8 @@
 using lib.antlr;
+using lib.console;
+using lib.parser.visitor;
 
-namespace lib
+namespace lib.interpreter
 {
     public class ExecutionVisitor : CosmosBaseVisitor<ExecutionContext>
     {

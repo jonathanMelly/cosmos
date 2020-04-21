@@ -1,3 +1,5 @@
+using lib.parser.type;
+
 namespace lib.extension
 {
     public static class StringExtension

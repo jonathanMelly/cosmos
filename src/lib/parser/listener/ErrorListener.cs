@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using Antlr4.Runtime;
+using lib.console;
 
-namespace lib
+namespace lib.parser.listener
 {
     public class ErrorListener : BaseErrorListener
     {

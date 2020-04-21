@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using lib;
+using lib.console;
 using Xunit.Abstractions;
-using static lib.IConsole;
+using static lib.console.IConsole;
 
 namespace test
 {

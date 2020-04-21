@@ -1,6 +1,7 @@
-using lib.extensions;
+using lib.extension;
+using lib.parser.exception;
 
-namespace lib
+namespace lib.parser.type
 {
     public class CosmosBoolean : CosmosTypedValue
     {

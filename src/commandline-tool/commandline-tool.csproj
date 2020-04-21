@@ -4,6 +4,49 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>commandline_tool</RootNamespace>
+
+        <RuntimeIdentifier>osx-x64</RuntimeIdentifier>
+        <RuntimeIdentifiers>win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
+
+        <!-- optimize published package : put only required deps -->
+        <PublishTrimmed>true</PublishTrimmed> <!-- equivalent cmd -p:PublishTrimmed=true -->
+
+        <!-- Big auto zip -->
+        <PublishSingleFile>true</PublishSingleFile> <!-- equivalent cmd -p:PublishSingleFile=true -->
+
+        <!-- Includes .NET -->
+        <SelfContained>true</SelfContained> <!-- equivalent cmd minusminus-self-contained=true -->
+
+        <!-- READY TO RUN -->
+        <!-- No Cross compiling -->
+        <!-- bug : https://github.com/dotnet/runtime/issues/13645 ? -->
+        <!--        <PublishReadyToRun>true</PublishReadyToRun>-->
+        <PublishReadyToRunShowWarnings>true</PublishReadyToRunShowWarnings>
+
+        <!-- COMMAND LINES -->
+        <!-- TODO, use nuke ? -->
+        <!-- publish -c Release -r osx-x64 -p:PublishReadyToRun=true -->
+        <!-- publish -c Release -r linux-x64 -p:PublishReadyToRun=false -->
+        <!-- publish -c Release -r windows-x64 -p:PublishReadyToRun=true -->
+    </PropertyGroup>
+    
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
     </PropertyGroup>
 
     <ItemGroup>

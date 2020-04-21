@@ -1,7 +1,9 @@
 using lib.antlr;
+using lib.parser.exception;
+using lib.parser.type;
 using static lib.antlr.CosmosLexer;
 
-namespace lib
+namespace lib.parser.visitor
 {
     public class NumericExpressionVisitor : CosmosBaseVisitor<CosmosNumber>
     {
