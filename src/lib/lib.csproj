@@ -31,9 +31,9 @@
     
     <!-- auto generate upon build -->
     <PropertyGroup>
-        <Grammar>$(SolutionDir)/grammar/Cosmos.g4</Grammar>
+        <Grammar>$(ProjectDir)../grammar/Cosmos.g4</Grammar>
         <Antlr>antlr</Antlr>
-        <Generator>$(SolutionDir)/../bin/generator/Antlr4.dll</Generator>
+        <Generator>$(ProjectDir)../../bin/generator/Antlr4.dll</Generator>
     </PropertyGroup>
     
     <PropertyGroup>
