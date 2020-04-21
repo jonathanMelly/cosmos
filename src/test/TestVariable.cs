@@ -1,6 +1,6 @@
 using FluentAssertions;
-using interpreter;
-using interpreter.extensions;
+using lib;
+using lib.extensions;
 using Xunit;
 using Xunit.Abstractions;
 

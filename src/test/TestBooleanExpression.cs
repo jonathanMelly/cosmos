@@ -1,7 +1,7 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
-using interpreter;
-using interpreter.extensions;
+using lib;
+using lib.extensions;
 using test.extension;
 using Xunit;
 using Xunit.Abstractions;

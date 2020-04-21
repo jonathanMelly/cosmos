@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using interpreter;
+using lib;
 using Xunit.Abstractions;
 
 namespace test

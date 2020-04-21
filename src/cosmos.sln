@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 #
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "interpreter", "interpreter\interpreter.csproj", "{CF48C53C-EC98-4E2C-8CF4-0812D703CB45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lib", "lib\lib.csproj", "{CF48C53C-EC98-4E2C-8CF4-0812D703CB45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{D82D000D-1AFB-458A-B84D-52AC650AC0E3}"
 EndProject

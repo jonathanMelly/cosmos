@@ -1,6 +1,6 @@
 using System;
 using FluentAssertions;
-using interpreter;
+using lib;
 using Xunit;
 using Xunit.Abstractions;
 
