@@ -1,10 +1,14 @@
 using System;
+using System.Globalization;
 using lib.parser.exception;
 
 namespace lib.parser.type
 {
     public class CosmosNumber : CosmosTypedValue
     {
+        //To avoid issues with . and , ... (could be better...)
+        private static IFormatProvider format = new CultureInfo("en-US");
+
         public CosmosNumber(decimal value) : base(value)
         {
         }
@@ -31,7 +35,7 @@ namespace lib.parser.type
         {
             try
             {
-                return System.Convert.ToDecimal(numberExpression);
+                return System.Convert.ToDecimal(numberExpression,format);
             }
             catch (FormatException e)
             {
