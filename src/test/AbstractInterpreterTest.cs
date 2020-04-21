@@ -3,6 +3,7 @@ using System.Text;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using lib.interpreter;
+using lib.parser;
 using lib.parser.type;
 using Xunit.Abstractions;
 
@@ -28,6 +29,8 @@ namespace test
         
         
         private readonly ITestOutputHelper helper;
+
+        protected Parser parser;
         protected Interpreter interpreter;
         protected TestConsole testConsole;
 
@@ -40,7 +43,8 @@ namespace test
 
         protected virtual void BuildFileInterpreter(string file)
         {
-            interpreter = new Interpreter().ForFile(file).WithConsole(testConsole);
+            parser = new Parser().ForFile(file).WithConsole(testConsole);
+            interpreter = new Interpreter(parser,testConsole);
         }
 
         protected virtual void BuildSnippetInterpreter(string content, bool expectedParseResult = true)
@@ -48,19 +52,20 @@ namespace test
             var program = $"{ValidHeaderSnippet}\n{ValidStartSnippet}\n\t{content}\n{ValidEnd}";
 
             helper.WriteLine(program);
-
-            interpreter = new Interpreter().ForSnippet(program).WithConsole(testConsole);
+            
+            parser = new Parser().ForSnippet(program).WithConsole(testConsole);
+            interpreter = new Interpreter(parser,testConsole);
             
             using (var scope = new AssertionScope())
             {
-                interpreter.Parse().Should().Be(expectedParseResult);
+                parser.Parse().Should().Be(expectedParseResult);
                 if (expectedParseResult)
                 {
-                    interpreter.ErrorListener.Errors.Should().BeEmpty();
+                    parser.ErrorListener.Errors.Should().BeEmpty();
                 }
                 else
                 {
-                    interpreter.ErrorListener.Errors.Should().HaveCountGreaterThan(0);
+                    parser.ErrorListener.Errors.Should().HaveCountGreaterThan(0);
                 }
                 
             }

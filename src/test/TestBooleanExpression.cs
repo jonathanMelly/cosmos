@@ -170,7 +170,7 @@ namespace test
             interpreter.Execute().Should().BeFalse();
             
             //Assert
-            interpreter.Errors.Should().HaveCount(1).And.ContainMatch($"*élément invalide '{Tokens.Gte[0]}'*");
+            parser.Errors.Should().HaveCount(1).And.ContainMatch($"*élément invalide '{Tokens.Gte[0]}'*");
         }
         
         [Fact]
@@ -196,12 +196,12 @@ namespace test
             using (new AssertionScope())
             {
                 interpreter.Execute().Should().BeTrue();
-                interpreter.Errors.Should().BeEmpty();
+                parser.Errors.Should().BeEmpty();
             }
             
             
             //Assert
-            interpreter.Variables.
+            parser.Variables.
                 Should().ContainKey(variable.Name).
                 WhichValue.Should().BeEquivalentTo(variable,expression+" should be "+expectedResult);
         }

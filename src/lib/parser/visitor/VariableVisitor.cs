@@ -1,32 +1,32 @@
 using lib.antlr;
-using lib.interpreter;
 using lib.parser.type;
 
 namespace lib.parser.visitor
 {
     public class VariableVisitor : CosmosBaseVisitor<CosmosVariable>
     {
-        private readonly Interpreter interpreter;
+        private readonly Parser parser;
 
         private ExpressionVisitor expressionVisitor;
 
-        public VariableVisitor(Interpreter interpreter)
+        public VariableVisitor(Parser parser)
         {
-            this.interpreter = interpreter;
+            this.parser = parser;
         }
 
-        public void SetExpressionVisitor(ExpressionVisitor expressionVisitor)
+        public ExpressionVisitor ExpressionVisitor
         {
-            this.expressionVisitor = expressionVisitor;
+            get => expressionVisitor;
+            set => expressionVisitor = value;
         }
 
         public override CosmosVariable VisitVariable(CosmosParser.VariableContext context)
         {
             var variableName = context.VARIABLE().GetText();
 
-            if (interpreter.Variables.ContainsKey(variableName)) return interpreter.Variables[variableName];
+            if (parser.Variables.ContainsKey(variableName)) return parser.Variables[variableName];
 
-            interpreter.ErrorListener.UnknownVariableError(context.start.Line, context.start.Column, variableName);
+            parser.ErrorListener.UnknownVariableError(context.start.Line, context.start.Column, variableName);
             //throw new MissingTokenHandlerException(context,firstChild.GetText());
 
             return null;
@@ -38,7 +38,7 @@ namespace lib.parser.visitor
             (
                 context.zone_memoire().VARIABLE().GetText(),
                 context.expression() != null
-                    ? expressionVisitor.Visit(context.expression())
+                    ? ExpressionVisitor.Visit(context.expression())
                     : null
             );
         }

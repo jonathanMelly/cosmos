@@ -1,5 +1,5 @@
-﻿using System;
-using lib.interpreter;
+﻿using lib.interpreter;
+using lib.parser;
 
 namespace commandline_tool
 {
@@ -14,7 +14,8 @@ namespace commandline_tool
         public static int Main(string[] args)
         {
             //TODO gérer les options en ligne de commande (compilation, éxécution, ...)
-            var interpreter = new Interpreter().ForFile(args[0]);
+            var parser = new Parser().ForFile(args[0]);
+            var interpreter = new Interpreter(parser);
             var result = interpreter.Execute();
 
             return (int) (result ? ExitCode.Success : ExitCode.CompileError);

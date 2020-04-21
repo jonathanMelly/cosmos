@@ -1,5 +1,6 @@
 using lib.antlr;
 using lib.console;
+using lib.parser;
 using lib.parser.visitor;
 
 namespace lib.interpreter
@@ -8,18 +9,17 @@ namespace lib.interpreter
     {
         private readonly ExpressionVisitor expressionVisitor;
 
-        private readonly Interpreter interpreter;
+        private readonly Parser parser;
         private readonly VariableVisitor variableVisitor;
         private IConsole executionConsole;
 
 
-        public ExecutionVisitor(Interpreter interpreter)
+        public ExecutionVisitor(Parser parser)
         {
-            this.interpreter = interpreter;
-            variableVisitor = new VariableVisitor(interpreter);
-            expressionVisitor = new ExpressionVisitor(interpreter, variableVisitor);
-
-            variableVisitor.SetExpressionVisitor(expressionVisitor);
+            this.parser = parser;
+            variableVisitor = new VariableVisitor(parser);
+            expressionVisitor = new ExpressionVisitor(variableVisitor);
+            variableVisitor.ExpressionVisitor=expressionVisitor;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace lib.interpreter
 
         public override ExecutionContext VisitProgramme(CosmosParser.ProgrammeContext context)
         {
-            executionConsole = executionConsole ?? new DefaultConsole();
+            executionConsole ??= new DefaultConsole();
             return base.VisitProgramme(context);
         }
 
@@ -69,7 +69,7 @@ namespace lib.interpreter
         public override ExecutionContext VisitAllouer(CosmosParser.AllouerContext context)
         {
             var variable = variableVisitor.Visit(context);
-            interpreter.Variables[variable.Name] = variable;
+            parser.Variables[variable.Name] = variable;
 
             return null;
         }

@@ -1,5 +1,4 @@
 using lib.antlr;
-using lib.interpreter;
 using lib.parser.type;
 
 namespace lib.parser.visitor
@@ -11,7 +10,7 @@ namespace lib.parser.visitor
         private readonly StringExpressionVisitor stringExpressionVisitor;
         private readonly VariableVisitor variableVisitor;
 
-        public ExpressionVisitor(Interpreter interpreter, VariableVisitor variableVisitor)
+        public ExpressionVisitor(VariableVisitor variableVisitor)
         {
             this.variableVisitor = variableVisitor;
 

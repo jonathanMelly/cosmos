@@ -29,7 +29,7 @@ namespace test
             interpreter.Execute().Should().BeTrue();
 
             //Assert
-            interpreter.Variables.Should().HaveCount(1).And.ContainKey(expectedResult.Name).WhichValue.Should()
+            parser.Variables.Should().HaveCount(1).And.ContainKey(expectedResult.Name).WhichValue.Should()
                 .BeEquivalentTo(expectedResult);
         }
 
@@ -57,7 +57,7 @@ namespace test
             interpreter.Execute().Should().BeTrue();
 
             //Assert
-            interpreter.Variables.Should().HaveCount(1).And.ContainKey(variable.Name).WhichValue.Value.Should()
+            parser.Variables.Should().HaveCount(1).And.ContainKey(variable.Name).WhichValue.Value.Should()
                 .BeNull();
         }
 
@@ -73,7 +73,7 @@ namespace test
             interpreter.Execute().Should().BeTrue();
 
             //Assert
-            interpreter.Variables.Should().HaveCount(1).And.ContainKey(variable.Name).WhichValue.Value.Should()
+            parser.Variables.Should().HaveCount(1).And.ContainKey(variable.Name).WhichValue.Value.Should()
                 .BeNull();
         }
 
@@ -118,7 +118,7 @@ namespace test
             interpreter.Execute().Should().BeTrue();
 
             //Assert
-            interpreter.Variables.Should().HaveCount(2).And.ContainKey(variableRef.Name).And.ContainKey(copy.Name)
+            parser.Variables.Should().HaveCount(2).And.ContainKey(variableRef.Name).And.ContainKey(copy.Name)
                 .WhichValue.Value.Should().NotBe(copy.Value).And.Be(variableRef.Value);
         }
 

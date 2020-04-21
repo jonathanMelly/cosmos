@@ -33,7 +33,7 @@ namespace test
             interpreter.Execute();
 
             //Assert
-            interpreter.Errors.Should().BeEmpty();
+            parser.Errors.Should().BeEmpty();
             testConsole.Content.Should().Match(ValidExecutionContent);
         }
 
@@ -48,7 +48,7 @@ namespace test
             interpreter.Execute();
 
             //Assert
-            Assert.Contains(interpreter.Errors, error => error.Contains(dateError));
+            Assert.Contains(parser.Errors, error => error.Contains(dateError));
             testConsole.ErrorContent.Should().Contain(dateError); //this could go into ErrorListener test...
         }
 
@@ -60,7 +60,7 @@ namespace test
             BuildFileInterpreter(ValidProgramFile);
 
             //Act
-            var success = interpreter.Parse();
+            var success = parser.Parse();
 
             //Assert
             Assert.True(success, "There should be no parse error");
