@@ -12,10 +12,19 @@ pool:
 steps:
 
 - task: DotNetCoreCLI@2
+  displayName: "Manual restore nuget"
+  inputs:
+    command: 'restore'
+    projects: '$(solution_file)'
+    feedsToUse: 'select'
+    includeNuGetOrg: true
+
+- task: DotNetCoreCLI@2
   displayName: 'Build'
   inputs:
     command: 'build'
     projects: '$(solution_file)'
+    arguments: '--no-restore'
 
 - task: DotNetCoreCLI@2
   displayName: 'Unit Tests: run'
