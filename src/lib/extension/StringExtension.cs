@@ -1,4 +1,4 @@
-namespace lib.extensions
+namespace lib.extension
 {
     public static class StringExtension
     {
