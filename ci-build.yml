@@ -46,7 +46,7 @@ steps:
 #Integration test (retcode indicates if failed)
 - script: |
       echo Starting integration test
-      dotnet run -r win-x64 --project src/interpreter/interpreter.csproj src/test/data/ValidProgram.cosmos
+      dotnet run -r win-x64 --project src/commandline-tool/commandline-tool.csproj src/test/data/ValidProgram.cosmos
       echo End of integration test
   #workingDirectory: #
   displayName: 'Integration tests: run'

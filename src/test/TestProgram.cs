@@ -1,4 +1,5 @@
 using System;
+using commandline_tool;
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
