@@ -22,7 +22,7 @@ namespace lib.parser.visitor
 
         public override CosmosVariable VisitVariable(CosmosParser.VariableContext context)
         {
-            var variableName = context.VARIABLE().GetText();
+            var variableName = context.la_zone_memoire().VARIABLE().GetText();
 
             if (parser.Variables.ContainsKey(variableName)) return parser.Variables[variableName];
 
@@ -36,7 +36,7 @@ namespace lib.parser.visitor
         {
             return new CosmosVariable
             (
-                context.zone_memoire().VARIABLE().GetText(),
+                context.une_zone_memoire().VARIABLE().GetText(),
                 context.expression() != null
                     ? ExpressionVisitor.Visit(context.expression())
                     : null

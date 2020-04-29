@@ -11,6 +11,8 @@ namespace test
 {
     public abstract class AbstractInterpreterTest
     {
+        protected const string DataFilePath = "../../../data/";
+        
         private const string ValidHeaderSnippet = "Auteur: Jonathan Strokee\n" +
                                                   "Date: 27.03.2020\n" +
                                                   "Entreprise: ETML\n" +
@@ -25,7 +27,7 @@ namespace test
         protected const string TrueCondition = "1 vaut 1";
         protected const string FalseCondition = "2 vaut 3";
         
-        protected const string Allocation = "Allouer la zone mémoire ";
+        protected const string Allocation = "Allouer une zone mémoire ";
         
         
         private readonly ITestOutputHelper helper;

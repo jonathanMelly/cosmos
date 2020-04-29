@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from /Volumes/nFo/data/etml/codespace/csharp/cosmos/src//grammar/Cosmos.g4 by ANTLR 4.6.6
+// Generated from /Volumes/nFo/data/etml/codespace/csharp/cosmos/src/lib/../grammar/Cosmos.g4 by ANTLR 4.6.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -173,15 +173,45 @@ public interface ICosmosListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitAffecter([NotNull] CosmosParser.AffecterContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.zone_memoire"/>.
+	/// Enter a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterZone_memoire([NotNull] CosmosParser.Zone_memoireContext context);
+	void EnterLa_zone_memoire([NotNull] CosmosParser.La_zone_memoireContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.zone_memoire"/>.
+	/// Exit a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitZone_memoire([NotNull] CosmosParser.Zone_memoireContext context);
+	void ExitLa_zone_memoire([NotNull] CosmosParser.La_zone_memoireContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.une_zone_memoire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterUne_zone_memoire([NotNull] CosmosParser.Une_zone_memoireContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.une_zone_memoire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitUne_zone_memoire([NotNull] CosmosParser.Une_zone_memoireContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.boucle"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterBoucle([NotNull] CosmosParser.BoucleContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.boucle"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitBoucle([NotNull] CosmosParser.BoucleContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.boucle_avec_variable"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterBoucle_avec_variable([NotNull] CosmosParser.Boucle_avec_variableContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.boucle_avec_variable"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitBoucle_avec_variable([NotNull] CosmosParser.Boucle_avec_variableContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.selection"/>.
 	/// </summary>
@@ -233,15 +263,15 @@ public interface ICosmosListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitExpression([NotNull] CosmosParser.ExpressionContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.expression_non_booleenne"/>.
+	/// Enter a parse tree produced by <see cref="CosmosParser.expression_comparable"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterExpression_non_booleenne([NotNull] CosmosParser.Expression_non_booleenneContext context);
+	void EnterExpression_comparable([NotNull] CosmosParser.Expression_comparableContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.expression_non_booleenne"/>.
+	/// Exit a parse tree produced by <see cref="CosmosParser.expression_comparable"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitExpression_non_booleenne([NotNull] CosmosParser.Expression_non_booleenneContext context);
+	void ExitExpression_comparable([NotNull] CosmosParser.Expression_comparableContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.expression_booleenne"/>.
 	/// </summary>
@@ -292,6 +322,16 @@ public interface ICosmosListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitAtome_numerique([NotNull] CosmosParser.Atome_numeriqueContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.nombre_aleatoire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNombre_aleatoire([NotNull] CosmosParser.Nombre_aleatoireContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.nombre_aleatoire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNombre_aleatoire([NotNull] CosmosParser.Nombre_aleatoireContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.variable"/>.
 	/// </summary>

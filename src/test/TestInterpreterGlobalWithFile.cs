@@ -19,9 +19,9 @@ namespace test
             "-->pour laquelle on peut avoir une alternative si aucune condition préalable n'est vraie\n" +
             "->Afficher un nombre, par exemple quarante-quatre : 44";
 
-        private const string Path = "../../../data/";
-        public const string ValidProgramFile = Path + "ValidProgram.cosmos";
-        public const string InvalidDateProgramFile = Path + "MissingDate.cosmos";
+        
+        public const string ValidProgramFile = DataFilePath + "ValidProgram.cosmos";
+        public const string InvalidDateProgramFile = DataFilePath + "MissingDate.cosmos";
 
         [Fact]
         public void TestExecuteValidProgram()

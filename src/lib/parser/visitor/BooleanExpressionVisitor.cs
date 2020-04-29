@@ -27,7 +27,10 @@ namespace lib.parser.visitor
                     var resultb = context.operateur.Type switch
                     {
                         OPERATEUR_LOGIQUE_OU => left || Visit(right).Boolean().Value,
+                        
                         OPERATEUR_LOGIQUE_ET => left && Visit(right).Boolean().Value,
+                        ET => left && Visit(right).Boolean().Value,
+                        
                         OPERATEUR_LOGIQUE_OU_EXCLUSIF => left ^ Visit(right).Boolean().Value,
                         OPERATEUR_COMPARAISON_EQUIVALENT => left == Visit(right).Boolean().Value,
                         OPERATEUR_COMPARAISON_DIFFERENT => left != Visit(right).Boolean().Value,
@@ -37,7 +40,7 @@ namespace lib.parser.visitor
 
                     return resultb.AsCosmosBoolean();
 
-                case CosmosParser.Expression_non_booleenneContext _:
+                case CosmosParser.Expression_comparableContext _:
                     var leftNb = expressionVisitor.Visit(context.gaucheNb);
                     var rightNb = expressionVisitor.Visit(context.droiteNb);
 
