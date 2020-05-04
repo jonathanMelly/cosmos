@@ -1,32 +1,26 @@
 #Builds and test regular commits
 name: '$(TeamProject)->$(BuildDefinitionName)[$(SourceBranchName)]-$(Date:dd.MM.yyyy)@$(Date:HH):$(Date:mm):$(Date:ss)'
 
-trigger:
-  - master
-
 variables:
 - group: platform
 
 - name: source_directory
   value: 'src'
-
 - name: solution_file
   value: '$(source_directory)/cosmos.sln'
-
 - name: test_directory
   value: '$(source_directory)/test'
-
 - name: test_project
   value: '$(test_directory)/test.csproj'
-
 - name: tools_directory
   value: '_tools'
-
 - name: coverage_summary_files
   value: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
-
 - name: coverage_report_directory
   value: '_coverage'
+
+trigger:
+  - master
 
 stages:
 
