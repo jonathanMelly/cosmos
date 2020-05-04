@@ -5,15 +5,28 @@ trigger:
   - master
 
 variables:
-  source_directory: 'src'
-  solution_file: '$(source_directory)/cosmos.sln'
-  test_directory: '$(source_directory)/test'
-  test_project: '$(test_directory)/test.csproj'
-  tools_directory: '_tools'
-  coverage_summary_files: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
-  coverage_report_directory: '_coverage'
+- group: platform
 
-  - group: platform
+- name: source_directory
+  value: 'src'
+
+- name: solution_file
+  value: '$(source_directory)/cosmos.sln'
+
+- name: test_directory
+  value: '$(source_directory)/test'
+
+- name: test_project
+  value: '$(test_directory)/test.csproj'
+
+- name: tools_directory
+  value: '_tools'
+
+- name: coverage_summary_files
+  value: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
+
+- name: coverage_report_directory
+  value: '_coverage'
 
 stages:
 
