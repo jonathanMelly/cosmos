@@ -1,5 +1,5 @@
 #Builds and test regular commits
-name: '$(TeamProject)-$(BuildDefinitionName)[$(SourceBranchName)] du $(Date:dd.MM.yyyy) a $(Date:hh)h$(Date:mm)m$(Date:ss)s'
+name: '$(TeamProject)-$(BuildDefinitionName)[$(SourceBranchName)] du $(Date:dd.MM.yyyy) a $(Date:HH)h$(Date:mm)m$(Date:ss)s'
 
 trigger:
   - master
