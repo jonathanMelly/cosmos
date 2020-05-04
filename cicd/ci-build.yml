@@ -1,65 +1,93 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+#Builds and test regular commits
+name: $(TeamProject)_$(BuildDefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 
 trigger:
-- master
+  - master
 
-pool:
-  vmImage: 'windows-latest'
+variables:
+  source_directory: 'src'
+  solution_file: '$(source_directory)/cosmos.sln'
+  test_directory: '$(source_directory)/test'
+  test_project: '$(test_directory)/test.csproj'
+  tools_directory: '_tools'
+  coverage_summary_files: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
+  coverage_report_directory: '_coverage'
 
-steps:
+  - group: platform
 
-- task: DotNetCoreCLI@2
-  displayName: "Manual restore nuget"
-  inputs:
-    command: 'restore'
-    projects: '$(solution_file)'
-    feedsToUse: 'select'
-    verbosityRestore: 'Minimal'
+stages:
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build'
-  inputs:
-    command: 'build'
-    projects: '$(solution_file)'
-    arguments: '--no-restore'
+  - stage: BuildTestAndCover
+    pool:
+      #needs windows for report generator...
+      vmImage: $(vm_windows)
+    jobs:
+      - job: All
+        steps:
+          #Added regarding issues with dotnet cli on windows azure agent...
+          - task: DotNetCoreCLI@2
+            displayName: "Manual restore nuget"
+            inputs:
+              command: 'restore'
+              projects: '$(solution_file)'
+              feedsToUse: 'select'
+              verbosityRestore: 'Minimal'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Unit Tests: run'
-  inputs:
-    command: 'test'
-    projects: '$(test_project)'
-    arguments: '--collect:"Xplat Code Coverage"'
-    publishTestResults: true
-    testRunTitle: 'All tests'
+          - task: DotNetCoreCLI@2
+            displayName: 'Build'
+            inputs:
+              command: 'build'
+              projects: '$(solution_file)'
+              arguments: '--no-restore'
 
-- script: |
-    dotnet tool install dotnet-reportgenerator-globaltool --tool-path $(tool_path)
-    $(tool_path)/reportgenerator -classfilters:"-interpreter.antlr.*" -reports:"$(coverage_summary_file)" -targetdir:"$(coverage_report_folder)" -reporttypes:"HtmlInline_AzurePipelines;Cobertura;Badges"
-  failOnStderr: false
-  continueOnError: true
-  displayName: 'Unit Tests: generate coverage'
+          - task: DotNetCoreCLI@2
+            displayName: 'Unit Tests: run'
+            inputs:
+              command: 'test'
+              projects: '$(test_project)'
+              arguments: '--collect:"Xplat Code Coverage"'
+              publishTestResults: true #published into $(Agent.TempDirectory)
+              testRunTitle: 'All tests'
 
-#disable.coverage.autogenerate:true in variables to keep previous report supporting filters
-- task: PublishCodeCoverageResults@1
-  displayName: 'Unit Tests: publish coverage'
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(coverage_report_folder)Cobertura.xml'
-    reportDirectory: '$(coverage_report_folder)'
-    failIfCoverageEmpty: false
+          - script: |
+              dotnet tool install dotnet-reportgenerator-globaltool --tool-path $(tools_directory)
+              $(tools_directory)/reportgenerator -classfilters:"-lib.antlr.*" -reports:"$(coverage_summary_files)" -targetdir:"$(coverage_report_directory)" -reporttypes:"HtmlInline_AzurePipelines;Cobertura;Badges"
+            failOnStderr: false
+            continueOnError: true
+            displayName: 'Unit Tests: generate coverage'
 
+          - task: PublishCodeCoverageResults@1
+            displayName: 'Unit Tests: publish coverage'
+            inputs:
+              codeCoverageTool: 'Cobertura'
+              summaryFileLocation: '$(coverage_report_directory)Cobertura.xml'
+              #if not supplied, then beware of auto(re)generation : https://github.com/microsoft/azure-pipelines-tasks/issues/10354
+              reportDirectory: '$(coverage_report_directory)'
+              failIfCoverageEmpty: false
 
-#Integration test (retcode indicates if failed)
-- script: |
-      echo Starting integration test
-      dotnet run -r win-x64 --project src/commandline-tool/commandline-tool.csproj src/test/data/ValidProgram.cosmos
-      echo End of integration test
-  #workingDirectory: #
-  displayName: 'Integration tests: run'
-  failOnStderr: true
+  - stage: ITWindows
+    dependsOn: BuildTestAndCover
+    pool:
+      vmImage: $(vm_windows)
+    steps:
+      - template: ci-itest-tmpl.yml
+        parameters:
+          platform: $(runtime_windows)
 
+  - stage: ITLinux
+    dependsOn: BuildTestAndCover
+    pool:
+      vmImage: $(vm_ubuntu)
+    steps:
+      - template: ci-itest-tmpl.yml
+        parameters:
+          platform: $(runtime_linux)
 
-
+  - stage: ITMac
+    dependsOn: BuildTestAndCover
+    pool:
+      vmImage: $(vm_mac)
+    steps:
+      - template: ci-itest-tmpl.yml
+        parameters:
+          platform: $(runtime_mac)
