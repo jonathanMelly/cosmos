@@ -78,29 +78,35 @@ stages:
               reportDirectory: '$(coverage_report_directory)'
               failIfCoverageEmpty: false
 
-  - stage: ITWindows
+  - stage: Windows
     dependsOn: BuildTestAndCover
     pool:
       vmImage: $(vm_windows)
-    steps:
-      - template: ci-itest-tmpl.yml
-        parameters:
-          platform: $(runtime_windows)
+    jobs:
+      - job: IT
+      steps:
+        - template: ci-itest-tmpl.yml
+          parameters:
+            platform: $(runtime_windows)
 
-  - stage: ITLinux
+  - stage: Linux
     dependsOn: BuildTestAndCover
     pool:
       vmImage: $(vm_ubuntu)
-    steps:
-      - template: ci-itest-tmpl.yml
-        parameters:
-          platform: $(runtime_linux)
+    jobs:
+      - job: IT
+      steps:
+        - template: ci-itest-tmpl.yml
+          parameters:
+            platform: $(runtime_linux)
 
-  - stage: ITMac
+  - stage: Mac
     dependsOn: BuildTestAndCover
     pool:
       vmImage: $(vm_mac)
-    steps:
-      - template: ci-itest-tmpl.yml
-        parameters:
-          platform: $(runtime_mac)
+    jobs:
+      - job: IT
+      steps:
+        - template: ci-itest-tmpl.yml
+          parameters:
+            platform: $(runtime_mac)
