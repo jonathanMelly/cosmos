@@ -8,6 +8,6 @@ steps:
       echo Starting integration test on ${{ parameters.platform }} platform
       dotnet run -r ${{ parameters.platform }} --project $(source_directory)/commandline-tool/commandline-tool.csproj $(test_directory)/data/ValidProgram.cosmos
       echo End of integration test
-      #workingDirectory:
-      displayName: 'Integration tests: run on ${{ parameters.platform }}'
-      failOnStderr: true
+  #workingDirectory: #not needed to set
+  displayName: 'Integration tests: run on ${{ parameters.platform }}'
+  failOnStderr: true
