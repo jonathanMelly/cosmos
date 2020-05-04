@@ -92,7 +92,7 @@ stages:
   - stage: Linux
     dependsOn: BuildTestAndCover
     pool:
-      vmImage: $(vm_ubuntu)
+      vmImage: $(vm_linux)
     jobs:
     - job: IT
       steps:
