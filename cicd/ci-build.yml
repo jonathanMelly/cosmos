@@ -73,9 +73,8 @@ stages:
             displayName: 'Unit Tests: publish coverage'
             inputs:
               codeCoverageTool: 'Cobertura'
-              summaryFileLocation: '$(coverage_report_directory)Cobertura.xml'
-              #if not supplied, then beware of auto(re)generation : https://github.com/microsoft/azure-pipelines-tasks/issues/10354
-              reportDirectory: '$(coverage_report_directory)'
+              summaryFileLocation: '$(coverage_report_directory)/Cobertura.xml'
+              reportDirectory: '$(coverage_report_directory)' #if not supplied, then beware of auto(re)generation : https://github.com/microsoft/azure-pipelines-tasks/issues/10354
               failIfCoverageEmpty: false
 
   - stage: Windows
