@@ -8,7 +8,7 @@ variables:
 - group: platform
 
 - name: source_directory
-  value: 'src'
+  value: '$(System.DefaultWorkingDirectory)/src'
 
 - name: solution_file
   value: '$(source_directory)/cosmos.sln'
@@ -20,13 +20,13 @@ variables:
   value: '$(test_directory)/test.csproj'
 
 - name: tools_directory
-  value: '_tools'
+  value: '$(System.DefaultWorkingDirectory)/_tools'
 
 - name: coverage_summary_files
   value: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
 
 - name: coverage_report_directory
-  value: '_coverage'
+  value: '$(System.DefaultWorkingDirectory)/_coverage'
 
 stages:
 
@@ -64,7 +64,7 @@ stages:
 
           - script: |
               dotnet tool install dotnet-reportgenerator-globaltool --tool-path $(tools_directory)
-              $(tools_directory)/reportgenerator -classfilters:"-lib.antlr.*" -reports:"$(coverage_summary_files)" -targetdir:"$(coverage_report_directory)" -reporttypes:"HtmlInline_AzurePipelines;Cobertura;Badges"
+              ./$(tools_directory)/reportgenerator -classfilters:"-lib.antlr.*" -reports:"$(coverage_summary_files)" -targetdir:"$(coverage_report_directory)" -reporttypes:"HtmlInline_AzurePipelines;Cobertura;Badges"
             failOnStderr: false
             continueOnError: true
             displayName: 'Unit Tests: generate coverage'
