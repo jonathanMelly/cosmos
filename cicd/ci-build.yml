@@ -54,8 +54,8 @@ stages:
 
         #Includes integration tests for resource efficiency (not starting a new win agent...)
         - template: ci-itest-steps-tmpl.yml
-            parameters:
-              runtime: $(runtime_windows)
+          parameters:
+            runtime: $(runtime_windows)
 
   - template: platform-stage-tmpl.yml
     parameters:
