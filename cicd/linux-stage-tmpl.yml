@@ -1,15 +1,19 @@
+#Linux executor
 parameters:
+  - name: dependsOn
+    type: object
+    default: {}
   - name: steps
     type: stepList
+    default: []
 
-  - name: dependsOn
-    type: string
-
-extends:
-  template: platform-stage-tmpl.yml
-  parameters:
-    dependsOn: ${{ parameters.dependsOn }}
-    name: Linux
-    vmImage: $(vm_linux)
-    steps:
-    - ${{ parameters.steps }}
+stages:
+  - stage: Linux
+    dependsOn:
+    - ${{ parameters.dependsOn }}
+    pool:
+      vmImage: $(vm_linux)
+    jobs:
+      - job: Steps
+        steps:
+        - ${{ parameters.steps }}
