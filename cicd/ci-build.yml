@@ -8,57 +8,54 @@ variables:
 - template: variables.yml
 
 stages:
-
-  - stage: BuildTestAndCover
-    pool:
-      #needs windows for report generator...
-      vmImage: $(vm_windows)
-    jobs:
-      - job: All
-        steps:
-          #Added regarding issues with dotnet cli on windows azure agent...
-          - task: DotNetCoreCLI@2
-            displayName: "Manual restore nuget"
-            inputs:
-              command: 'restore'
-              projects: '$(solution_file)'
-              feedsToUse: 'select'
-              verbosityRestore: 'Minimal'
-
-          - task: DotNetCoreCLI@2
-            displayName: 'Build'
-            inputs:
-              command: 'build'
-              projects: '$(solution_file)'
-              arguments: '--no-restore'
-
-          - task: DotNetCoreCLI@2
-            displayName: 'Unit Tests: run'
-            inputs:
-              command: 'test'
-              projects: '$(test_project)'
-              arguments: '--collect:"Xplat Code Coverage"'
-              publishTestResults: true #published into $(Agent.TempDirectory)
-              testRunTitle: 'All tests'
-
-          - script: |
-              dotnet tool install dotnet-reportgenerator-globaltool --tool-path $(tools_directory)
-              $(tools_directory)/reportgenerator -classfilters:"-lib.antlr.*" -reports:"$(coverage_summary_files)" -targetdir:"$(coverage_report_directory)" -reporttypes:"HtmlInline_AzurePipelines;Cobertura;Badges"
-            failOnStderr: false
-            continueOnError: true
-            displayName: 'Unit Tests: generate coverage'
-
-          - task: PublishCodeCoverageResults@1
-            displayName: 'Unit Tests: publish coverage'
-            inputs:
-              codeCoverageTool: 'Cobertura'
-              summaryFileLocation: '$(coverage_report_directory)/Cobertura.xml'
-              reportDirectory: '$(coverage_report_directory)' #if not supplied, then beware of auto(re)generation : https://github.com/microsoft/azure-pipelines-tasks/issues/10354
-              failIfCoverageEmpty: false
-
-  - template: linux-stage-tmpl.yml
+  - template: platform-stage-tmpl.yml
     parameters:
-      dependsOn: BuildTestAndCover
+      name: BuildTestAndCoverOnWindows
+      steps:
+        #Added regarding issues with dotnet cli on windows azure agent...
+        - task: DotNetCoreCLI@2
+          displayName: "Manual restore nuget"
+          inputs:
+            command: 'restore'
+            projects: '$(solution_file)'
+            feedsToUse: 'select'
+            verbosityRestore: 'Minimal'
+
+        - task: DotNetCoreCLI@2
+          displayName: 'Build'
+          inputs:
+            command: 'build'
+            projects: '$(solution_file)'
+            arguments: '--no-restore'
+
+        - task: DotNetCoreCLI@2
+          displayName: 'Unit Tests: run'
+          inputs:
+            command: 'test'
+            projects: '$(test_project)'
+            arguments: '--collect:"Xplat Code Coverage"'
+            publishTestResults: true #published into $(Agent.TempDirectory)
+            testRunTitle: 'All tests'
+
+        - script: |
+            dotnet tool install dotnet-reportgenerator-globaltool --tool-path $(tools_directory)
+            $(tools_directory)/reportgenerator -classfilters:"-lib.antlr.*" -reports:"$(coverage_summary_files)" -targetdir:"$(coverage_report_directory)" -reporttypes:"HtmlInline_AzurePipelines;Cobertura;Badges"
+          failOnStderr: false
+          continueOnError: true
+          displayName: 'Unit Tests: generate coverage'
+
+        - task: PublishCodeCoverageResults@1
+          displayName: 'Unit Tests: publish coverage'
+          inputs:
+            codeCoverageTool: 'Cobertura'
+            summaryFileLocation: '$(coverage_report_directory)/Cobertura.xml'
+            reportDirectory: '$(coverage_report_directory)' #if not supplied, then beware of auto(re)generation : https://github.com/microsoft/azure-pipelines-tasks/issues/10354
+            failIfCoverageEmpty: false
+
+  - template: platform-stage-tmpl.yml
+    parameters:
+      dependsOn: BuildTestAndCoverOnWindows
+      name: Linux IT
       steps:
         - template: ci-itest-steps-tmpl.yml
           parameters:
