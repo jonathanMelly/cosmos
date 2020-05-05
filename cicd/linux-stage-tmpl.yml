@@ -1,10 +1,14 @@
 parameters:
-  name : steps
-  type : stepList
+  - name: steps
+    type: stepList
+
+  - name: dependsOn
+    type: string
 
 extends:
   template: platform-stage-tmpl.yml
   parameters:
+    dependsOn: ${{ parameters.dependsOn }}
     name: Linux
     vmImage: $(vm_linux)
     steps:

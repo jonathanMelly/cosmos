@@ -57,8 +57,9 @@ stages:
               failIfCoverageEmpty: false
 
   - template: linux-stage-tmpl.yml
-    dependsOn: BuildTestAndCover
-    steps:
-    - template: ci-itest-steps-tmpl.yml
-        parameters:
-          runtime: $(runtime_linux)
+    parameters:
+      dependsOn: BuildTestAndCover
+      steps:
+        - template: ci-itest-steps-tmpl.yml
+          parameters:
+            runtime: $(runtime_linux)

@@ -4,12 +4,15 @@ parameters:
     type: string
   - name: vmImage
     type: string
+  - name: dependsOn
+    type: string
   - name: steps
     type: stepList
     default: []
 
 stages:
   - stage: ${{ parameters.name }}
+    dependsOn: ${{ parameters.dependsOn }}
     pool:
       vmImage: ${{ parameters.vmImage }}
     jobs:
