@@ -5,7 +5,7 @@ parameters:
 
   - name: dependsOn
     type: object
-    default: {}
+    default: []
 
   - name: steps
     type: stepList
