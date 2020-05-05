@@ -55,7 +55,7 @@ stages:
   - template: platform-stage-tmpl.yml
     parameters:
       dependsOn: BuildTestAndCoverOnWindows
-      name: Linux IT
+      name: LinuxIT
       steps:
         - template: ci-itest-steps-tmpl.yml
           parameters:
