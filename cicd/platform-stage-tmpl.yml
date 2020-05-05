@@ -13,8 +13,7 @@ parameters:
 
 stages:
   - stage: ${{ parameters.name }}
-    dependsOn:
-    - ${{ parameters.dependsOn }}
+    dependsOn: ${{ parameters.dependsOn }}
     pool:
       ${{ if contains(parameters.name, 'linux') }}:
        vmImage: $(vm_linux)
