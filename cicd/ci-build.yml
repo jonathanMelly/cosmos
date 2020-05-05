@@ -5,28 +5,7 @@ trigger:
   - master
 
 variables:
-- group: platform
-
-- name: source_directory
-  value: '$(System.DefaultWorkingDirectory)/src'
-
-- name: solution_file
-  value: '$(source_directory)/cosmos.sln'
-
-- name: test_directory
-  value: '$(source_directory)/test'
-
-- name: test_project
-  value: '$(test_directory)/test.csproj'
-
-- name: tools_directory
-  value: '$(System.DefaultWorkingDirectory)/_tools'
-
-- name: coverage_summary_files
-  value: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
-
-- name: coverage_report_directory
-  value: '$(System.DefaultWorkingDirectory)/_coverage'
+- template: variables.yml
 
 stages:
 
@@ -77,35 +56,9 @@ stages:
               reportDirectory: '$(coverage_report_directory)' #if not supplied, then beware of auto(re)generation : https://github.com/microsoft/azure-pipelines-tasks/issues/10354
               failIfCoverageEmpty: false
 
-  - stage: Windows
+  - template: linux-stage-tmpl.yml
     dependsOn: BuildTestAndCover
-    pool:
-      vmImage: $(vm_windows)
-    jobs:
-    - job: IT
-      steps:
-        - template: ci-itest-tmpl.yml
-          parameters:
-            platform: $(runtime_windows)
-
-  - stage: Linux
-    dependsOn: BuildTestAndCover
-    pool:
-      vmImage: $(vm_linux)
-    jobs:
-    - job: IT
-      steps:
-        - template: ci-itest-tmpl.yml
-          parameters:
-            platform: $(runtime_linux)
-
-  - stage: Mac
-    dependsOn: BuildTestAndCover
-    pool:
-      vmImage: $(vm_mac)
-    jobs:
-    - job: IT
-      steps:
-        - template: ci-itest-tmpl.yml
-          parameters:
-            platform: $(runtime_mac)
+    steps:
+    - template: ci-itest-steps-tmpl.yml
+        parameters:
+          runtime: $(runtime_linux)

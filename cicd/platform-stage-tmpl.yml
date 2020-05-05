@@ -1,0 +1,18 @@
+#Platfrom specific steps executor
+parameters:
+  - name: name
+    type: string
+  - name: vmImage
+    type: string
+  - name: steps
+    type: stepList
+    default: []
+
+stages:
+  - stage: ${{ parameters.name }}
+    pool:
+      vmImage: ${{ parameters.vmImage }}
+    jobs:
+      - job: Steps
+        steps:
+        - ${{ parameters.steps }}

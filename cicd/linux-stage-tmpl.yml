@@ -1,0 +1,11 @@
+parameters:
+  name : steps
+  type : stepList
+
+extends:
+  template: platform-stage-tmpl.yml
+  parameters:
+    name: Linux
+    vmImage: $(vm_linux)
+    steps:
+    - ${{ parameters.steps }}
