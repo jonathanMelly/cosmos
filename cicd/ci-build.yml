@@ -52,6 +52,11 @@ stages:
             reportDirectory: '$(coverage_report_directory)' #if not supplied, then beware of auto(re)generation : https://github.com/microsoft/azure-pipelines-tasks/issues/10354
             failIfCoverageEmpty: false
 
+        #Includes integration tests for resource efficiency (not starting a new win agent...)
+        - template: ci-itest-steps-tmpl.yml
+            parameters:
+              runtime: $(runtime_windows)
+
   - template: platform-stage-tmpl.yml
     parameters:
       dependsOn: BuildTestAndCoverOnWindows
@@ -60,3 +65,12 @@ stages:
         - template: ci-itest-steps-tmpl.yml
           parameters:
             runtime: $(runtime_linux)
+
+  - template: platform-stage-tmpl.yml
+    parameters:
+      dependsOn: BuildTestAndCoverOnWindows
+      name: ITMac
+      steps:
+        - template: ci-itest-steps-tmpl.yml
+          parameters:
+            runtime: $(runtime_mac)
