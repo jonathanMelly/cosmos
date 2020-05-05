@@ -16,11 +16,11 @@ stages:
     dependsOn:
     - ${{ parameters.dependsOn }}
     pool:
-      - ${{ if contains(parameters.name, 'linux') }}:
+      ${{ if contains(parameters.name, 'linux') }}:
       vmImage: $(vm_linux)
-      - ${{ if contains(parameters.name, 'mac') }}:
+      ${{ if contains(parameters.name, 'mac') }}:
       vmImage: $(vm_mac)
-      - ${{ if contains(parameters.name, 'windows') }}:
+      ${{ if contains(parameters.name, 'windows') }}:
       vmImage: $(vm_windows)
     jobs:
       - job: Steps for ${{ parameters.name }}
