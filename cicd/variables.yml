@@ -2,6 +2,7 @@ variables:
   # Base directories
   source_directory: '$(System.DefaultWorkingDirectory)/src'
   tools_directory: '$(System.DefaultWorkingDirectory)/_tools'
+  publish_directory: '$(System.DefaultWorkingDirectory)/_publish'
   test_directory: '$(source_directory)/test'
 
   # Project descriptors

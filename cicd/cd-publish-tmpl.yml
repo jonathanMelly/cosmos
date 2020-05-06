@@ -12,7 +12,7 @@ steps:
   - bash: |
       artifact_name="$(artifact_prefix)-$RUNTIME"
       echo "##vso[task.setvariable variable=artifact_name;isOutput=true]$artifact_name"
-      echo "##vso[task.setvariable variable=output_directory;isOutput=true]$BUILD_ARTIFACTSTAGINGDIRECTORY/$artifact_name"
+      echo "##vso[task.setvariable variable=output_directory;isOutput=true]$(publish_directory)/$artifact_name"
     name: tmplvariables
     env:
       RUNTIME: ${{ parameters.runtime }}
@@ -31,12 +31,19 @@ steps:
   # zip (and on success removes original files)
   - bash: |
       cp -v $BUILD_REPOSITORY_LOCALPATH/$VALID_PROGRAM $OUTPUT_DIRECTORY/
-      cd $BUILD_ARTIFACTSTAGINGDIRECTORY
-      zip -rmTv $ARTIFACT_NAME.zip $ARTIFACT_NAME
-    displayName: Create archive (with test program)
+    displayName: Add $(valid_program)
     env:
       OUTPUT_DIRECTORY: $(tmplvariables.output_directory)
-      ARTIFACT_NAME: $(tmplvariables.artifact_name)
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(tmplvariables.output_directory)'
+      includeRootFolder: true
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(tmplvariables.artifact_name).zip'
+      replaceExistingArchive: true
+      verbose: true
+    displayName: Zipping
 
   # Transform generated zip to azure artifacts
   - task: PublishBuildArtifacts@1
