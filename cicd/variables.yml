@@ -10,7 +10,7 @@ variables:
   commandline_project: '$(source_directory)/commandline-tool/commandline-tool.csproj'
 
   # Special file for publish
-  valid_program: '/src/test/data/ValidProgram.cosmos'
+  valid_program: 'src/test/data/ValidProgram.cosmos'
 
   # Vms
   vm_linux: 'ubuntu-latest'

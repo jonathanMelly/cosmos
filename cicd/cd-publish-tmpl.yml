@@ -11,7 +11,7 @@ steps:
       command: 'publish'
       publishWebProjects: false
       projects: '$(commandline_project)'
-      arguments: '/p:version=$(version.CleanValue) -c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(Build.ArtifactStagingDirectory)'
+      arguments: '/p:version=$(version.CleanValue) -c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(Build.ArtifactStagingDirectory)/${{ parameters.runtime }}'
       zipAfterPublish: false
       modifyOutputPath: false
 
