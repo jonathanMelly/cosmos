@@ -22,6 +22,6 @@ stages:
       ${{ if contains(parameters.name, 'windows') }}:
        vmImage: $(vm_windows)
     jobs:
-      - job: Steps
+      - job: MainJob
         steps:
         - ${{ parameters.steps }}
