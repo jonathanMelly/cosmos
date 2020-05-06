@@ -18,17 +18,17 @@ stages:
             runtime: $(runtime_linux)
 
   - template: platform-stage-tmpl.yml
-      parameters:
-        name: MacArtifacts
-        steps:
-          - template: cd-publish-tmpl.yml
-            parameters:
-              runtime: $(mac_linux)
+    parameters:
+      name: MacArtifacts
+      steps:
+        - template: cd-publish-tmpl.yml
+          parameters:
+            runtime: $(mac_linux)
 
   - template: platform-stage-tmpl.yml
-      parameters:
-        name: WindowsArtifacts
-        steps:
-          - template: cd-publish-tmpl.yml
-            parameters:
-              runtime: $(windows_linux)
+    parameters:
+      name: WindowsArtifacts
+      steps:
+        - template: cd-publish-tmpl.yml
+          parameters:
+            runtime: $(windows_linux)
