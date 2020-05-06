@@ -4,7 +4,7 @@ name: '$(TeamProject)-$(BuildDefinitionName)[$(SourceBranchName)] du $(Date:dd.M
 trigger:
   tags:
     include:
-      - v*
+      - release/*
 
 variables:
   - template: variables.yml
