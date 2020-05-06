@@ -12,6 +12,7 @@ variables:
 
   # Special file for publish
   valid_program: 'src/test/data/ValidProgram.cosmos'
+  demo_program_name: 'demo.cosmos'
 
   # Used for binary generation (=>$(executable_prefix)-linux-x64.zip)
   artifact_prefix: $(System.TeamProject)

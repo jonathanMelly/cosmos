@@ -30,7 +30,7 @@ steps:
   # add testProgram
   # zip (and on success removes original files)
   - bash: |
-      cp -v $BUILD_REPOSITORY_LOCALPATH/$VALID_PROGRAM $OUTPUT_DIRECTORY/
+      cp -v $BUILD_REPOSITORY_LOCALPATH/$VALID_PROGRAM $OUTPUT_DIRECTORY/$DEMO_PROGRAM_NAME
     displayName: Add $(valid_program)
     env:
       OUTPUT_DIRECTORY: $(tmplvariables.output_directory)
