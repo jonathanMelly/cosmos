@@ -5,16 +5,18 @@ parameters:
 
 steps:
   - task: DotNetCoreCLI@2
-      displayName: 'Publish ${{ parameters.runtime }}'
-      inputs:
-        command: 'publish'
-        publishWebProjects: false
-        projects: '$(commandline_project)'
-        arguments: '-c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(Build.ArtifactStagingDirectory)'
-        zipAfterPublish: true
-        modifyOutputPath: false
-        - task: PublishBuildArtifacts@1
-          inputs:
-            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-            ArtifactName: 'cosmos-${{ parameters.runtime }}'
-            publishLocation: 'Container'
+    displayName: 'Publish ${{ parameters.runtime }}'
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: '$(commandline_project)'
+      arguments: '-c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(Build.ArtifactStagingDirectory)'
+      zipAfterPublish: true
+      modifyOutputPath: false
+
+  # Transform generated zip to azure artifacts
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'cosmos-${{ parameters.runtime }}'
+      publishLocation: 'Container'
