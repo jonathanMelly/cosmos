@@ -2,7 +2,7 @@
 # Include this step before you require the content and write : $(version.cleanValue)
 steps:
   - bash: |
-      version=$(echo '$(Build.SourceBranchName)' | cut -d'/' -f2)
+      version=$(echo '$(Build.SourceBranchName)' | cut -d'v' -f2)
       echo Extracted version: $version
       echo "##vso[task.setvariable variable=cleanValue;isOutput=true]$version"
     name: version
