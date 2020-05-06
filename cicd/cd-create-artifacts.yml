@@ -1,4 +1,6 @@
 #creates artifacts on version tag
+name: '$(TeamProject)-$(BuildDefinitionName)[$(SourceBranchName)] du $(Date:dd.MM.yyyy) a $(Date:HH)h$(Date:mm)m$(Date:ss)s'
+
 trigger:
   tags:
     include:
