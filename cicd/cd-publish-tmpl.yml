@@ -12,8 +12,16 @@ steps:
       publishWebProjects: false
       projects: '$(commandline_project)'
       arguments: '/p:version=$(version.CleanValue) -c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(Build.ArtifactStagingDirectory)'
-      zipAfterPublish: true
+      zipAfterPublish: false
       modifyOutputPath: false
+
+  # add testProgram
+  - bash: cp $(Build.Repository.LocalPath)/$(valid_program) $(Build.ArtifactStagingDirectory)/${{ parameters.runtime }}/
+    displayName: Add program example
+
+  # zip (and on success removes original files)
+  - bash: zip -rmT $(Build.ArtifactStagingDirectory)/${{ parameters.runtime }}.zip $(Build.ArtifactStagingDirectory)/${{ parameters.runtime }}
+    displayName: Zipping
 
   # Transform generated zip to azure artifacts
   - task: PublishBuildArtifacts@1
