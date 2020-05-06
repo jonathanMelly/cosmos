@@ -6,7 +6,7 @@ parameters:
 steps:
   # Creates usefull var
   - script: echo "##vso[task.setvariable variable=output_directory;isOutput=true]$(Build.ArtifactStagingDirectory)/$(artifact_prefix)-${{ parameters.runtime }}"
-      name: tmplvariables
+    name: tmplvariables
   - template: version-step.yml
   - task: DotNetCoreCLI@2
     displayName: 'Publish ${{ parameters.runtime }} $(Build.SourceBranchName)'
