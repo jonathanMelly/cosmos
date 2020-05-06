@@ -6,7 +6,7 @@ parameters:
 steps:
   - template: version-step.yml
   - task: DotNetCoreCLI@2
-    displayName: 'Publish ${{ parameters.runtime }}'
+    displayName: 'Publish ${{ parameters.runtime }} $(version.CleanValue)'
     inputs:
       command: 'publish'
       publishWebProjects: false
