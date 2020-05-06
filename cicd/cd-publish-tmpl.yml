@@ -1,0 +1,20 @@
+#run integration tests (to be run on each target platform)
+parameters:
+  - name: 'runtime'
+    type: string
+
+steps:
+  - task: DotNetCoreCLI@2
+      displayName: 'Publish ${{ parameters.runtime }}'
+      inputs:
+        command: 'publish'
+        publishWebProjects: false
+        projects: '$(commandline_project)'
+        arguments: '-c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(Build.ArtifactStagingDirectory)'
+        zipAfterPublish: true
+        modifyOutputPath: false
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'cosmos-${{ parameters.runtime }}'
+            publishLocation: 'Container'

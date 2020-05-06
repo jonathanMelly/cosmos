@@ -1,0 +1,34 @@
+#creates artifacts on version tag
+trigger:
+  tags:
+    include:
+      - v*
+
+variables:
+  - template: variables.yml
+
+stages:
+
+  - template: platform-stage-tmpl.yml
+    parameters:
+      name: LinuxArtifacts
+      steps:
+        - template: cd-publish-tmpl.yml
+          parameters:
+            runtime: $(runtime_linux)
+
+  - template: platform-stage-tmpl.yml
+      parameters:
+        name: MacArtifacts
+        steps:
+          - template: cd-publish-tmpl.yml
+            parameters:
+              runtime: $(mac_linux)
+
+  - template: platform-stage-tmpl.yml
+      parameters:
+        name: WindowsArtifacts
+        steps:
+          - template: cd-publish-tmpl.yml
+            parameters:
+              runtime: $(windows_linux)
