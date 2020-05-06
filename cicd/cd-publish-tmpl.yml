@@ -3,10 +3,10 @@ parameters:
   - name: 'runtime'
     type: string
 
-variables:
-  output_directory: $(Build.ArtifactStagingDirectory)/$(artifact_prefix)-${{ parameters.runtime }}
-
 steps:
+  # Creates usefull var
+  - script: echo "##vso[task.setvariable variable=output_directory;isOutput=true]$(Build.ArtifactStagingDirectory)/$(artifact_prefix)-${{ parameters.runtime }}"
+      name: tmplvariables
   - template: version-step.yml
   - task: DotNetCoreCLI@2
     displayName: 'Publish ${{ parameters.runtime }} $(Build.SourceBranchName)'
@@ -14,17 +14,18 @@ steps:
       command: 'publish'
       publishWebProjects: false
       projects: '$(commandline_project)'
-      arguments: '/p:version=$(version.CleanValue) -c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(output_directory)'
+      arguments: '/p:version=$(version.CleanValue) -c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(tmplvariables.output_directory)'
       zipAfterPublish: false
       modifyOutputPath: false
 
   # add testProgram
-  - bash: cp -v $BUILD_REPOSITORY_LOCALPATH/$VALID_PROGRAM $OUTPUT_DIRECTORY/
-    displayName: Add $(valid_program)
-
   # zip (and on success removes original files)
-  - bash: zip -rmTv $OUTPUT_DIRECTORY.zip $OUTPUT_DIRECTORY
-    displayName: Zipping
+  - bash: |
+      cp -v $BUILD_REPOSITORY_LOCALPATH/$VALID_PROGRAM $OUTPUT_DIRECTORY/
+      zip -rmTv $OUTPUT_DIRECTORY.zip $OUTPUT_DIRECTORY
+    displayName: Create archive (with test program)
+    env:
+      OUTPUT_DIRECTORY: $(tmplvariables.output_directory)
 
   # Transform generated zip to azure artifacts
   - task: PublishBuildArtifacts@1
