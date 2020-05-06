@@ -1,4 +1,5 @@
-﻿using lib.interpreter;
+﻿using System.Reflection;
+using lib.interpreter;
 using lib.parser;
 
 namespace commandline_tool
@@ -19,6 +20,14 @@ namespace commandline_tool
             var result = interpreter.Execute();
 
             return (int) (result ? ExitCode.Success : ExitCode.CompileError);
+        }
+
+        public static string GetVersion()
+        {
+            var version = Assembly.GetEntryAssembly()!
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion;
+            return version;
         }
     }
 }

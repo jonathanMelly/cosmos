@@ -4,13 +4,14 @@ parameters:
     type: string
 
 steps:
+  - template: version-step.yml
   - task: DotNetCoreCLI@2
     displayName: 'Publish ${{ parameters.runtime }}'
     inputs:
       command: 'publish'
       publishWebProjects: false
       projects: '$(commandline_project)'
-      arguments: '-c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(Build.ArtifactStagingDirectory)'
+      arguments: '/p:version=$(version.CleanValue) -c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(Build.ArtifactStagingDirectory)'
       zipAfterPublish: true
       modifyOutputPath: false
 
