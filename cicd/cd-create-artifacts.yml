@@ -25,7 +25,7 @@ stages:
       steps:
         - template: cd-publish-tmpl.yml
           parameters:
-            runtime: $(mac_linux)
+            runtime: $(runtime_mac)
 
   - template: platform-stage-tmpl.yml
     parameters:
@@ -33,4 +33,4 @@ stages:
       steps:
         - template: cd-publish-tmpl.yml
           parameters:
-            runtime: $(windows_linux)
+            runtime: $(runtime_windows)
