@@ -11,7 +11,7 @@ steps:
       command: 'publish'
       publishWebProjects: false
       projects: '$(commandline_project)'
-      arguments: '/p:version=$(version.CleanValue) /p:AssemblyName=$(assembly_name) -c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(Build.ArtifactStagingDirectory)/${{ parameters.runtime }}'
+      arguments: '/p:version=$(version.CleanValue) -c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(Build.ArtifactStagingDirectory)/${{ parameters.runtime }}'
       zipAfterPublish: false
       modifyOutputPath: false
 
@@ -20,12 +20,12 @@ steps:
     displayName: Add $(valid_program)
 
   # zip (and on success removes original files)
-  - bash: zip -rmTv $(Build.ArtifactStagingDirectory)/$(assembly_name)-${{ parameters.runtime }}.zip $(Build.ArtifactStagingDirectory)/${{ parameters.runtime }}
+  - bash: zip -rmTv $(Build.ArtifactStagingDirectory)/$(artifact_prefix)-${{ parameters.runtime }}.zip $(Build.ArtifactStagingDirectory)/${{ parameters.runtime }}
     displayName: Zipping
 
   # Transform generated zip to azure artifacts
   - task: PublishBuildArtifacts@1
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'cosmos-${{ parameters.runtime }}'
+      ArtifactName: '$(artifact_prefix)-${{ parameters.runtime }}'
       publishLocation: 'Container'

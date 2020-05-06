@@ -12,8 +12,8 @@ variables:
   # Special file for publish
   valid_program: 'src/test/data/ValidProgram.cosmos'
 
-  # Used for binary generation
-  assembly_name: $(System.TeamProject)
+  # Used for binary generation (=>$(executable_prefix)-linux-x64.zip)
+  artifact_prefix: $(System.TeamProject)
 
   # Vms
   vm_linux: 'ubuntu-latest'
