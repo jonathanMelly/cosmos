@@ -55,11 +55,13 @@ steps:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: '$(artifact_prefix)-${{ parameters.runtime }}'
       publishLocation: 'Container'
+    displayName: Publish zip
 
   # Add release notes template so it is available without checking out the code later on...
   - bash: |
+      mkdir $(publish_directory)/notes
       cp -v $BUILD_REPOSITORY_LOCALPATH/$RELEASE_NOTES_TEMPLATE $(publish_directory)/notes/
-      displayName: Add release notes template
+    displayName: Add release notes template
     condition: eq('${{ parameters.includeNotesTemplate }}', true)
 
   - task: PublishBuildArtifacts@1
@@ -68,3 +70,4 @@ steps:
       ArtifactName: 'release-notes-template'
       publishLocation: 'Container'
     condition: eq('${{ parameters.includeNotesTemplate }}', true)
+    displayName: Publish release notes template
