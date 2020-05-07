@@ -1,5 +1,5 @@
 ## :rocket: Nouveautés
-@@WILOOP[ANY]:System.WorkItemType=User Story:System.WorkItemType=Task:System.WorkItemType=Feature:System.WorkItemType=Epic@@  
+@@WILOOP[ANY]:System.WorkItemType=User Story@@  
 * ${widetail.fields['System.Title']} ([AB#${widetail.id}]($(System.TaskDefinitionsURI)$(Build.ProjectName)/_workitems/edit/${widetail.id}/)) :white_check_mark:   
 @@WILOOP[ANY]@@
 
