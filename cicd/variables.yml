@@ -11,8 +11,9 @@ variables:
   commandline_project: '$(source_directory)/commandline-tool/commandline-tool.csproj'
 
   # Special file for publish
-  valid_program: 'src/test/data/ValidProgram.cosmos'
+  valid_program: 'src/test/data/ValidProgram.cosmos' #relative path in the repo
   demo_program_name: 'demo.cosmos'
+  release_notes_template: 'cicd/release-notes-template.md' #relative path in the repo
 
   # Used for binary generation (=>$(executable_prefix)-linux-x64.zip)
   artifact_prefix: $(System.TeamProject)

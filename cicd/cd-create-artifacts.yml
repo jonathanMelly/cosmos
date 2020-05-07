@@ -18,6 +18,7 @@ stages:
         - template: cd-publish-tmpl.yml
           parameters:
             runtime: $(runtime_linux)
+            includeNotesTemplate: true
 
   - template: platform-stage-tmpl.yml
     parameters:

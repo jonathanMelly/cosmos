@@ -7,6 +7,10 @@ parameters:
     type: string
     default: $(Build.SourceBranchName)
 
+  - name: 'includeNotesTemplate'
+    type: boolean
+    default: false
+
 steps:
   # Creates usefull var
   - bash: |
@@ -51,3 +55,16 @@ steps:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: '$(artifact_prefix)-${{ parameters.runtime }}'
       publishLocation: 'Container'
+
+  # Add release notes template so it is available without checking out the code later on...
+  - bash: |
+      cp -v $BUILD_REPOSITORY_LOCALPATH/$RELEASE_NOTES_TEMPLATE $(publish_directory)/notes/
+      displayName: Add release notes template
+    condition: eq('${{ parameters.includeNotesTemplate }}', true)
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(publish_directory)/notes/'
+      ArtifactName: 'release-notes-template'
+      publishLocation: 'Container'
+    condition: eq('${{ parameters.includeNotesTemplate }}', true)
