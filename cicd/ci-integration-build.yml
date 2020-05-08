@@ -45,5 +45,4 @@ stages:
       - job: MergeAndPush
         steps:
           # Merge into master on success (ready to be released)
-          - bash: |
-              git push origin integration:master
+          - bash: git push origin integration:master
