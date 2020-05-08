@@ -31,3 +31,4 @@ variables:
   # Reporting
   coverage_summary_files: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
   coverage_report_directory: '$(System.DefaultWorkingDirectory)/_coverage'
+  disable.coverage.autogenerate: true
