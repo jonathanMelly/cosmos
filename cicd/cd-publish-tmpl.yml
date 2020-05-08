@@ -31,11 +31,12 @@ steps:
       zipAfterPublish: false
       modifyOutputPath: false
 
-  # add testProgram
-  # zip (and on success removes original files)
+  # add testProgram and tests that it works
   - bash: |
       cp -v $BUILD_REPOSITORY_LOCALPATH/$VALID_PROGRAM $OUTPUT_DIRECTORY/$DEMO_PROGRAM_NAME
-    displayName: Add $(valid_program)
+      echo "testing generated binaries"
+      $OUTPUT_DIRECTORY/cosmos $OUTPUT_DIRECTORY/$DEMO_PROGRAM_NAME
+    displayName: Validate binary
     env:
       OUTPUT_DIRECTORY: $(tmplvariables.output_directory)
 

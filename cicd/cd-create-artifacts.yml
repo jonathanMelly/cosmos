@@ -1,14 +1,10 @@
 #creates artifacts on version tag
 name: '$(TeamProject)-$(BuildDefinitionName)[$(SourceBranchName)] du $(Date:dd.MM.yyyy) a $(Date:HH)h$(Date:mm)m$(Date:ss)s'
 
-# Waits for standard build to avoid publishing if build fails
-resources:
-  pipelines:
-    - pipeline: build   # Name of the pipeline resource
-      source: ci-build # Name of the triggering pipeline
-      trigger:
-        tags:
-          - release/*
+trigger:
+  tags:
+    include:
+      - release/*
 
 variables:
   - template: variables.yml

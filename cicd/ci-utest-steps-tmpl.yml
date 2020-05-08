@@ -1,0 +1,32 @@
+#run integration tests (to be run on each target platform)
+parameters:
+  - name: publish
+    type: boolean
+    default: false
+
+steps:
+  #Added regarding issues with dotnet cli on windows azure agent...
+  - task: DotNetCoreCLI@2
+    displayName: "Manual restore nuget"
+    inputs:
+      command: 'restore'
+      projects: '$(solution_file)'
+      feedsToUse: 'select'
+      verbosityRestore: 'Minimal'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build'
+    inputs:
+      command: 'build'
+      projects: '$(solution_file)'
+      arguments: '--no-restore'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Unit Tests: run'
+    inputs:
+      command: 'test'
+      projects: '$(test_project)'
+      ${{ if eq(parameters.publish, true) }}:
+        arguments: '--collect:"Xplat Code Coverage"'
+        publishTestResults: true #published into $(Agent.TempDirectory)
+      testRunTitle: 'All tests'

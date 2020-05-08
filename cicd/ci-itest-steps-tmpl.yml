@@ -2,6 +2,7 @@
 parameters:
   - name: runtime
     type: string
+    default: $(runtime_windows)
 
 steps:
   - script: |

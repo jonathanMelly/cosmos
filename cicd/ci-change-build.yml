@@ -1,0 +1,39 @@
+#Builds and test regular commits
+name: '$(TeamProject)-$(BuildDefinitionName)[$(SourceBranchName)] du $(Date:dd.MM.yyyy) a $(Date:HH)h$(Date:mm)m$(Date:ss)s'
+
+trigger:
+  - change/*
+
+variables:
+- template: variables.yml
+
+stages:
+  - template: platform-stage-tmpl.yml
+    parameters:
+      name: BuildTestAndCoverOnWindows
+      steps:
+
+        #Unit tests
+        - template: ci-utest-steps-tmpl.yml
+          parameters:
+            publish: true
+
+        - script: |
+            dotnet tool install dotnet-reportgenerator-globaltool --tool-path $(tools_directory)
+            $(tools_directory)/reportgenerator -classfilters:"-lib.antlr.*" -reports:"$(coverage_summary_files)" -targetdir:"$(coverage_report_directory)" -reporttypes:"HtmlInline_AzurePipelines;Cobertura;Badges"
+          failOnStderr: false
+          continueOnError: true
+          displayName: 'Unit Tests: generate coverage'
+
+        - task: PublishCodeCoverageResults@1
+          displayName: 'Unit Tests: publish coverage'
+          inputs:
+            codeCoverageTool: 'Cobertura'
+            summaryFileLocation: '$(coverage_report_directory)/Cobertura.xml'
+            reportDirectory: '$(coverage_report_directory)' #if not supplied, then beware of auto(re)generation : https://github.com/microsoft/azure-pipelines-tasks/issues/10354
+            failIfCoverageEmpty: false
+
+        #Start integration test
+        - template: ci-itest-steps-tmpl.yml
+
+
