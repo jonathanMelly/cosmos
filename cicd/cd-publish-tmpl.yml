@@ -1,0 +1,74 @@
+#run integration tests (to be run on each target platform)
+parameters:
+  - name: 'runtime'
+    type: string
+
+  - name: 'version'
+    type: string
+    default: $(Build.SourceBranchName)
+
+  - name: 'includeNotesTemplate'
+    type: boolean
+    default: false
+
+steps:
+  # Creates usefull var
+  - bash: |
+      artifact_name="$(artifact_prefix)-$RUNTIME"
+      echo "##vso[task.setvariable variable=artifact_name;isOutput=true]$artifact_name"
+      echo "##vso[task.setvariable variable=output_directory;isOutput=true]$(publish_directory)/$artifact_name"
+    name: tmplvariables
+    env:
+      RUNTIME: ${{ parameters.runtime }}
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish ${{ parameters.runtime }} ${{ parameters.version }}'
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: '$(commandline_project)'
+      arguments: '/p:version=${{ parameters.version }} -c Release -r ${{ parameters.runtime }} -p:PublishReadyToRun=true -o $(tmplvariables.output_directory)'
+      zipAfterPublish: false
+      modifyOutputPath: false
+
+  # add testProgram and tests that it works
+  - bash: |
+      cp -v $BUILD_REPOSITORY_LOCALPATH/$VALID_PROGRAM $OUTPUT_DIRECTORY/$DEMO_PROGRAM_NAME
+      echo "testing generated binaries"
+      $OUTPUT_DIRECTORY/cosmos $OUTPUT_DIRECTORY/$DEMO_PROGRAM_NAME
+    displayName: Validate binary
+    env:
+      OUTPUT_DIRECTORY: $(tmplvariables.output_directory)
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(tmplvariables.output_directory)'
+      includeRootFolder: true
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(tmplvariables.artifact_name).zip'
+      replaceExistingArchive: true
+      verbose: true
+    displayName: Zipping
+
+  # Transform generated zip to azure artifacts
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: '$(artifact_prefix)-${{ parameters.runtime }}'
+      publishLocation: 'Container'
+    displayName: Publish zip
+
+  # Add release notes template so it is available without checking out the code later on...
+  - bash: |
+      mkdir $(publish_directory)/notes
+      cp -v $BUILD_REPOSITORY_LOCALPATH/$RELEASE_NOTES_TEMPLATE $(publish_directory)/notes/
+    displayName: Add release notes template
+    condition: eq('${{ parameters.includeNotesTemplate }}', true)
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(publish_directory)/notes/'
+      ArtifactName: 'release-notes-template'
+      publishLocation: 'Container'
+    condition: eq('${{ parameters.includeNotesTemplate }}', true)
+    displayName: Publish release notes template

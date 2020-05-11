@@ -1,0 +1,57 @@
+#Builds and test integrated User stories
+name: '$(TeamProject)-$(BuildDefinitionName)[$(SourceBranchName)] du $(Date:dd.MM.yyyy) a $(Date:HH)h$(Date:mm)m$(Date:ss)s'
+
+trigger:
+  - integration
+
+variables:
+- template: variables.yml
+
+stages:
+
+  - template: platform-stage-tmpl.yml
+    parameters:
+      name: Windows
+      steps:
+        - template: ci-utest-steps-tmpl.yml
+        - template: ci-itest-steps-tmpl.yml
+
+  - template: platform-stage-tmpl.yml
+    parameters:
+      name: Linux
+      steps:
+        - template: ci-utest-steps-tmpl.yml
+        - template: ci-itest-steps-tmpl.yml
+          parameters:
+            runtime: $(runtime_linux)
+
+  - template: platform-stage-tmpl.yml
+    parameters:
+      name: Mac
+      steps:
+        - template: ci-utest-steps-tmpl.yml
+        - template: ci-itest-steps-tmpl.yml
+          parameters:
+            runtime: $(runtime_mac)
+
+  - stage: MergeIntoMaster
+    dependsOn:
+    - Windows
+    - Linux
+    - Mac
+    pool:
+      vmImage: $(vm_linux)
+    jobs:
+      - job: MergeAndPush
+        steps:
+          # Merge into master on success (ready to be released)
+          - bash: |
+              cd $SYSTEM_DEFAULTWORKINGDIRECTORY
+              target=$BUILD_REPOSITORY_PROVIDER.com/$BUILD_REPOSITORY_NAME.git
+              echo "merge and push to $target"
+              git checkout master
+              git merge --ff-only origin/integration
+              git push https://$PAT@$target master
+            env:
+              PAT: $(Github.Pat)
+            displayName: Merge/Push to master

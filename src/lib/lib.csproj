@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Needed for execution/interaction of generated CSharp classes -->
+        <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
+    </ItemGroup>
+
+    <!-- auto generate upon build -->
+    <PropertyGroup>
+        <Grammar>$(MSBuildProjectDirectory)/../grammar/Cosmos.g4</Grammar>
+        <Antlr>antlr</Antlr>
+        <Generator>$(MSBuildProjectDirectory)/../../bin/generator/Antlr4.dll</Generator>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <AntlrOut>$(MSBuildProjectDirectory)/$(Antlr)</AntlrOut>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <ReferenceGrammar>$(AntlrOut)/Reference.g4</ReferenceGrammar>
+        <Package>lib.$(Antlr)</Package>
+    </PropertyGroup>
+
+    <Target Name="GenerateAntlrCode" BeforeTargets="BeforeBuild" Inputs="$(Grammar)" Outputs="$(ReferenceGrammar)">
+        <Exec Command="mono $(Generator) -o $(AntlrOut) -Dlanguage=CSharp -visitor -package $(Package) $(Grammar)" />
+        <!-- Copy source grammar for incremental build -->
+        <Copy SourceFiles="$(Grammar)" DestinationFiles="$(ReferenceGrammar)" SkipUnchangedFiles="true" />
+    </Target>
+    
+</Project>

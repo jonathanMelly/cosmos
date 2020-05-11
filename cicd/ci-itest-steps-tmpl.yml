@@ -1,0 +1,14 @@
+#run integration tests (to be run on each target platform)
+parameters:
+  - name: runtime
+    type: string
+    default: $(runtime_windows)
+
+steps:
+  - script: |
+      echo Starting IT
+      dotnet run -r ${{ parameters.runtime }} --project $(source_directory)/commandline-tool/commandline-tool.csproj $(test_directory)/data/ValidProgram.cosmos
+      echo End of IT
+    #workingDirectory: #not needed to set
+    displayName: 'Integration tests for runtime ${{ parameters.runtime }}'
+    failOnStderr: true

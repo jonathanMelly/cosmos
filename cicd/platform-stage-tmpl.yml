@@ -1,0 +1,27 @@
+# Parallel ready steps executor
+parameters:
+  - name: name
+    type: string
+
+  - name: dependsOn
+    type: object
+    default: []
+
+  - name: steps
+    type: stepList
+    default: []
+
+stages:
+  - stage: ${{ parameters.name }}
+    dependsOn: ${{ parameters.dependsOn }}
+    pool:
+      ${{ if contains(parameters.name, 'linux') }}:
+       vmImage: $(vm_linux)
+      ${{ if contains(parameters.name, 'mac') }}:
+       vmImage: $(vm_mac)
+      ${{ if contains(parameters.name, 'windows') }}:
+       vmImage: $(vm_windows)
+    jobs:
+      - job: MainJob
+        steps:
+        - ${{ parameters.steps }}

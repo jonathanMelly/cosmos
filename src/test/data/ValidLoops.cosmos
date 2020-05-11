@@ -1,0 +1,43 @@
+Auteur: Jonathan
+Date: 28.04.2020
+Entreprise: ETML
+Description: Demonstration des boucles
+
+//Début du programme
+Voici les ordres du programme DEMO_COSMOS_BOUCLES à classer dans la bibliothèque DEMONSTRATION :
+	
+	//Répétition fixe
+    Répéter 3x
+        Afficher "#repetition".
+    >>
+    
+    //Répétition dynamique
+    Créer une zone mémoire nommée #cycles et y enregistrer la valeur 6.
+    
+    Répéter le nombre de fois correspondant à la valeur enregistrée dans la zone mémoire #cycle
+        Répéter autant de fois qu'il y a de #cycles
+			Afficher "#repetition\n".
+		>>
+    >>
+    
+    //Répétition avec une condition
+    Allouer une zone mémoire nommée #chocolatMange et y enregistrer le nombre 0.
+    Allouer une zone mémoire nommée #capaciteEstomac et y enregistrer le nombre 10.
+    
+    
+    Répéter tant que #chocolatMange est inférieur à #capaciteEstomac
+    
+        //On simule un jeu où l'on peut attrapper un chocolat... ou pas
+        Allouer une zone mémoire nommée #nombreAleatoire avec un nombre aléatoire entre 0 et 1.
+        Si #nombreAleatoire est égal à 1 alors
+            //Incrémente le nombre de chocolats mangés (en remplaçant la valeur)
+            Insérer (#chocolatMange + 1) dans la zone mémoire #chocolatMange.
+            Afficher "Miam j'ai attrappé un chocolat\n".
+        ?
+        
+        Afficher "Pour l'instant, j'ai mangé #chocolatMange chocolat(s)\n".
+	>>
+	
+    Afficher "Mon estomac est plein !" .
+    
+Fin de la transmission.
