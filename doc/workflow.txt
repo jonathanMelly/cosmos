@@ -1,0 +1,19 @@
+1. Create UserStory AB#1 on azure board
+2. Create branch change/AB#1-SmallDescr
+  2.1 Commit AB#TaskN
+  2.2 Push => Validated by ci-change.yaml
+  etc..
+3. git co integration
+   git merge --squash change/AB#1-SmallDescr => Set AB#1 in commit msg
+   git push => Validated by ci-integration.yaml which also pushes onto master (upon success)
+
+etc..
+
+#Cleanup...
+3.5 git branch -D change/AB#1-SmallDescr
+
+4. git switch -c release/1.0.0
+   git merge master(or until specified treeish) --no-commit --no-ff
+   git commit -m "features set for release 1.0.0"
+   git tag release/1.0.0
+   git push => cd-create-artifacts => release
