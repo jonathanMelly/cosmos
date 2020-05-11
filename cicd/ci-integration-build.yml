@@ -47,10 +47,11 @@ stages:
           # Merge into master on success (ready to be released)
           - bash: |
               cd $SYSTEM_DEFAULTWORKINGDIRECTORY
-              target=$BUILD_REPOSITORY_PROVIDER/$BUILD_REPOSITORY_NAME.git
+              target=$BUILD_REPOSITORY_PROVIDER.com/$BUILD_REPOSITORY_NAME.git
               echo "merge and push to $target"
               git checkout master
-              git merge --ff-only integration
+              git merge --ff-only origin/integration
               git push https://$PAT@$target origin
             env:
               PAT: $(Github.Pat)
+            displayName: Merge/Push to master
