@@ -1,4 +1,7 @@
+using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
 using lib.antlr;
+using lib.parser.exception;
 using lib.parser.type;
 
 namespace lib.parser.visitor
@@ -22,14 +25,16 @@ namespace lib.parser.visitor
 
         public override CosmosVariable VisitVariable(CosmosParser.VariableContext context)
         {
-            var variableName = context.la_zone_memoire().VARIABLE().GetText();
+            return GetVariable(context.la_zone_memoire().VARIABLE(), context);
+        }
+
+        public CosmosVariable GetVariable(ITerminalNode variableNode, ParserRuleContext context)
+        {
+            var variableName = variableNode.GetText();
 
             if (parser.Variables.ContainsKey(variableName)) return parser.Variables[variableName];
 
-            parser.ErrorListener.UnknownVariableError(context.start.Line, context.start.Column, variableName);
-            //throw new MissingTokenHandlerException(context,firstChild.GetText());
-
-            return null;
+            throw new UnknownVariableException(variableName,context);
         }
 
         public override CosmosVariable VisitAllouer(CosmosParser.AllouerContext context)

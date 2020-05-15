@@ -7,15 +7,18 @@ using static lib.console.IConsole;
 
 namespace test
 {
-    public class TestConsole : TextWriter, IConsole
+    public class XUnitCompatibleConsole : TextWriter, IConsole
     {
         private readonly IDictionary<Channel, StringBuilder> content =
             new Dictionary<Channel, StringBuilder>
-                {[Channel.Standard] = new StringBuilder(), [Channel.Error] = new StringBuilder()};
+                {[Channel.Standard] = new StringBuilder(),
+                    [Channel.Error] = new StringBuilder(),
+                    [Channel.Debug] = new StringBuilder()
+                };
 
         private readonly ITestOutputHelper helper;
 
-        public TestConsole(ITestOutputHelper helper)
+        public XUnitCompatibleConsole(ITestOutputHelper helper)
         {
             this.helper = helper;
         }
@@ -23,6 +26,9 @@ namespace test
         public override Encoding Encoding => Encoding.Default;
 
         public string Content => content[Channel.Standard].ToString();
+
+        public string DebugContent => content[Channel.Debug].ToString();
+
         public string ErrorContent => content[Channel.Error].ToString();
 
         public void Write(string text, Channel channel)

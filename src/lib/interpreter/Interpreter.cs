@@ -7,21 +7,21 @@ namespace lib.interpreter
     {
         private readonly Parser parser;
         private IConsole console;
-        
+
         public Interpreter(Parser parser, IConsole console=null)
         {
             this.parser = parser;
             this.console = console;
         }
-        
+
         public bool Execute()
         {
             if (!parser.Parse()) return false;
 
             var visitor = new ExecutionVisitor(parser).WithConsole(console);
-            visitor.Visit(parser.Context);
+            var result = visitor.Visit(parser.Context);
 
-            return true;
+            return result.Success;
         }
     }
 }

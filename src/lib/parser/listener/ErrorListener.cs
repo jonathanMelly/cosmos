@@ -23,24 +23,31 @@ namespace lib.parser.listener
             Error(line, charPositionInLine, msg);
         }
 
-        public void UnknownVariableError(int line, int column, string variableNane)
+        public void Error(CosmosException exception)
         {
-            Error(line, column,
-                $"Espace mémoire {variableNane} inconnu. Il manque probablement la ligne : Allouer {variableNane}.");
+            Error(exception.Message);
+        }
+
+        public void Error(string message)
+        {
+            string finalMessage = Translate(message);
+            Errors.Add(finalMessage);
+            console.WriteLine(finalMessage, IConsole.Channel.Error);
         }
 
         public void Error(int line, int column, string message)
         {
-            var finalMessage = $"ligne {line}:{column} {Translate(message)}";
-            Errors.Add(finalMessage);
-            console.WriteLine(finalMessage, IConsole.Channel.Error);
+            var finalMessage = $"{CosmosException.BuildParseErrorHeader(line,column)} {message}";
+            Error(finalMessage);
         }
 
         private string Translate(string message)
         {
             return message.
+                Replace(" at ", " à l'endroit ou il y a ").
                 Replace("mismatched input", "élément invalide").
-                Replace("expecting", "attendu");
+                Replace("expecting", "attendu").
+                Replace("missing", "il manque");
         }
     }
 }

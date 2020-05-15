@@ -145,6 +145,18 @@ public partial class CosmosBaseListener : ICosmosListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitInstruction([NotNull] CosmosParser.InstructionContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.noop"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNoop([NotNull] CosmosParser.NoopContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.noop"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNoop([NotNull] CosmosParser.NoopContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.instruction_simple"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

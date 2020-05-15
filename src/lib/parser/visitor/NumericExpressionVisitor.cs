@@ -7,6 +7,16 @@ namespace lib.parser.visitor
 {
     public class NumericExpressionVisitor : CosmosBaseVisitor<CosmosNumber>
     {
+        private readonly VariableVisitor variableVisitor;
+        public NumericExpressionVisitor(VariableVisitor variableVisitor)
+        {
+            this.variableVisitor = variableVisitor;
+        }
+
+        public override CosmosNumber VisitVariable(CosmosParser.VariableContext context)
+        {
+            return variableVisitor.Visit(context).Value.Number();
+        }
 
         public override CosmosNumber VisitExpression_numerique(CosmosParser.Expression_numeriqueContext context)
         {
@@ -28,7 +38,14 @@ namespace lib.parser.visitor
                     };
 
                 case CosmosParser.Atome_numeriqueContext atomeNumeriqueContext:
+                    if (atomeNumeriqueContext.nombre_aleatoire() != null)
+                    {
+                        //TODO Random
+                    }
                     return new CosmosNumber(atomeNumeriqueContext.nombre().VALEUR_NOMBRE().GetText());
+
+                case CosmosParser.VariableContext variableContext:
+                    return variableVisitor.Visit(variableContext).Value.Number();
 
                 default:
                     if (context.PARENTHESE_GAUCHE() != null)

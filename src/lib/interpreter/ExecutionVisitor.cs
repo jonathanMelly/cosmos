@@ -18,7 +18,7 @@ namespace lib.interpreter
         {
             this.parser = parser;
             variableVisitor = new VariableVisitor(parser);
-            expressionVisitor = new ExpressionVisitor(variableVisitor);
+            expressionVisitor = new ExpressionVisitor(variableVisitor,parser);
             variableVisitor.ExpressionVisitor=expressionVisitor;
         }
 
@@ -34,8 +34,20 @@ namespace lib.interpreter
 
         public override ExecutionContext VisitProgramme(CosmosParser.ProgrammeContext context)
         {
-            executionConsole ??= new DefaultConsole();
-            return base.VisitProgramme(context);
+            var result = new ExecutionContext {Success = false};
+            try
+            {
+                executionConsole ??= new DefaultConsole();
+                base.VisitProgramme(context);
+                result.Success = true;
+            }
+            catch (CosmosException e)
+            {
+                parser.ErrorListener.Error(e);
+            }
+
+            return result;
+
         }
 
         public override ExecutionContext VisitSelection(CosmosParser.SelectionContext context)
@@ -56,6 +68,59 @@ namespace lib.interpreter
                 foreach (var instructionIntegree in context.sinon().instruction())
                     Visit(instructionIntegree);
 
+            return null;
+        }
+
+        public override ExecutionContext VisitBoucle(CosmosParser.BoucleContext context)
+        {
+
+            //WHILE
+            if (context.expression_booleenne() != null)
+            {
+                while (expressionVisitor.Visit(context.expression_booleenne()).Boolean().Value)
+                {
+                    foreach (var instructionContext in context.instruction())
+                    {
+                        Visit(instructionContext);
+                    }
+                }
+            }
+            //FOR
+            else
+            {
+                decimal iterations;
+                if (context.boucle_avec_variable() != null)
+                {
+                    var variable = context.boucle_avec_variable().VARIABLE() != null ?
+                        variableVisitor.GetVariable(context.boucle_avec_variable().VARIABLE(),context.boucle_avec_variable()) :
+                        variableVisitor.Visit(context.boucle_avec_variable().variable());
+
+                    iterations = variable.Value.Number().Value;
+                }
+                else
+                {
+                    iterations = expressionVisitor.Visit(context.expression_numerique()).Number().Value;
+                }
+
+                for (var i = 0; i < iterations; i++)
+                {
+                    foreach (var instructionContext in context.instruction())
+                    {
+                        Visit(instructionContext);
+                    }
+
+                }
+            }
+
+            return null;
+        }
+
+        public override ExecutionContext VisitAffecter(CosmosParser.AffecterContext context)
+        {
+            var variable = variableVisitor.Visit(context.variable());
+            var newValue = variable.UpdatedTo(expressionVisitor.Visit(context.expression()));
+
+            parser.Variables[variable.Name] = newValue;
             return null;
         }
 

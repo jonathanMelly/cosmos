@@ -15,7 +15,7 @@ namespace lib.parser.type
             rawValue = value;
         }
 
-        private string ExceptionBaseMessage => $"{RawValue} [{RawValue.GetType()}] is not";
+        private string ExceptionBaseMessage => $"{RawValue} [{RawValue.GetType()}] n'est pas";
 
         public virtual bool IsString => false;
 
@@ -27,7 +27,7 @@ namespace lib.parser.type
             if (ReferenceEquals(this, obj)) return 0;
             return obj is CosmosTypedValue other
                 ? CompareTo(other)
-                : throw new ArgumentException($"Object must be of type {nameof(CosmosTypedValue)}");
+                : throw new ArgumentException($"L'argument doit etre de type {nameof(CosmosTypedValue)}");
         }
 
         public abstract int CompareTo(CosmosTypedValue other);
@@ -165,14 +165,14 @@ namespace lib.parser.type
             }
             return a.rawValue == b.rawValue;
         }
-        
+
         public static bool operator !=(CosmosTypedValue a, CosmosTypedValue b)
         {
             if (a == null)
             {
-                    
+
             }
-            
+
             if (a?.rawValue == null)
             {
                 return b?.rawValue != null;
@@ -184,7 +184,7 @@ namespace lib.parser.type
             }
             return a.rawValue != b.rawValue;
         }
-        
+
         public static bool operator >(CosmosTypedValue a, CosmosTypedValue b)
         {
             if (a == null)
@@ -201,12 +201,12 @@ namespace lib.parser.type
             {
                 return ac.CompareTo(bc)>0;
             }
-            
+
             throw new InvalidComparisonException($"Cannot compare {a} with {b} for operator >");
-            
+
         }
-        
-        
+
+
         public static bool operator <(CosmosTypedValue a, CosmosTypedValue b)
         {
             if (a == null)
@@ -218,15 +218,15 @@ namespace lib.parser.type
             {
                 return false;
             }
-            
+
             if (a.rawValue is IComparable ac && b.rawValue is IComparable bc)
             {
                 return ac.CompareTo(bc)<0;
             }
-            
+
             throw new InvalidComparisonException($"Cannot compare {a} with {b} for operator <");
         }
-        
+
         public static bool operator <=(CosmosTypedValue a, CosmosTypedValue b)
         {
             if (a == null)
@@ -238,15 +238,15 @@ namespace lib.parser.type
             {
                 return false;
             }
-            
+
             if (a.rawValue is IComparable ac && b.rawValue is IComparable bc)
             {
                 return ac.CompareTo(bc)<=0;
             }
-            
+
             throw new InvalidComparisonException($"Cannot compare {a} with {b} for operator <=");
         }
-        
+
         public static bool operator >=(CosmosTypedValue a, CosmosTypedValue b)
         {
             if (a == null)
@@ -258,12 +258,12 @@ namespace lib.parser.type
             {
                 return true;
             }
-            
+
             if (a.rawValue is IComparable ac && b.rawValue is IComparable bc)
             {
                 return ac.CompareTo(bc)>=0;
             }
-            
+
             throw new InvalidComparisonException($"Cannot compare {a} with {b} for operator >=");
         }
         */

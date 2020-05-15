@@ -5,7 +5,8 @@ namespace lib.console
         public enum Channel
         {
             Standard = 1,
-            Error = 2
+            Error = 2,
+            Debug = 3
         }
 
         /// <summary>

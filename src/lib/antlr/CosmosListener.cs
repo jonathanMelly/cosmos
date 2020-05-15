@@ -123,6 +123,16 @@ public interface ICosmosListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitInstruction([NotNull] CosmosParser.InstructionContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.noop"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNoop([NotNull] CosmosParser.NoopContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.noop"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNoop([NotNull] CosmosParser.NoopContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.instruction_simple"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

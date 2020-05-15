@@ -19,7 +19,7 @@ namespace test
             "-->pour laquelle on peut avoir une alternative si aucune condition préalable n'est vraie\n" +
             "->Afficher un nombre, par exemple quarante-quatre : 44";
 
-        
+
         public const string ValidProgramFile = DataFilePath + "ValidProgram.cosmos";
         public const string InvalidDateProgramFile = DataFilePath + "MissingDate.cosmos";
 
@@ -48,7 +48,6 @@ namespace test
             interpreter.Execute();
 
             //Assert
-            Assert.Contains(parser.Errors, error => error.Contains(dateError));
             testConsole.ErrorContent.Should().Contain(dateError); //this could go into ErrorListener test...
         }
 

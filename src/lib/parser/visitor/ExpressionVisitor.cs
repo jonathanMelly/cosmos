@@ -10,14 +10,16 @@ namespace lib.parser.visitor
         private readonly StringExpressionVisitor stringExpressionVisitor;
         private readonly VariableVisitor variableVisitor;
 
-        public ExpressionVisitor(VariableVisitor variableVisitor)
+        public ExpressionVisitor(VariableVisitor variableVisitor,Parser parser)
         {
             this.variableVisitor = variableVisitor;
 
-            stringExpressionVisitor = new StringExpressionVisitor();
-            numericExpressionVisitor = new NumericExpressionVisitor();
+            stringExpressionVisitor = new StringExpressionVisitor(parser);
+            numericExpressionVisitor = new NumericExpressionVisitor(variableVisitor);
             booleanExpressionVisitor = new BooleanExpressionVisitor(this);
         }
+
+        public VariableVisitor VariableVisitor => variableVisitor;
 
         public override CosmosTypedValue VisitExpression_booleenne(CosmosParser.Expression_booleenneContext context)
         {
@@ -39,36 +41,5 @@ namespace lib.parser.visitor
             return variableVisitor.VisitVariable(context).Value;
         }
 
-        /*
-        public override CosmosTypedValue VisitExpression_non_booleenne(CosmosParser.Expression_non_booleenneContext context)
-        {
-            return context.GetChild(0) switch
-            {
-                CosmosParser.Expression_textuelleContext textuelleContext => Visit(textuelleContext),
-                CosmosParser.Expression_numeriqueContext numeriqueContext => Visit(numeriqueContext),
-                
-                _ => throw new MissingTokenHandlerException(context)
-            };
-        }
-
-
-        /// <summary>
-        /// Main dispatcher
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        /// <exception cref="MissingTokenHandlerException"></exception>
-        public override CosmosTypedValue VisitExpression(CosmosParser.ExpressionContext context)
-        {
-            return context.GetChild(0) switch
-            {
-                CosmosParser.VariableContext  variableContext => variableVisitor.Visit(variableContext).Value,
-                CosmosParser.Expression_booleenneContext booleenneContext => Visit(booleenneContext),
-                CosmosParser.Expression_non_booleenneContext nonBooleenneContext => Visit(nonBooleenneContext),
-                
-                _ => throw new MissingTokenHandlerException(context)
-            };
-        }
-        */
     }
 }

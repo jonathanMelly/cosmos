@@ -5,13 +5,14 @@ namespace lib.parser.exception
     public class MissingTokenHandlerException : CosmosException
     {
         public MissingTokenHandlerException(IToken token) :
-            base($"ligne {token.Line}:{token.Column} No handler for token {token.Text}")
+            base($"{BuildParseErrorHeader(token)} Element non pris en charge: {token.Text}")
         {
         }
 
         public MissingTokenHandlerException(ParserRuleContext context) :
             base(
-                $"ligne {context.Start.Line}:{context.Start.Column} No handler for token {context.GetChild(0).GetText()}")
+                $"{BuildParseErrorHeader(context)} {context.Start.Line}:{context.Start.Column} " +
+                $"Element non pris en charge: {context.GetChild(0).GetText()}")
         {
         }
     }

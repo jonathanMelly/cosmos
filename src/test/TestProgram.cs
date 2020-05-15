@@ -10,12 +10,12 @@ namespace test
     {
         public TestProgram(ITestOutputHelper helper)
         {
-            fakeConsole = new TestConsole(helper);
+            fakeConsole = new XUnitCompatibleConsole(helper);
             Console.SetOut(fakeConsole);
             Console.SetError(fakeConsole);
         }
 
-        private readonly TestConsole fakeConsole;
+        private readonly XUnitCompatibleConsole fakeConsole;
 
         [Fact]
         public void TestProgramWithInvalidFile()
@@ -28,7 +28,7 @@ namespace test
 
             //Assert
             exitCode.Should().Be((int) Program.ExitCode.CompileError);
-            fakeConsole.Content.Should().Contain("attendu 'Date:'");
+            fakeConsole.Content.Should().Contain("attendu 'Date:'").And.Contain("il manque 'Description:'");
         }
 
         [Fact]

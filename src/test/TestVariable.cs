@@ -14,7 +14,7 @@ namespace test
             //Todo : affectation
         }
 
-        
+
 
         private void TestValidAllocationWithValue(string variableExpression, CosmosTypedValue expectedValue,
             string variablePrefix = "")
@@ -44,7 +44,7 @@ namespace test
             interpreter.Execute().Should().BeFalse();
         }
 
-        
+
 
         [Fact]
         public void TestEmptyAllocationNumbered()
@@ -120,6 +120,25 @@ namespace test
             //Assert
             parser.Variables.Should().HaveCount(2).And.ContainKey(variableRef.Name).And.ContainKey(copy.Name)
                 .WhichValue.Value.Should().NotBe(copy.Value).And.Be(variableRef.Value);
+        }
+
+        [Fact]
+        public void TestRefToUnknownVariableAllocation()
+        {
+            //Arrange
+            var variableRef = "#ref".AsCosmosVariable(12.AsCosmosNumber());
+
+            var copy = "#copy".AsCosmosVariable(0.AsCosmosNumber());
+
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) + "\t" +
+                                    BuildAllocationSnippet(copy.Name, variableRef.Name+$"Error"));
+
+
+            //Act
+            interpreter.Execute().Should().BeFalse();
+
+            //Assert
+            testConsole.ErrorContent.Should().Contain("inconnue");
         }
 
         [Fact]

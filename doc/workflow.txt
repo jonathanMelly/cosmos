@@ -4,7 +4,8 @@
   2.2 Push => Validated by ci-change.yaml
   etc..
 3. git co integration
-   git merge --squash change/AB#1-SmallDescr => Set AB#1 in commit msg
+   git merge --squash change/AB#1-SmallDescr
+   git commit => Set AB#1 in commit msg
    git push => Validated by ci-integration.yaml which also pushes onto master (upon success)
 
 etc..
