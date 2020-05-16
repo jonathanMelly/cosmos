@@ -1,3 +1,4 @@
+using System;
 using lib.antlr;
 using lib.parser.type;
 
@@ -10,12 +11,12 @@ namespace lib.parser.visitor
         private readonly StringExpressionVisitor stringExpressionVisitor;
         private readonly VariableVisitor variableVisitor;
 
-        public ExpressionVisitor(VariableVisitor variableVisitor,Parser parser)
+        public ExpressionVisitor(VariableVisitor variableVisitor,Parser parser, Random random)
         {
             this.variableVisitor = variableVisitor;
 
             stringExpressionVisitor = new StringExpressionVisitor(parser);
-            numericExpressionVisitor = new NumericExpressionVisitor(variableVisitor);
+            numericExpressionVisitor = new NumericExpressionVisitor(variableVisitor,random);
             booleanExpressionVisitor = new BooleanExpressionVisitor(this);
         }
 

@@ -1,3 +1,4 @@
+using System;
 using lib.antlr;
 using lib.console;
 using lib.parser;
@@ -7,19 +8,18 @@ namespace lib.interpreter
 {
     public class ExecutionVisitor : CosmosBaseVisitor<ExecutionContext>
     {
-        private readonly ExpressionVisitor expressionVisitor;
+        private ExpressionVisitor expressionVisitor;
 
         private readonly Parser parser;
         private readonly VariableVisitor variableVisitor;
         private IConsole executionConsole;
+        private Random random = new Random();
 
 
         public ExecutionVisitor(Parser parser)
         {
             this.parser = parser;
             variableVisitor = new VariableVisitor(parser);
-            expressionVisitor = new ExpressionVisitor(variableVisitor,parser);
-            variableVisitor.ExpressionVisitor=expressionVisitor;
         }
 
         /// <summary>
@@ -32,8 +32,17 @@ namespace lib.interpreter
             return this;
         }
 
+        public ExecutionVisitor WithRandom(Random random)
+        {
+            this.random = random;
+            return this;
+        }
+
         public override ExecutionContext VisitProgramme(CosmosParser.ProgrammeContext context)
         {
+            expressionVisitor = new ExpressionVisitor(variableVisitor,parser,random);
+            variableVisitor.ExpressionVisitor=expressionVisitor;
+
             var result = new ExecutionContext {Success = false};
             try
             {

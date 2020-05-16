@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using FluentAssertions;
@@ -28,8 +29,8 @@ namespace test
         protected const string TrueCondition = "1 vaut 1";
         protected const string FalseCondition = "2 vaut 3";
 
-        protected const string Allocation = "Allouer une zone mémoire ";
-        protected const string Afficher = "Afficher";
+        protected const string Allocation = "\tAllouer une zone mémoire ";
+        protected const string Afficher = "\tAfficher"; //no integrated tab as used as
         protected const string Repeter = "\tRépéter ";
 
 
@@ -38,6 +39,8 @@ namespace test
         protected Parser parser;
         protected Interpreter interpreter;
         protected XUnitCompatibleConsole testConsole;
+
+        protected Random random = new Random(27031983);
 
         public AbstractInterpreterTest(ITestOutputHelper helper)
         {
@@ -59,7 +62,7 @@ namespace test
 
         protected virtual void BuildSnippetInterpreter(string content, bool expectedParseResult = true)
         {
-            var program = $"{ValidHeaderSnippet}\n{ValidStartSnippet}\n\t{content}\n{ValidEnd}";
+            var program = $"{ValidHeaderSnippet}\n{ValidStartSnippet}\n{content}\n{ValidEnd}";
 
             var programWithLines = new StringBuilder();
             var i = 1;
@@ -71,7 +74,7 @@ namespace test
             helper.WriteLine($"///Code source----\n{programWithLines}\n///Fin du code source----\n\nRésultat d'éxécution:\n",IConsole.Channel.Debug);
 
             parser = new Parser().ForSnippet(program).WithConsole(testConsole);
-            interpreter = new Interpreter(parser,testConsole);
+            interpreter = new Interpreter(parser,testConsole).WithRandom(random);
 
             using (var scope = new AssertionScope())
             {
@@ -93,13 +96,13 @@ namespace test
             var result = new StringBuilder();
             const string function = Afficher;
             result.Append(
-                $"\tSi {(condition ? TrueCondition : FalseCondition)} alors\n\t\t{function} \"{(condition ? TrueCondition : FalseCondition)}\".\n\t");
+                $"\tSi {(condition ? TrueCondition : FalseCondition)} alors\n\t{function} \"{(condition ? TrueCondition : FalseCondition)}\".\n\t");
             if (elsifs != null)
                 foreach (var elsif in elsifs)
                     result.Append(
-                        $"sinon si {(elsif ? TrueCondition : FalseCondition)} alors\n\t\t{function} \"{(elsif ? TrueCondition : FalseCondition)}\".\n\t");
+                        $"sinon si {(elsif ? TrueCondition : FalseCondition)} alors\n\t{function} \"{(elsif ? TrueCondition : FalseCondition)}\".\n\t");
 
-            if (elsee != null) result.Append($"et sinon\n\t\t{function} \"{TrueCondition}\".\n\t");
+            if (elsee != null) result.Append($"et sinon\n\t{function} \"{TrueCondition}\".\n\t");
 
             result.Append("?\n");
 
@@ -114,7 +117,7 @@ namespace test
             string variablePrefix = "")
         {
             var result =
-                $"\t{Allocation} {variableName} {(variableExpression != null ? $"avec {variablePrefix} {variableExpression}" : "")}.\n";
+                $"{Allocation} {variableName} {(variableExpression != null ? $"avec {variablePrefix} {variableExpression}" : "")}.\n";
             return result;
         }
 
@@ -134,7 +137,7 @@ namespace test
             {
                 finalContent = $"\"{content}\"";
             }
-            result.Append($"\t{Afficher} {finalContent}.\n");
+            result.Append($"{Afficher} {finalContent}.\n");
 
             return result.ToString();
         }
@@ -143,7 +146,7 @@ namespace test
         {
             var result = new StringBuilder();
             result.Append($"{Repeter} {iterations}x\n");
-            result.Append(content);
+            result.Append($"\t"+content);
             result.Append($"\n\t>>");
 
             return result.ToString();
@@ -163,7 +166,7 @@ namespace test
                 result.Append($"autant de fois qu'il y a de {iterations.Name}\n");
             }
 
-            result.Append(content);
+            result.Append("\t"+content);
             result.Append($"\n\t>>\n");
 
             return result.ToString();
@@ -173,7 +176,7 @@ namespace test
         {
             var result = new StringBuilder();
             result.Append($"{Repeter} tant que {boolExpression} \n");
-            result.Append(content);
+            result.Append($"\t"+content);
             result.Append($"\n\t>>\n");
 
             return result.ToString();

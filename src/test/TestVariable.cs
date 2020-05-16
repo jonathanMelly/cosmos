@@ -110,7 +110,7 @@ namespace test
 
             var copy = "#copy".AsCosmosVariable(0.AsCosmosNumber());
 
-            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) + "\t" +
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
                                     BuildAllocationSnippet(copy.Name, variableRef.Name));
 
 
@@ -130,7 +130,7 @@ namespace test
 
             var copy = "#copy".AsCosmosVariable(0.AsCosmosNumber());
 
-            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) + "\t" +
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
                                     BuildAllocationSnippet(copy.Name, variableRef.Name+$"Error"));
 
 

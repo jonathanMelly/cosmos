@@ -1,3 +1,4 @@
+using System;
 using lib.antlr;
 using lib.parser.exception;
 using lib.parser.type;
@@ -8,9 +9,12 @@ namespace lib.parser.visitor
     public class NumericExpressionVisitor : CosmosBaseVisitor<CosmosNumber>
     {
         private readonly VariableVisitor variableVisitor;
-        public NumericExpressionVisitor(VariableVisitor variableVisitor)
+        private readonly Random random;
+
+        public NumericExpressionVisitor(VariableVisitor variableVisitor,Random random)
         {
             this.variableVisitor = variableVisitor;
+            this.random = random;
         }
 
         public override CosmosNumber VisitVariable(CosmosParser.VariableContext context)
@@ -40,7 +44,9 @@ namespace lib.parser.visitor
                 case CosmosParser.Atome_numeriqueContext atomeNumeriqueContext:
                     if (atomeNumeriqueContext.nombre_aleatoire() != null)
                     {
-                        //TODO Random
+                        var min = Convert.ToInt32(atomeNumeriqueContext.nombre_aleatoire().min.GetText());
+                        var max = Convert.ToInt32(atomeNumeriqueContext.nombre_aleatoire().max.GetText());
+                        return new CosmosNumber(random.Next(min,max+1));
                     }
                     return new CosmosNumber(atomeNumeriqueContext.nombre().VALEUR_NOMBRE().GetText());
 
