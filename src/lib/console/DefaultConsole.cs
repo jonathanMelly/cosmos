@@ -26,5 +26,10 @@ namespace lib.console
         {
             Write($"{text}\n", channel);
         }
+
+        public string ReadLine()
+        {
+            return Console.ReadLine();
+        }
     }
 }

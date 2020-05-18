@@ -25,7 +25,12 @@ namespace lib.parser.visitor
 
         public override CosmosVariable VisitVariable(CosmosParser.VariableContext context)
         {
-            return GetVariable(context.la_zone_memoire().VARIABLE(), context);
+            return VisitLa_zone_memoire(context.la_zone_memoire());
+        }
+
+        public override CosmosVariable VisitLa_zone_memoire(CosmosParser.La_zone_memoireContext context)
+        {
+            return GetVariable(context.VARIABLE(), context);
         }
 
         public CosmosVariable GetVariable(ITerminalNode variableNode, ParserRuleContext context)

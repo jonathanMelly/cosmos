@@ -1,7 +1,9 @@
 using System;
 using lib.antlr;
 using lib.console;
+using lib.extension;
 using lib.parser;
+using lib.parser.type;
 using lib.parser.visitor;
 
 namespace lib.interpreter
@@ -126,7 +128,11 @@ namespace lib.interpreter
 
         public override ExecutionContext VisitAffecter(CosmosParser.AffecterContext context)
         {
-            var variable = variableVisitor.Visit(context.variable());
+
+            var variable = context.variable() != null ?
+                variableVisitor.Visit(context.variable()) :
+                variableVisitor.GetVariable(context.la_zone_memoire().VARIABLE(), context.la_zone_memoire());
+
             var newValue = variable.UpdatedTo(expressionVisitor.Visit(context.expression()));
 
             parser.Variables[variable.Name] = newValue;
@@ -144,6 +150,30 @@ namespace lib.interpreter
         {
             var variable = variableVisitor.Visit(context);
             parser.Variables[variable.Name] = variable;
+
+            return null;
+        }
+
+        public override ExecutionContext VisitRecuperer(CosmosParser.RecupererContext context)
+        {
+            var input = executionConsole.ReadLine();
+            CosmosTypedValue typedValue;
+
+            if (bool.TryParse(input.Replace("vrai","true").Replace("faux","false"),out var boolResult))
+            {
+                typedValue = boolResult.AsCosmosBoolean();
+            }
+            else if (decimal.TryParse(input, out var numberResult))
+            {
+                typedValue = numberResult.AsCosmosNumber();
+            }
+            else
+            {
+                typedValue = input.AsCosmosString();
+            }
+            var variable = variableVisitor.Visit(context.la_zone_memoire());
+
+            parser.Variables[variable.Name] = variable.UpdatedTo(typedValue);
 
             return null;
         }

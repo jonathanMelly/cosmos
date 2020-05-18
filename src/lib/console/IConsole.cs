@@ -22,5 +22,11 @@ namespace lib.console
         /// <param name="text">to be printed (\n appended)</param>
         /// <param name="channel">1=standard, 2=error</param>
         void WriteLine(string text, Channel channel = Channel.Standard);
+
+        /// <summary>
+        /// Waits and get user input until carriage return
+        /// </summary>
+        /// <returns>input</returns>
+        string ReadLine();
     }
 }

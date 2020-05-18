@@ -31,6 +31,11 @@ namespace test
 
         public string ErrorContent => content[Channel.Error].ToString();
 
+        public Stack<string> Input => input;
+
+        private Stack<string> input = new Stack<string>();
+
+
         public void Write(string text, Channel channel)
         {
             helper.WriteLine(text);
@@ -40,6 +45,11 @@ namespace test
         public void WriteLine(string text, Channel channel)
         {
             Write(text + "\n", channel);
+        }
+
+        public string ReadLine()
+        {
+            return Input.Pop();
         }
 
         public override string ToString()

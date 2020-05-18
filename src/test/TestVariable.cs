@@ -161,5 +161,43 @@ namespace test
             var value = "StringAllocation2";
             TestValidAllocationWithValue($"\"{value}\"", value.AsCosmosString());
         }
+
+        [Fact]
+        public void TestCopyValue()
+        {
+            //Arrange
+            var variableRef = "#ref".AsCosmosVariable(12.AsCosmosNumber());
+            var newVal = 5;
+
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
+                                    BuildCopySnippet(newVal,variableRef.Name)+
+                                    BuildAfficherSnippet(variableRef.Name.ToString()));
+
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            testConsole.Content.Should().Be(newVal.ToString());
+        }
+
+        [Fact]
+        public void TestCopyValueVariant2()
+        {
+            //Arrange
+            var variableRef = "#ref".AsCosmosVariable(12.AsCosmosNumber());
+            var newVal = 5;
+
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
+                                    BuildCopySnippet(newVal,variableRef.Name,1)+
+                                    BuildAfficherSnippet(variableRef.Name.ToString()));
+
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            testConsole.Content.Should().Be(newVal.ToString());
+        }
     }
 }

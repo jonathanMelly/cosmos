@@ -60,7 +60,7 @@ namespace lib.parser.visitor
                         return context.operateur.Type switch
                         {
                             OPERATEUR_MATH_MOINS => -Visit(context.sousExpression),
-                            OPERATEUR_MATH_PLUS | PARENTHESE_GAUCHE => Visit(context.sousExpression),
+                            OPERATEUR_MATH_PLUS  => Visit(context.sousExpression),
 
                             _ => throw new MissingTokenHandlerException(context.operateur)
                         };

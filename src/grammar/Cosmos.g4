@@ -35,12 +35,13 @@ DE_LA_TRANSMISSION : 'de la transmission' ;
 instruction : TABULATION+ (instruction_simple | instruction_complexe) ;
 noop:TABULATION* RETOUR_DE_CHARIOT ;
 
-instruction_simple   : (afficher|allouer|affecter) POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
+instruction_simple   : (afficher|allouer|affecter|recuperer) POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
 instruction_complexe : selection|boucle ; //terminaison spécifique pour chaque
 
 afficher : 'Afficher' expression;
 allouer : ALLOUER_TERME une_zone_memoire (INITIALISATION_TERME? expression)? ;
-affecter : ('Insérer' expression 'dans' la_zone_memoire) | (variable OPERATEUR_MATH_EGAL expression ) ;
+affecter : (('Insérer'|'Copier') expression 'dans' la_zone_memoire) | (variable OPERATEUR_MATH_EGAL expression ) ;
+recuperer: 'Récupérer la saisie et la stocker dans'?  la_zone_memoire;
 
 ALLOUER_TERME : 'Allouer' | 'Créer' ;
 INITIALISATION_TERME : 'avec' | 'et y enregistrer' ;

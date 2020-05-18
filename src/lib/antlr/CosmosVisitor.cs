@@ -124,6 +124,12 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitAffecter([NotNull] CosmosParser.AffecterContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.recuperer"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRecuperer([NotNull] CosmosParser.RecupererContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

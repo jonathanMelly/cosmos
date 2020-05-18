@@ -181,5 +181,20 @@ namespace test
 
             return result.ToString();
         }
+
+        protected string BuildCopySnippet(object source, string destination,int variant=0)
+        {
+            var term = variant switch
+            {
+                1=> "Insérer",
+                _ => "Copier"
+            };
+            return $"\t{term} {source.ToString()} dans {destination}.\n";
+        }
+
+        protected string BuildInputSnippet(CosmosVariable destination)
+        {
+            return $"\tRécupérer la saisie et la stocker dans la zone mémoire nommée {destination.Name}.\n";
+        }
     }
 }

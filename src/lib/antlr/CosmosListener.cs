@@ -183,6 +183,16 @@ public interface ICosmosListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitAffecter([NotNull] CosmosParser.AffecterContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.recuperer"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterRecuperer([NotNull] CosmosParser.RecupererContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.recuperer"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitRecuperer([NotNull] CosmosParser.RecupererContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

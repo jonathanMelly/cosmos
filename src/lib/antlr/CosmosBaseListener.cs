@@ -217,6 +217,18 @@ public partial class CosmosBaseListener : ICosmosListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitAffecter([NotNull] CosmosParser.AffecterContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.recuperer"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterRecuperer([NotNull] CosmosParser.RecupererContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.recuperer"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitRecuperer([NotNull] CosmosParser.RecupererContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
