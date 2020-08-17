@@ -37,6 +37,11 @@ namespace lib.parser.visitor
             return numericExpressionVisitor.Visit(context);
         }
 
+        public override CosmosTypedValue VisitNombre(CosmosParser.NombreContext context)
+        {
+            return numericExpressionVisitor.VisitNombre(context);
+        }
+
         public override CosmosTypedValue VisitVariable(CosmosParser.VariableContext context)
         {
             return variableVisitor.VisitVariable(context).Value;

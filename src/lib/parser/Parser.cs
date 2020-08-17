@@ -10,6 +10,15 @@ namespace lib.parser
 {
     public class Parser
     {
+        public const string ValidHeaderSnippet = "Auteur: Jonathan Strokee\n" +
+                                                  "Date: 27.03.2020\n" +
+                                                  "Entreprise: ETML\n" +
+                                                  "Description: Demonstration du langage cosmos,\n" +
+                                                  "ce langage esttodo extraordinaire\n" +
+                                                  "Voici les ordres du programme DEMO_COSMOS à classer dans la bibliothèque DEMONSTRATION :\n";
+
+        public const string ValidEnd = "\nFin de la transmission.";
+
         private string code;
         private string codeFile;
 
@@ -33,9 +42,9 @@ namespace lib.parser
             return this;
         }
 
-        public Parser ForSnippet(string snippet)
+        public Parser ForSnippet(string snippet,bool addHeader = false)
         {
-            code = snippet;
+            code = $"{(addHeader?ValidHeaderSnippet:"")}{snippet}{ValidEnd}";
             return this;
         }
 
@@ -43,6 +52,14 @@ namespace lib.parser
         {
             this.console = console;
             return this;
+        }
+
+        public void CopyContext(Parser parser)
+        {
+            foreach (var existingVariable in parser.Variables)
+            {
+                Variables.Add(existingVariable);
+            }
         }
 
         public bool Parse()
@@ -57,9 +74,9 @@ namespace lib.parser
             parser.AddErrorListener(ErrorListener);
 
             context = parser.programme();
-            
+
             //TODO : add variablecheckerVisitor ;-)
-            
+
             return !ErrorListener.HadError;
         }
     }

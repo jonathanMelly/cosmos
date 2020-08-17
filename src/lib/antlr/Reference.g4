@@ -35,13 +35,16 @@ DE_LA_TRANSMISSION : 'de la transmission' ;
 instruction : TABULATION+ (instruction_simple | instruction_complexe) ;
 noop:TABULATION* RETOUR_DE_CHARIOT ;
 
-instruction_simple   : (afficher|allouer|affecter|recuperer) POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
+instruction_simple   : (afficher|allouer|affecter|recuperer|generer_aleatoire|placer_ligne|placer_colonne) POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
 instruction_complexe : selection|boucle ; //terminaison spécifique pour chaque
 
 afficher : 'Afficher' expression;
 allouer : ALLOUER_TERME une_zone_memoire (INITIALISATION_TERME? expression)? ;
 affecter : (('Insérer'|'Copier') expression 'dans' la_zone_memoire) | (variable OPERATEUR_MATH_EGAL expression ) ;
 recuperer: 'Récupérer la saisie et la stocker dans'?  la_zone_memoire;
+placer_ligne: 'Placer le curseur à la ligne' expression_numerique;
+placer_colonne: 'Placer le curseur à la colonne' expression_numerique;
+generer_aleatoire: 'Placer un nombre aléatoire compris entre ' min=expression_numerique ET max=expression_numerique 'dans' la_zone_memoire;
 
 ALLOUER_TERME : 'Allouer' | 'Créer' ;
 INITIALISATION_TERME : 'avec' | 'et y enregistrer' ;
@@ -135,10 +138,7 @@ expression_numerique
 expression_textuelle : atome_textuel ; //todo ou concaténation ... ?
 
 atome_textuel : chaine_de_caractere ;
-atome_numerique : nombre | nombre_aleatoire ;
-
-nombre_aleatoire : 'un nombre aléatoire entre ' min=nombre ET max=nombre;
-
+atome_numerique : nombre ;
 
 PARENTHESE_GAUCHE : '(' ;
 PARENTHESE_DROITE : ')' ;

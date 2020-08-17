@@ -27,7 +27,8 @@ namespace lib.parser.visitor
                     {
                         if (parser.Variables.ContainsKey(match.Value))
                         {
-                            return parser.Variables[match.Value].Value.ToString();
+                            object value = parser.Variables[match.Value].Value;
+                            return value==null?"<NÉANT>":value.ToString();
                         }
 
                         parser.ErrorListener.Error(new UnknownVariableException(match.Value,atomeTextuelContext.chaine_de_caractere()));

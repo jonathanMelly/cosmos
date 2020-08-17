@@ -130,6 +130,24 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitRecuperer([NotNull] CosmosParser.RecupererContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.placer_ligne"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPlacer_ligne([NotNull] CosmosParser.Placer_ligneContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.placer_colonne"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPlacer_colonne([NotNull] CosmosParser.Placer_colonneContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.generer_aleatoire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitGenerer_aleatoire([NotNull] CosmosParser.Generer_aleatoireContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -219,12 +237,6 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitAtome_numerique([NotNull] CosmosParser.Atome_numeriqueContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.nombre_aleatoire"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitNombre_aleatoire([NotNull] CosmosParser.Nombre_aleatoireContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.variable"/>.
 	/// </summary>

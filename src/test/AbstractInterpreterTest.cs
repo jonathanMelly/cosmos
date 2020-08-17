@@ -15,16 +15,8 @@ namespace test
     {
         protected const string DataFilePath = "../../../data/";
 
-        private const string ValidHeaderSnippet = "Auteur: Jonathan Strokee\n" +
-                                                  "Date: 27.03.2020\n" +
-                                                  "Entreprise: ETML\n" +
-                                                  "Description: Demonstration du langage cosmos,\n" +
-                                                  "ce langage esttodo extraordinaire";
 
-        private const string ValidStartSnippet =
-            "Voici les ordres du programme DEMO_COSMOS à classer dans la bibliothèque DEMONSTRATION :";
 
-        private const string ValidEnd = "Fin de la transmission.";
 
         protected const string TrueCondition = "1 vaut 1";
         protected const string FalseCondition = "2 vaut 3";
@@ -62,7 +54,7 @@ namespace test
 
         protected virtual void BuildSnippetInterpreter(string content, bool expectedParseResult = true)
         {
-            var program = $"{ValidHeaderSnippet}\n{ValidStartSnippet}\n{content}\n{ValidEnd}";
+            var program = $"{Parser.ValidHeaderSnippet}{content}{Parser.ValidEnd}";
 
             var programWithLines = new StringBuilder();
             var i = 1;

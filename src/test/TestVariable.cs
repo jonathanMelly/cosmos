@@ -199,5 +199,20 @@ namespace test
             //Assert
             testConsole.Content.Should().Be(newVal.ToString());
         }
+
+        [Fact]
+        private void TestEmptyVariable()
+        {
+            //Arrange
+            var variableName = "#maVariable";
+
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableName.AsCosmosVariable())+"\n\t"+BuildAfficherSnippet(variableName));
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            testConsole.Content.Should().Be("<NÉANT>");
+        }
     }
 }

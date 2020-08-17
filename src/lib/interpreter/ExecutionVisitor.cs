@@ -177,5 +177,19 @@ namespace lib.interpreter
 
             return null;
         }
+
+        public override ExecutionContext VisitGenerer_aleatoire(CosmosParser.Generer_aleatoireContext context)
+        {
+            var min = Convert.ToInt32(expressionVisitor.Visit(context.min).Number().Value);
+            var max = Convert.ToInt32(expressionVisitor.Visit(context.max).Number().Value);
+
+            var variable = variableVisitor.GetVariable(context.la_zone_memoire().VARIABLE(), context.la_zone_memoire());
+
+            var newValue = variable.UpdatedTo(new CosmosNumber(random.Next(min,max+1)));
+
+            parser.Variables[variable.Name] = newValue;
+
+            return null;
+        }
     }
 }

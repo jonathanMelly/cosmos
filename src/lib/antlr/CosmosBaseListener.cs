@@ -229,6 +229,42 @@ public partial class CosmosBaseListener : ICosmosListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitRecuperer([NotNull] CosmosParser.RecupererContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.placer_ligne"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterPlacer_ligne([NotNull] CosmosParser.Placer_ligneContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.placer_ligne"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitPlacer_ligne([NotNull] CosmosParser.Placer_ligneContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.placer_colonne"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterPlacer_colonne([NotNull] CosmosParser.Placer_colonneContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.placer_colonne"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitPlacer_colonne([NotNull] CosmosParser.Placer_colonneContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.generer_aleatoire"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterGenerer_aleatoire([NotNull] CosmosParser.Generer_aleatoireContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.generer_aleatoire"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitGenerer_aleatoire([NotNull] CosmosParser.Generer_aleatoireContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -408,18 +444,6 @@ public partial class CosmosBaseListener : ICosmosListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitAtome_numerique([NotNull] CosmosParser.Atome_numeriqueContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.nombre_aleatoire"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterNombre_aleatoire([NotNull] CosmosParser.Nombre_aleatoireContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.nombre_aleatoire"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitNombre_aleatoire([NotNull] CosmosParser.Nombre_aleatoireContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.variable"/>.
 	/// <para>The default implementation does nothing.</para>

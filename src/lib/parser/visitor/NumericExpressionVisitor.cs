@@ -42,13 +42,10 @@ namespace lib.parser.visitor
                     };
 
                 case CosmosParser.Atome_numeriqueContext atomeNumeriqueContext:
-                    if (atomeNumeriqueContext.nombre_aleatoire() != null)
-                    {
-                        var min = Convert.ToInt32(atomeNumeriqueContext.nombre_aleatoire().min.GetText());
-                        var max = Convert.ToInt32(atomeNumeriqueContext.nombre_aleatoire().max.GetText());
-                        return new CosmosNumber(random.Next(min,max+1));
-                    }
-                    return new CosmosNumber(atomeNumeriqueContext.nombre().VALEUR_NOMBRE().GetText());
+                    return Visit(atomeNumeriqueContext.nombre());
+
+                case CosmosParser.NombreContext nombreContext:
+                    return VisitNombre(nombreContext);
 
                 case CosmosParser.VariableContext variableContext:
                     return variableVisitor.Visit(variableContext).Value.Number();
@@ -65,6 +62,13 @@ namespace lib.parser.visitor
                             _ => throw new MissingTokenHandlerException(context.operateur)
                         };
             }
+
+
+        }
+
+        public override CosmosNumber VisitNombre(CosmosParser.NombreContext context)
+        {
+            return new CosmosNumber(context.VALEUR_NOMBRE().GetText());
         }
     }
 }
