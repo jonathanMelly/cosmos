@@ -1,8 +1,10 @@
 using System;
+using System.Threading;
 using lib.antlr;
 using lib.console;
 using lib.extension;
 using lib.parser;
+using lib.parser.exception;
 using lib.parser.type;
 using lib.parser.visitor;
 
@@ -189,6 +191,80 @@ namespace lib.interpreter
 
             parser.Variables[variable.Name] = newValue;
 
+            return null;
+        }
+
+        public override ExecutionContext VisitPlacer_curseur(CosmosParser.Placer_curseurContext context)
+        {
+            var index = (int) expressionVisitor.Visit(context.expression_numerique()).Number().Value;
+            if (context.ligne != null)
+            {
+                executionConsole.SetCursorToLine(index);
+            }
+            else
+            {
+                executionConsole.SetCursorToColumn(index);
+            }
+
+            return null;
+        }
+
+        public override ExecutionContext VisitDormir(CosmosParser.DormirContext context)
+        {
+            var time = (int) expressionVisitor.Visit(context.expression_numerique()).Number().Value;
+            Thread.Sleep(time);
+            return null;
+        }
+
+        public override ExecutionContext VisitColorier(CosmosParser.ColorierContext context)
+        {
+            var dark ="";
+            var translatedColor = "";
+
+            if (context.dark != null)
+            {
+                dark = "Dark";
+            }
+
+            if (context.blue != null)
+            {
+                translatedColor = "Blue";
+            }
+            else if (context.green != null)
+            {
+                translatedColor = "Green";
+            }
+            else if (context.red != null)
+            {
+                translatedColor = "Red";
+            }
+            else if (context.white != null)
+            {
+                translatedColor = "White";
+            }
+            else if (context.black!=null)
+            {
+                translatedColor = "Black";
+            }
+            else
+            {
+                throw new UnHandledColorException("La couleur indiquée n'est pas encore prise en charge");
+            }
+
+            var newColor = ConsoleColor.Gray;
+            bool parse = ConsoleColor.TryParse($"{dark}{translatedColor}",out newColor);
+
+            if (parse)
+            {
+                if (context.background!=null)
+                {
+                    executionConsole.SetBackColorTo(newColor.ToString());
+                }
+                else
+                {
+                    executionConsole.SetFrontColorTo(newColor.ToString());
+                }
+            }
             return null;
         }
     }

@@ -1,0 +1,17 @@
+Auteur: Jonathan Strokee
+Date: 27.03.2020
+Entreprise: ETML
+Description: Demonstration du langage cosmos,
+ce langage esttodo extraordinaire
+
+//Début du programme
+Voici les ordres du programme DEMO_COSMOS à classer dans la bibliothèque DEMONSTRATION :
+
+	//Affichage de texte sur la console (La répétition est là à titre de démonstration)
+	Placer le curseur à la ligne 5.
+	Placer le curseur à la colonne 6.
+	Choisir la couleur rouge foncé pour le fond.
+	Choisir la couleur bleu pour le texte.
+	Afficher "Texte en couleur et décalé".
+
+Fin de la transmission.

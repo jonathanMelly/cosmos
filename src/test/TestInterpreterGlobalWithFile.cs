@@ -64,5 +64,18 @@ namespace test
             //Assert
             Assert.True(success, "There should be no parse error");
         }
+
+        [Fact]
+        public void TestConsoleManipulation()
+        {
+            //Arrange
+            BuildFileInterpreter(DataFilePath+"ConsoleManipulation.cosmos");
+
+            //Act
+            interpreter.Execute();
+
+            //Assert
+            testConsole.Content.Should().Match("@@Set cursor y to 5\n@@Set cursor x to 6\n@@Set back color to DarkRed\n@@Set front color to Blue\nTexte en couleur et décalé");
+        }
     }
 }

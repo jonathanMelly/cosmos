@@ -28,5 +28,28 @@ namespace lib.console
         /// </summary>
         /// <returns>input</returns>
         string ReadLine();
+
+        /// <summary>
+        /// Place the cursor to specified line
+        /// </summary>
+        /// <param name="index">The zero based line index</param>
+        void SetCursorToLine(in int index);
+
+        /// <summary>
+        /// Place the cursor to the specified column
+        /// </summary>
+        /// <param name="index">The zero based column index</param>
+        void SetCursorToColumn(in int index);
+
+        /// <summary>
+        /// Set front color for following writes
+        /// </summary>
+        /// <param name="color">the color name</param>
+        void SetFrontColorTo(string color);
+        /// <summary>
+        /// Set back color for following writes
+        /// </summary>
+        /// <param name="color">the color name</param>
+        void SetBackColorTo(string color);
     }
 }

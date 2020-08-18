@@ -193,25 +193,15 @@ public interface ICosmosListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitRecuperer([NotNull] CosmosParser.RecupererContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.placer_ligne"/>.
+	/// Enter a parse tree produced by <see cref="CosmosParser.placer_curseur"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterPlacer_ligne([NotNull] CosmosParser.Placer_ligneContext context);
+	void EnterPlacer_curseur([NotNull] CosmosParser.Placer_curseurContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.placer_ligne"/>.
+	/// Exit a parse tree produced by <see cref="CosmosParser.placer_curseur"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitPlacer_ligne([NotNull] CosmosParser.Placer_ligneContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.placer_colonne"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterPlacer_colonne([NotNull] CosmosParser.Placer_colonneContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.placer_colonne"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitPlacer_colonne([NotNull] CosmosParser.Placer_colonneContext context);
+	void ExitPlacer_curseur([NotNull] CosmosParser.Placer_curseurContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.generer_aleatoire"/>.
 	/// </summary>
@@ -222,6 +212,26 @@ public interface ICosmosListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitGenerer_aleatoire([NotNull] CosmosParser.Generer_aleatoireContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.dormir"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterDormir([NotNull] CosmosParser.DormirContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.dormir"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitDormir([NotNull] CosmosParser.DormirContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.colorier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterColorier([NotNull] CosmosParser.ColorierContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.colorier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitColorier([NotNull] CosmosParser.ColorierContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// </summary>

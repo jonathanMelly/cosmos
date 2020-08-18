@@ -131,6 +131,11 @@ namespace commandline_tool
                     }
 
                     var sourceFile = args[0];
+                    //Prend en compte les fichiers sans spécifier l'extension par défaut de .cosmos
+                    if (!File.Exists(sourceFile))
+                    {
+                        sourceFile = $"{sourceFile}.cosmos";
+                    }
 
                     if (File.Exists(sourceFile))
                     {

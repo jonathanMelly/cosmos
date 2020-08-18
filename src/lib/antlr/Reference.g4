@@ -35,16 +35,17 @@ DE_LA_TRANSMISSION : 'de la transmission' ;
 instruction : TABULATION+ (instruction_simple | instruction_complexe) ;
 noop:TABULATION* RETOUR_DE_CHARIOT ;
 
-instruction_simple   : (afficher|allouer|affecter|recuperer|generer_aleatoire|placer_ligne|placer_colonne) POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
+instruction_simple   : (afficher|allouer|affecter|recuperer|generer_aleatoire|placer_curseur|dormir|colorier) POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
 instruction_complexe : selection|boucle ; //terminaison spécifique pour chaque
 
 afficher : 'Afficher' expression;
 allouer : ALLOUER_TERME une_zone_memoire (INITIALISATION_TERME? expression)? ;
 affecter : (('Insérer'|'Copier') expression 'dans' la_zone_memoire) | (variable OPERATEUR_MATH_EGAL expression ) ;
 recuperer: 'Récupérer la saisie et la stocker dans'?  la_zone_memoire;
-placer_ligne: 'Placer le curseur à la ligne' expression_numerique;
-placer_colonne: 'Placer le curseur à la colonne' expression_numerique;
+placer_curseur: 'Placer le curseur à la' (ligne='ligne'|colonne='colonne') expression_numerique;
 generer_aleatoire: 'Placer un nombre aléatoire compris entre ' min=expression_numerique ET max=expression_numerique 'dans' la_zone_memoire;
+dormir: 'Attendre' expression_numerique 'ms';
+colorier: 'Choisir la couleur' (red='rouge'|green='vert'|blue='bleu'|white='blanc'|black='noir'|gray='gris') dark='foncé'? 'pour le' (text='texte'|background='fond');
 
 ALLOUER_TERME : 'Allouer' | 'Créer' ;
 INITIALISATION_TERME : 'avec' | 'et y enregistrer' ;

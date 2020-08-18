@@ -66,5 +66,25 @@ namespace test
         {
             WriteLine(text, Channel.Standard);
         }
+
+        public void SetCursorToLine(in int index)
+        {
+            WriteLine($"@@Set cursor y to {index}");
+        }
+
+        public void SetCursorToColumn(in int index)
+        {
+            WriteLine($"@@Set cursor x to {index}");
+        }
+
+        public void SetFrontColorTo(string color)
+        {
+            WriteLine($"@@Set front color to {color}");
+        }
+
+        public void SetBackColorTo(string color)
+        {
+            WriteLine($"@@Set back color to {color}");
+        }
     }
 }
