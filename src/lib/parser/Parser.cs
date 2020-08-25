@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Antlr4.Runtime;
+using Antlr4.Runtime.Tree.Xpath;
 using lib.antlr;
 using lib.console;
 using lib.parser.listener;
@@ -10,14 +12,9 @@ namespace lib.parser
 {
     public class Parser
     {
-        public const string ValidHeaderSnippet = "Auteur: Jonathan Strokee\n" +
-                                                  "Date: 27.03.2020\n" +
-                                                  "Entreprise: ETML\n" +
-                                                  "Description: Demonstration du langage cosmos,\n" +
-                                                  "ce langage esttodo extraordinaire\n" +
-                                                  "Voici les ordres du programme DEMO_COSMOS à classer dans la bibliothèque DEMONSTRATION :\n";
 
-        public const string ValidEnd = "\nFin de la transmission.";
+        public static string ValidEnd = $"{Environment.NewLine}Fin de la transmission.{Environment.NewLine}";
+        public static string ValidHeaderSnippet = BuildValidHeader("TEST_PROG",library:"TEST_LIB");
 
         private string code;
         private string codeFile;
@@ -78,6 +75,15 @@ namespace lib.parser
             //TODO : add variablecheckerVisitor ;-)
 
             return !ErrorListener.HadError;
+        }
+
+        public static string BuildValidHeader(string name,string library=null,string date=null)
+        {
+            return $"Auteur: {Environment.UserName}{Environment.NewLine}" +
+                   $"Date: {date ?? DateTime.Now.ToString("dd.MM.yyyy")}{Environment.NewLine}" +
+                   $"Entreprise: {Environment.UserDomainName}{Environment.NewLine}" +
+                   $"Description: {name}{Environment.NewLine}" +
+                   $"Voici les ordres du programme {name} {(library==null?"":$"à classer dans la bibliothèque {library}")} :{Environment.NewLine}";
         }
     }
 }
