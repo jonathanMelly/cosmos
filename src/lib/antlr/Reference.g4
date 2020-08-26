@@ -184,7 +184,7 @@ RETOUR_DE_CHARIOT : '\r'? '\n' ;
 //fragment CARACTERE : ~[."\\\r\n ] ;
 
 //Tout le reste...
-MOT : LETTRE+ ;
+MOT : LETTRE (LETTRE|CHIFFRE)* ;
 ESPACE: ' ' -> skip ;
 COMMENTAIRE_LIGNE: (TABULATION? | TABULATION+) '//' ~[\n]* RETOUR_DE_CHARIOT -> skip ;
 COMMENTAIRE : '/*' .*? '*/' -> skip ;
