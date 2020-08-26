@@ -13,7 +13,9 @@ etc..
 #Cleanup...
 3.5 git branch -D change/AB#1-SmallDescr
 
-4. git switch -c release/1.0.0
+4.
+   git checkout release/LastRelease
+   git switch -c release/1.0.0
    git merge master(or until specified treeish) --no-commit --no-ff
    git commit -m "features set for release 1.0.0"
    git tag release/1.0.0
