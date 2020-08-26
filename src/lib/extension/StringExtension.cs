@@ -13,6 +13,7 @@ namespace lib.extension
         {
             return new CosmosVariable(subject, value);
         }
-        
+
+
     }
 }

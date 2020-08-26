@@ -1,3 +1,4 @@
+using System;
 using lib.console;
 using lib.parser;
 
@@ -7,21 +8,28 @@ namespace lib.interpreter
     {
         private readonly Parser parser;
         private IConsole console;
-        
+        private Random random = new Random();
+
         public Interpreter(Parser parser, IConsole console=null)
         {
             this.parser = parser;
             this.console = console;
         }
-        
+
+        public Interpreter WithRandom(Random random)
+        {
+            this.random = random;
+            return this;
+        }
+
         public bool Execute()
         {
             if (!parser.Parse()) return false;
 
-            var visitor = new ExecutionVisitor(parser).WithConsole(console);
-            visitor.Visit(parser.Context);
+            var visitor = new ExecutionVisitor(parser).WithConsole(console).WithRandom(random);
+            var result = visitor.Visit(parser.Context);
 
-            return true;
+            return result.Success;
         }
     }
 }

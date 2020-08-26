@@ -123,6 +123,16 @@ public interface ICosmosListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitInstruction([NotNull] CosmosParser.InstructionContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.noop"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNoop([NotNull] CosmosParser.NoopContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.noop"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNoop([NotNull] CosmosParser.NoopContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.instruction_simple"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -172,6 +182,56 @@ public interface ICosmosListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitAffecter([NotNull] CosmosParser.AffecterContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.recuperer"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterRecuperer([NotNull] CosmosParser.RecupererContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.recuperer"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitRecuperer([NotNull] CosmosParser.RecupererContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.placer_curseur"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterPlacer_curseur([NotNull] CosmosParser.Placer_curseurContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.placer_curseur"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitPlacer_curseur([NotNull] CosmosParser.Placer_curseurContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.generer_aleatoire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterGenerer_aleatoire([NotNull] CosmosParser.Generer_aleatoireContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.generer_aleatoire"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitGenerer_aleatoire([NotNull] CosmosParser.Generer_aleatoireContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.dormir"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterDormir([NotNull] CosmosParser.DormirContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.dormir"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitDormir([NotNull] CosmosParser.DormirContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.colorier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterColorier([NotNull] CosmosParser.ColorierContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.colorier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitColorier([NotNull] CosmosParser.ColorierContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// </summary>
@@ -322,16 +382,6 @@ public interface ICosmosListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitAtome_numerique([NotNull] CosmosParser.Atome_numeriqueContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.nombre_aleatoire"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterNombre_aleatoire([NotNull] CosmosParser.Nombre_aleatoireContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.nombre_aleatoire"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitNombre_aleatoire([NotNull] CosmosParser.Nombre_aleatoireContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.variable"/>.
 	/// </summary>

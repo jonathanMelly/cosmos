@@ -1,3 +1,4 @@
+using System;
 using lib.antlr;
 using lib.parser.exception;
 using lib.parser.type;
@@ -7,6 +8,19 @@ namespace lib.parser.visitor
 {
     public class NumericExpressionVisitor : CosmosBaseVisitor<CosmosNumber>
     {
+        private readonly VariableVisitor variableVisitor;
+        private readonly Random random;
+
+        public NumericExpressionVisitor(VariableVisitor variableVisitor,Random random)
+        {
+            this.variableVisitor = variableVisitor;
+            this.random = random;
+        }
+
+        public override CosmosNumber VisitVariable(CosmosParser.VariableContext context)
+        {
+            return variableVisitor.Visit(context).Value.Number();
+        }
 
         public override CosmosNumber VisitExpression_numerique(CosmosParser.Expression_numeriqueContext context)
         {
@@ -28,7 +42,13 @@ namespace lib.parser.visitor
                     };
 
                 case CosmosParser.Atome_numeriqueContext atomeNumeriqueContext:
-                    return new CosmosNumber(atomeNumeriqueContext.nombre().VALEUR_NOMBRE().GetText());
+                    return Visit(atomeNumeriqueContext.nombre());
+
+                case CosmosParser.NombreContext nombreContext:
+                    return VisitNombre(nombreContext);
+
+                case CosmosParser.VariableContext variableContext:
+                    return variableVisitor.Visit(variableContext).Value.Number();
 
                 default:
                     if (context.PARENTHESE_GAUCHE() != null)
@@ -37,11 +57,18 @@ namespace lib.parser.visitor
                         return context.operateur.Type switch
                         {
                             OPERATEUR_MATH_MOINS => -Visit(context.sousExpression),
-                            OPERATEUR_MATH_PLUS | PARENTHESE_GAUCHE => Visit(context.sousExpression),
+                            OPERATEUR_MATH_PLUS  => Visit(context.sousExpression),
 
                             _ => throw new MissingTokenHandlerException(context.operateur)
                         };
             }
+
+
+        }
+
+        public override CosmosNumber VisitNombre(CosmosParser.NombreContext context)
+        {
+            return new CosmosNumber(context.VALEUR_NOMBRE().GetText());
         }
     }
 }

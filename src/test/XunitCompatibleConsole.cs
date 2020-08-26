@@ -7,15 +7,18 @@ using static lib.console.IConsole;
 
 namespace test
 {
-    public class TestConsole : TextWriter, IConsole
+    public class XUnitCompatibleConsole : TextWriter, IConsole
     {
         private readonly IDictionary<Channel, StringBuilder> content =
             new Dictionary<Channel, StringBuilder>
-                {[Channel.Standard] = new StringBuilder(), [Channel.Error] = new StringBuilder()};
+                {[Channel.Standard] = new StringBuilder(),
+                    [Channel.Error] = new StringBuilder(),
+                    [Channel.Debug] = new StringBuilder()
+                };
 
         private readonly ITestOutputHelper helper;
 
-        public TestConsole(ITestOutputHelper helper)
+        public XUnitCompatibleConsole(ITestOutputHelper helper)
         {
             this.helper = helper;
         }
@@ -23,7 +26,15 @@ namespace test
         public override Encoding Encoding => Encoding.Default;
 
         public string Content => content[Channel.Standard].ToString();
+
+        public string DebugContent => content[Channel.Debug].ToString();
+
         public string ErrorContent => content[Channel.Error].ToString();
+
+        public Stack<string> Input => input;
+
+        private Stack<string> input = new Stack<string>();
+
 
         public void Write(string text, Channel channel)
         {
@@ -34,6 +45,11 @@ namespace test
         public void WriteLine(string text, Channel channel)
         {
             Write(text + "\n", channel);
+        }
+
+        public string ReadLine()
+        {
+            return Input.Pop();
         }
 
         public override string ToString()
@@ -49,6 +65,26 @@ namespace test
         public override void WriteLine(string text)
         {
             WriteLine(text, Channel.Standard);
+        }
+
+        public void SetCursorToLine(in int index)
+        {
+            WriteLine($"@@Set cursor y to {index}");
+        }
+
+        public void SetCursorToColumn(in int index)
+        {
+            WriteLine($"@@Set cursor x to {index}");
+        }
+
+        public void SetFrontColorTo(string color)
+        {
+            WriteLine($"@@Set front color to {color}");
+        }
+
+        public void SetBackColorTo(string color)
+        {
+            WriteLine($"@@Set back color to {color}");
         }
     }
 }

@@ -14,7 +14,7 @@ namespace test
             //Todo : affectation
         }
 
-        
+
 
         private void TestValidAllocationWithValue(string variableExpression, CosmosTypedValue expectedValue,
             string variablePrefix = "")
@@ -44,7 +44,7 @@ namespace test
             interpreter.Execute().Should().BeFalse();
         }
 
-        
+
 
         [Fact]
         public void TestEmptyAllocationNumbered()
@@ -110,7 +110,7 @@ namespace test
 
             var copy = "#copy".AsCosmosVariable(0.AsCosmosNumber());
 
-            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) + "\t" +
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
                                     BuildAllocationSnippet(copy.Name, variableRef.Name));
 
 
@@ -120,6 +120,25 @@ namespace test
             //Assert
             parser.Variables.Should().HaveCount(2).And.ContainKey(variableRef.Name).And.ContainKey(copy.Name)
                 .WhichValue.Value.Should().NotBe(copy.Value).And.Be(variableRef.Value);
+        }
+
+        [Fact]
+        public void TestRefToUnknownVariableAllocation()
+        {
+            //Arrange
+            var variableRef = "#ref".AsCosmosVariable(12.AsCosmosNumber());
+
+            var copy = "#copy".AsCosmosVariable(0.AsCosmosNumber());
+
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
+                                    BuildAllocationSnippet(copy.Name, variableRef.Name+$"Error"));
+
+
+            //Act
+            interpreter.Execute().Should().BeFalse();
+
+            //Assert
+            testConsole.ErrorContent.Should().Contain("inconnue");
         }
 
         [Fact]
@@ -141,6 +160,59 @@ namespace test
         {
             var value = "StringAllocation2";
             TestValidAllocationWithValue($"\"{value}\"", value.AsCosmosString());
+        }
+
+        [Fact]
+        public void TestCopyValue()
+        {
+            //Arrange
+            var variableRef = "#ref".AsCosmosVariable(12.AsCosmosNumber());
+            var newVal = 5;
+
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
+                                    BuildCopySnippet(newVal,variableRef.Name)+
+                                    BuildAfficherSnippet(variableRef.Name.ToString()));
+
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            testConsole.Content.Should().Be(newVal.ToString());
+        }
+
+        [Fact]
+        public void TestCopyValueVariant2()
+        {
+            //Arrange
+            var variableRef = "#ref".AsCosmosVariable(12.AsCosmosNumber());
+            var newVal = 5;
+
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
+                                    BuildCopySnippet(newVal,variableRef.Name,1)+
+                                    BuildAfficherSnippet(variableRef.Name.ToString()));
+
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            testConsole.Content.Should().Be(newVal.ToString());
+        }
+
+        [Fact]
+        private void TestEmptyVariable()
+        {
+            //Arrange
+            var variableName = "#maVariable";
+
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableName.AsCosmosVariable())+"\n\t"+BuildAfficherSnippet(variableName));
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            testConsole.Content.Should().Be("<NÉANT>");
         }
     }
 }

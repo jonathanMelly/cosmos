@@ -15,6 +15,11 @@ namespace lib.parser.visitor
             this.expressionVisitor = expressionVisitor;
         }
 
+        public override CosmosBoolean VisitVariable(CosmosParser.VariableContext context)
+        {
+            return expressionVisitor.VariableVisitor.Visit(context).Value.Boolean();
+        }
+
         public override CosmosBoolean VisitExpression_booleenne(CosmosParser.Expression_booleenneContext context)
         {
             var firstChild = context.GetChild(0);
@@ -23,14 +28,14 @@ namespace lib.parser.visitor
                 case CosmosParser.Expression_booleenneContext _:
                     var left = Visit(context.gauche).Boolean().Value;
                     var right = context.droite;
-                    
+
                     var resultb = context.operateur.Type switch
                     {
                         OPERATEUR_LOGIQUE_OU => left || Visit(right).Boolean().Value,
-                        
+
                         OPERATEUR_LOGIQUE_ET => left && Visit(right).Boolean().Value,
                         ET => left && Visit(right).Boolean().Value,
-                        
+
                         OPERATEUR_LOGIQUE_OU_EXCLUSIF => left ^ Visit(right).Boolean().Value,
                         OPERATEUR_COMPARAISON_EQUIVALENT => left == Visit(right).Boolean().Value,
                         OPERATEUR_COMPARAISON_DIFFERENT => left != Visit(right).Boolean().Value,
@@ -57,6 +62,9 @@ namespace lib.parser.visitor
                     };
 
                     return result.AsCosmosBoolean();
+
+                case CosmosParser.VariableContext variableContext:
+                    return expressionVisitor.VariableVisitor.Visit(variableContext).Value.Boolean();
 
 
                 default:

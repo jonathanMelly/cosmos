@@ -10,12 +10,12 @@ namespace test
     {
         public TestProgram(ITestOutputHelper helper)
         {
-            fakeConsole = new TestConsole(helper);
+            fakeConsole = new XUnitCompatibleConsole(helper);
             Console.SetOut(fakeConsole);
             Console.SetError(fakeConsole);
         }
 
-        private readonly TestConsole fakeConsole;
+        private readonly XUnitCompatibleConsole fakeConsole;
 
         [Fact]
         public void TestProgramWithInvalidFile()
@@ -24,11 +24,11 @@ namespace test
             int exitCode;
 
             //Act
-            exitCode = Program.Main(new[] {TestInterpreterGlobalWithFile.InvalidDateProgramFile});
+            exitCode = Program.Main( new String[]{TestInterpreterGlobalWithFile.InvalidDateProgramFile,"--direct"});
 
             //Assert
-            exitCode.Should().Be((int) Program.ExitCode.CompileError);
-            fakeConsole.Content.Should().Contain("attendu 'Date:'");
+            exitCode.Should().Be((int) Program.ExitCode.ErreurSyntaxe);
+            fakeConsole.Content.Should().Contain("attendu 'Date:'").And.Contain("il manque 'Description:'");
         }
 
         [Fact]
@@ -38,11 +38,39 @@ namespace test
             int exitCode;
 
             //Act
-            exitCode = Program.Main(new[] {TestInterpreterGlobalWithFile.ValidProgramFile});
+            exitCode = Program.Main(new String[]{TestInterpreterGlobalWithFile.ValidProgramFile,"-d"});
 
             //Assert
-            exitCode.Should().Be((int) Program.ExitCode.Success);
+            exitCode.Should().Be((int) Program.ExitCode.Ok);
             fakeConsole.Content.Should().Match(TestInterpreterGlobalWithFile.ValidExecutionContent);
+        }
+
+        [Fact]
+        public void TestHelp()
+        {
+            //Arrange
+            int exitCode;
+
+            //Act
+            exitCode = Program.Main(new String[]{"-h"});
+
+            //Assert
+            exitCode.Should().Be((int) Program.ExitCode.Ok);
+            fakeConsole.Content.Should().Contain("aide");
+        }
+
+        [Fact]
+        public void TestBadArg()
+        {
+            //Arrange
+            int exitCode;
+
+            //Act
+            exitCode = Program.Main(new String[]{"-h5"});
+
+            //Assert
+            exitCode.Should().Be((int) Program.ExitCode.ArgumentInvalide);
+            fakeConsole.Content.Should().Contain("Erreur");
         }
     }
 }

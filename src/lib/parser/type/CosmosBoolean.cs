@@ -21,6 +21,11 @@ namespace lib.parser.type
             return this;
         }
 
+        public override string ToString()
+        {
+            return Value ? "vrai" : "faux";
+        }
+
         public override int CompareTo(CosmosTypedValue other)
         {
             if (ReferenceEquals(this, other)) return 0;

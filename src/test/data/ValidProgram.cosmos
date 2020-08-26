@@ -7,39 +7,39 @@ ce langage esttodo extraordinaire
 //Début du programme
 Voici les ordres du programme DEMO_COSMOS à classer dans la bibliothèque DEMONSTRATION :
 
-	//Affichage de texte sur la console
-	Afficher le texte "En programmant avec cosmos, on peut\n".
-	
+	//Affichage de texte sur la console (La répétition est là à titre de démonstration)
+	Répéter 1x
+	    Afficher le texte "En programmant avec cosmos, on peut\n".
+	>>
+
 	//Condition
 	Si 1 est différent de 2 et 2 n'est pas égal à 1 alors
 		Afficher le texte "->Éxécuter du code avec une condition\n".
-		
+
 		Si 2 est égal à 2 alors
 			Afficher le texte "-->dans laquelle on peut aussi avoir une condition (et ainsi de suite)\n".
 		?
 	?
-	
+
 	Si 1 est égal à 2 alors
 		Afficher "Erreur, 1 ne vaut pas 2 !".
 	sinon si 1 vaut 1 alors
 		Afficher "-->pour laquelle on peut avoir une alternative spécifique\n".
 	?
-		
+
 	Si 1 vaut 2 ou au contraire 2 vaut 1 alors
 		Afficher le texte "Erreur, 1 ne vaut pas 2!".
 		//Retour à la ligne
-		Afficher "\n". 
+		Afficher "\n".
 	sinon si 2 vaut 3 alors
 		Afficher "Erreur 2 ne vaut pas 3!\n".
 	et sinon
 		Afficher "-->pour laquelle on peut avoir une alternative si aucune condition préalable n'est vraie\n".
 	?
-	
-	
-	
+
 	//Affichage d'un nombre sur la console
 	Afficher le texte "->Afficher un nombre, par exemple quarante-quatre : ".
 	Afficher le nombre 44.
 	Afficher "\n".
-	
+
 Fin de la transmission.
