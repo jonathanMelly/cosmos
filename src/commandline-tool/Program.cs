@@ -39,6 +39,8 @@ namespace commandline_tool
         public static CliOption optHelp = new CliOption("h", "help", "Affiche l'aide");
         public static CliOption optVersion = new CliOption("v", "version", "Affiche la version");
 
+        public static CliOption optNewProgram = new CliOption("n", "nouveau", "Créee un fichier pour un nouveau programme");
+
         public static CliOption[] options = new CliOption[]
         {
             optInteractive,
@@ -109,6 +111,36 @@ namespace commandline_tool
                 {
                     ShowHelp();
                     return (int) ExitCode.Ok;
+                }
+                else if (args[0].IsMatch(optNewProgram))
+                {
+                    string programName = args.Length>1?args[1]:null;
+
+                    if (programName == null)
+                    {
+                        Console.Error.WriteLine($"Veuillez indiquer le nom du programme : cosmos {args[0]} <nomDuProgramme>");
+                        return (int) ExitCode.ArgumentInvalide;
+                    }
+                    else
+                    {
+                        string filename = $"{programName}.cosmos";
+                        if (File.Exists(filename))
+                        {
+                            Console.Error.WriteLine($"Le fichier {filename} existe déjà, veuillez spécifier un nom de programme différent.");
+                            return (int) ExitCode.ArgumentInvalide;
+                        }
+                        else
+                        {
+                            var content = $"{Parser.BuildValidHeader(programName)}\t//Ajoutez ici vos ordres, par exemple : Afficher \"Bonjour Cosmos\".{Parser.ValidEnd}";
+                            File.WriteAllText($"{programName}.cosmos",content);
+
+                            Console.WriteLine($"Nouveau programme généré dans {filename}");
+                            Console.WriteLine($"Pour le lancer: cosmos {programName}");
+                            return (int) ExitCode.Ok;
+                        }
+                    }
+
+
                 }
                 // Devrait être un fichier passé en paramètre
                 else
@@ -205,9 +237,10 @@ namespace commandline_tool
 
             ShowVersion();
             Console.WriteLine($"\nUtilisation :\n" +
-                              $"{indent}Mode interactif      : cosmos [{optInteractive}]\n" +
-                              $"{indent}Mode fichier source  : cosmos <fichierSource> {optSyntax} {optDirect}\n" +
-                              $"{indent}Mode extrait de code : cosmos {{{optSnippet}}} \"Extrait de code source...\" {optSyntax} {optDirect}");
+                              $"{indent}Mode interactif        : cosmos [{optInteractive}]\n" +
+                              $"{indent}Mode fichier source    : cosmos <fichierSource> {optSyntax} {optDirect}\n" +
+                              $"{indent}Mode extrait de code   : cosmos {{{optSnippet}}} \"Extrait de code source...\" {optSyntax} {optDirect}\n" +
+                              $"{indent}Mode nouveau programme : cosmos {{{optNewProgram}}} <nomDuProgramme>");
 
             Console.WriteLine("\nOptions:");
 

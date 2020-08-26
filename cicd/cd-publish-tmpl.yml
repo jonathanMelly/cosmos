@@ -35,7 +35,7 @@ steps:
   - bash: |
       cp -v $BUILD_REPOSITORY_LOCALPATH/$VALID_PROGRAM $OUTPUT_DIRECTORY/$DEMO_PROGRAM_NAME
       echo "testing generated binaries"
-      $OUTPUT_DIRECTORY/cosmos $OUTPUT_DIRECTORY/$DEMO_PROGRAM_NAME
+      $OUTPUT_DIRECTORY/cosmos $OUTPUT_DIRECTORY/$DEMO_PROGRAM_NAME -d
     displayName: Validate binary
     env:
       OUTPUT_DIRECTORY: $(tmplvariables.output_directory)
