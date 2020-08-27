@@ -64,34 +64,43 @@ namespace commandline_tool
             {
                 //TODO : vérifier qu'aucune autre option n'est passée
 
-                Console.WriteLine($"Mode interactif, essaie 'Afficher \"bonjour\".' par exemple et '{STOP}' pour arrêter");
+                Console.WriteLine($"Mode interactif, essayez 'Afficher \"bonjour\".' par exemple et '{STOP}' pour arrêter.");
                 string input="";
 
                 int variablesCount = 0;
-                do
+                bool goon = true;
+                while(goon)
                 {
                     Console.Write("=> ");
                     input = Console.ReadLine();
 
                     //Pour vérifier si une sortie a été effectuée
-
-                    if (input != STOP)
+                    if (input !=null )
                     {
-                        Console.Write("Résultat: ");
-                        parser = GetParserForEmbeddedSnippet(input,parser);
-                        var interpreter = new Interpreter(parser).Execute();
-
-                        //Permet d'afficher un message en cas d'ajout de variable... (TODO: améliorer dans la lib ?)
-                        if (parser.Variables.Count != variablesCount)
+                        if (input.ToLower() != STOP)
                         {
-                            Console.WriteLine(">Variable enregistrée");
-                            variablesCount = parser.Variables.Count;
+                            Console.Write("Résultat: ");
+                            parser = GetParserForEmbeddedSnippet(input, parser);
+                            var interpreter = new Interpreter(parser).Execute();
+
+                            //Permet d'afficher un message en cas d'ajout de variable... (TODO: améliorer dans la lib ?)
+                            if (parser.Variables.Count != variablesCount)
+                            {
+                                Console.WriteLine(">Variable enregistrée");
+                                variablesCount = parser.Variables.Count;
+                            }
                         }
+                        else
+                        {
+                            goon = false;
+                        }
+
+                        Console.WriteLine();
                     }
 
-                    Console.WriteLine();
+                }
 
-                } while (input != STOP);
+                return (int) ExitCode.Ok;
             }
             else
             {
