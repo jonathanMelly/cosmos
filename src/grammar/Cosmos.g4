@@ -72,12 +72,12 @@ base_si : condition=expression_booleenne 'alors' RETOUR_DE_CHARIOT (instruction|
 sinon_si : TABULATION+ 'sinon si' base_si ;
 sinon : TABULATION+ 'et sinon' RETOUR_DE_CHARIOT (instruction|noop)+ ;
 
-OPERATEUR_COMPARAISON_EQUIVALENT : 'vaut' | 'est égal à' | '==' ;
-OPERATEUR_COMPARAISON_DIFFERENT : 'est différent de' | 'n\'est pas égal à' | '!=' | '<>' ;
-OPERATEUR_COMPARAISON_PLUS_GRAND : 'est plus grand que' | '>' | 'est supérieur à' ;
-OPERATEUR_COMPARAISON_PLUS_PETIT : 'est plus petit que' | '<' | 'est inférieur à';
-OPERATEUR_COMPARAISON_PLUS_GRAND_OU_EGAL : 'est plus grand ou égal à' | '>=' | 'est supérieur ou égal à' ;
-OPERATEUR_COMPARAISON_PLUS_PETIT_OU_EGAL : 'est plus petit ou égal à' | '<=' | 'est inférieur ou égal à';
+OPERATEUR_COMPARAISON_EQUIVALENT : 'vaut' | 'est égal à' | '==' | 'est égale à' ;
+OPERATEUR_COMPARAISON_DIFFERENT : 'est différent de' | 'n\'est pas égal à' | '!=' | '<>' | 'est différente de' | 'n\'est pas égale à' |;
+OPERATEUR_COMPARAISON_PLUS_GRAND : 'est plus grand que' | 'est supérieur à' | '>' | 'est plus grande que' | 'est supérieure à' |  ;
+OPERATEUR_COMPARAISON_PLUS_PETIT : 'est plus petit que' | 'est inférieur à' | '<' | 'est plus petite que' | 'est inférieure à';
+OPERATEUR_COMPARAISON_PLUS_GRAND_OU_EGAL : 'est plus grand ou égal à' | 'est supérieur ou égal à' | '>=' |'est plus grande ou égale à' | 'est supérieure ou égale à'  ;
+OPERATEUR_COMPARAISON_PLUS_PETIT_OU_EGAL : 'est plus petit ou égal à' | 'est inférieur ou égal à' | '<=' | 'est plus petite ou égale à' | 'est inférieure ou égale à';
 
 VRAI: 'vrai'|'OK' ;
 FAUX: 'faux'|'KO' ;
