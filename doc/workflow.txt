@@ -14,9 +14,10 @@ etc..
 3.5 git branch -D change/AB#1-SmallDescr
 
 4.
-   git checkout release/LastRelease
-   git switch -c release/1.0.0
+
+   git switch -c 2.0.0 1.0.0 //créer la branche à partir de la dernière release
+   git fetch origin master:master //maj de master (qui est maj par le build)
    git merge master(or until specified treeish) --no-commit --no-ff
    git commit -m "features set for release 1.0.0"
-   git tag release/1.0.0
+   git tag release/2.0.0
    git push => cd-create-artifacts => release
