@@ -116,7 +116,17 @@ namespace test
         protected string BuildAllocationSnippet(CosmosVariable variable)
         {
             string value = null;
-            if (variable.Value != null) value = variable.Value.ToString();
+            if (variable.Value != null)
+            {
+                value = variable.Value.ToString();
+                //auto add string delimiters ""
+                if (variable.Value.IsString)
+                {
+                    value = $"\"{value}\"";
+                }
+            }
+
+
 
             return BuildAllocationSnippet(variable.Name, value);
         }

@@ -154,6 +154,12 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitColorier([NotNull] CosmosParser.ColorierContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.decouper"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitDecouper([NotNull] CosmosParser.DecouperContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -233,6 +233,16 @@ public interface ICosmosListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitColorier([NotNull] CosmosParser.ColorierContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.decouper"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterDecouper([NotNull] CosmosParser.DecouperContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.decouper"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitDecouper([NotNull] CosmosParser.DecouperContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

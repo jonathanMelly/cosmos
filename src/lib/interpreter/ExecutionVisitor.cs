@@ -267,5 +267,35 @@ namespace lib.interpreter
             }
             return null;
         }
+
+        public override ExecutionContext VisitDecouper(CosmosParser.DecouperContext context)
+        {
+            //split detected
+            if (context.separateur != null)
+            {
+                var source = expressionVisitor.Visit(context.source);
+                var separator = expressionVisitor.Visit(context.separateur);
+
+                if (source != null && separator != null)
+                {
+                    var split = source.ToString().Split(separator.ToString());
+                    for (var index = 0; index < split.Length; index++)
+                    {
+                        var part = split[index];
+
+                        //Allocate a special variable for result
+                        var variable = $"##decoupage.{index + 1}".AsCosmosVariable(part.AsCosmosString());
+                        parser.Variables[variable.Name] = variable;
+                    }
+                }
+                else
+                {
+                    throw new WrongTypeException("Un découpage doit être réalisé sur des caractères");
+                }
+
+
+            }
+            return null;
+        }
     }
 }

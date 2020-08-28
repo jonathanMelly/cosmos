@@ -9,7 +9,7 @@ namespace lib.parser.visitor
     public class StringExpressionVisitor : CosmosBaseVisitor<CosmosString>
     {
         private readonly Parser parser;
-        private readonly Regex variableRegex = new Regex(@"#\w+");
+        private readonly Regex variableRegex = new Regex(@"##?\w[\.\w]+");
 
         public StringExpressionVisitor(Parser parser)
         {
@@ -23,6 +23,7 @@ namespace lib.parser.visitor
                 case CosmosParser.Atome_textuelContext atomeTextuelContext:
                     var valueExpression = atomeTextuelContext.chaine_de_caractere().VALEUR_TEXTE().GetText();
 
+                    //For each match, it returns the stored value (if found)
                     valueExpression = variableRegex.Replace(valueExpression, match =>
                     {
                         if (parser.Variables.ContainsKey(match.Value))
