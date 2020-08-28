@@ -1,4 +1,4 @@
-﻿﻿﻿//langage de type 'pseudo-code' pour apprendre à programmer
+﻿//langage de type 'pseudo-code' pour apprendre à programmer
 grammar Cosmos ;
 
 //Removes clscompliant warning on build
