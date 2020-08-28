@@ -105,7 +105,7 @@ namespace lib.interpreter
                 if (context.boucle_avec_variable() != null)
                 {
                     var variable = context.boucle_avec_variable().VARIABLE() != null ?
-                        variableVisitor.GetVariable(context.boucle_avec_variable().VARIABLE(),context.boucle_avec_variable()) :
+                        variableVisitor.GetVariable(context.boucle_avec_variable().VARIABLE().GetText(),context.boucle_avec_variable()) :
                         variableVisitor.Visit(context.boucle_avec_variable().variable());
 
                     iterations = variable.Value.Number().Value;
@@ -133,7 +133,7 @@ namespace lib.interpreter
 
             var variable = context.variable() != null ?
                 variableVisitor.Visit(context.variable()) :
-                variableVisitor.GetVariable(context.la_zone_memoire().VARIABLE(), context.la_zone_memoire());
+                variableVisitor.GetVariable(context.la_zone_memoire().VARIABLE().GetText(), context.la_zone_memoire());
 
             var newValue = variable.UpdatedTo(expressionVisitor.Visit(context.expression()));
 
@@ -185,7 +185,7 @@ namespace lib.interpreter
             var min = Convert.ToInt32(expressionVisitor.Visit(context.min).Number().Value);
             var max = Convert.ToInt32(expressionVisitor.Visit(context.max).Number().Value);
 
-            var variable = variableVisitor.GetVariable(context.la_zone_memoire().VARIABLE(), context.la_zone_memoire());
+            var variable = variableVisitor.GetVariable(context.la_zone_memoire().VARIABLE().GetText(), context.la_zone_memoire());
 
             var newValue = variable.UpdatedTo(new CosmosNumber(random.Next(min,max+1)));
 

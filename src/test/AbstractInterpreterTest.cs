@@ -63,7 +63,7 @@ namespace test
                 programWithLines.Append(i++).Append(" ").Append(line).Append("\n");
             }
 
-            helper.WriteLine($"///Code source----\n{programWithLines}\n///Fin du code source----\n\nRésultat d'éxécution:\n",IConsole.Channel.Debug);
+            testConsole.WriteLine($"///Code source----\n{programWithLines}\n///Fin du code source----\n\nRésultat d'éxécution:\n",IConsole.Channel.Debug);
 
             parser = new Parser().ForSnippet(program).WithConsole(testConsole);
             interpreter = new Interpreter(parser,testConsole).WithRandom(random);

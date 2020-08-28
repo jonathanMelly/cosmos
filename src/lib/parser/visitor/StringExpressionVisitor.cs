@@ -9,11 +9,15 @@ namespace lib.parser.visitor
     public class StringExpressionVisitor : CosmosBaseVisitor<CosmosString>
     {
         private readonly Parser parser;
-        private readonly Regex variableRegex = new Regex(@"##?\w[\.\w]+");
+        private readonly VariableVisitor variableVisitor;
 
-        public StringExpressionVisitor(Parser parser)
+        //For simple cases, # prefix is enough... When not, one can use {} delimiters...
+        private readonly Regex variableRegex = new Regex(@"{?(##?\w(\.?\w)+)}?");
+
+        public StringExpressionVisitor(Parser parser,VariableVisitor variableVisitor)
         {
             this.parser = parser;
+            this.variableVisitor = variableVisitor;
         }
 
         public override CosmosString VisitExpression_textuelle(CosmosParser.Expression_textuelleContext context)
@@ -26,14 +30,26 @@ namespace lib.parser.visitor
                     //For each match, it returns the stored value (if found)
                     valueExpression = variableRegex.Replace(valueExpression, match =>
                     {
-                        if (parser.Variables.ContainsKey(match.Value))
+                        var varName = match.Value;
+
+                        //Handles special delimiters...
+                        if (varName.StartsWith("{") && varName.EndsWith("}"))
                         {
-                            object value = parser.Variables[match.Value].Value;
-                            return value==null?"<NÉANT>":value.ToString();
+                            varName = varName.Substring(1, varName.Length - 2);
                         }
 
-                        parser.ErrorListener.Error(new UnknownVariableException(match.Value,atomeTextuelContext.chaine_de_caractere()));
-                        return match.Value;
+                        try
+                        {
+                            var storedVariable = variableVisitor.GetVariable(varName, atomeTextuelContext);
+                            return storedVariable.Value==null ?"<NÉANT>":storedVariable.Value.ToString();
+                        }
+                        catch (UnknownVariableException e)
+                        {
+                            parser.ErrorListener.Error(e);
+                            return match.Value; //return refName as value
+                        }
+
+
                     });
 
                     return valueExpression.

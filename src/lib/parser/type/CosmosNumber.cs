@@ -9,24 +9,31 @@ namespace lib.parser.type
         //To avoid issues with . and , ... (could be better...)
         private static IFormatProvider format = new CultureInfo("en-US");
 
-        public CosmosNumber(decimal value) : base(value)
+        public bool Leading0 { get; set; } = false;
+
+        public CosmosNumber(decimal value,bool leading0=false) : base(value)
         {
+            Leading0 = leading0;
         }
 
-        public CosmosNumber(int value) : base(Convert(value))
+        public CosmosNumber(int value,bool leading0=false) : base(Convert(value))
         {
+            Leading0 = leading0;
         }
 
-        public CosmosNumber(float value) : base(Convert(value))
+        public CosmosNumber(float value,bool leading0=false) : base(Convert(value))
         {
+            Leading0 = leading0;
         }
 
-        public CosmosNumber(double value) : base(Convert(value))
+        public CosmosNumber(double value,bool leading0=false) : base(Convert(value))
         {
+            Leading0 = leading0;
         }
 
-        public CosmosNumber(string value) : base(Convert(value))
+        public CosmosNumber(string value,bool leading0=false) : base(Convert(value))
         {
+            Leading0 = leading0;
         }
 
         public decimal Value => (decimal) RawValue;
@@ -93,6 +100,11 @@ namespace lib.parser.type
         public static CosmosNumber operator -(CosmosNumber a)
         {
             return new CosmosNumber(-a.Value);
+        }
+
+        public override string ToString()
+        {
+            return $"{(Leading0 && Value<10?"0":"")}{base.ToString()}";
         }
     }
 }

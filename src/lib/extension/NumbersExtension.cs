@@ -4,9 +4,9 @@ namespace lib.extension
 {
     public static class NumbersExtension
     {
-        public static CosmosNumber AsCosmosNumber(this int subject)
+        public static CosmosNumber AsCosmosNumber(this int subject,bool leading0 = false)
         {
-            return CosmosTypedValue.Number(subject);
+            return CosmosTypedValue.Number(subject,leading0);
         }
 
         public static CosmosNumber AsCosmosNumber(this double subject)
