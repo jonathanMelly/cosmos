@@ -26,7 +26,7 @@ namespace lib.interpreter
         {
             if (!parser.Parse()) return false;
 
-            var visitor = new ExecutionVisitor(parser).WithConsole(console).WithRandom(random);
+            var visitor = new ExecutionVisitor(parser,console).WithRandom(random);
             var result = visitor.Visit(parser.Context);
 
             return result.Success;

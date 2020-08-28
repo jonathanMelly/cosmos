@@ -91,7 +91,7 @@ OPERATEUR_LOGIQUE_EST : 'est' ;
 OPERATEUR_LOGIQUE_NON : 'l\'inverse de' | '!' | 'not' ;
 
 OPERATEUR_MATH_EGAL : '=' ;
-VARIABLE : PREFIXE_VARIABLE (MOT|VALEUR_NOMBRE) ;
+VARIABLE : PREFIXE_VARIABLE PREFIXE_VARIABLE? (MOT|VALEUR_NOMBRE|(LETTRE (POINT? (LETTRE|CHIFFRE))*)) ; //double préfixe pour les variables internes...
 PREFIXE_VARIABLE : '#' ;
 
 //Variable doublé pour éviter que la première règle de sous-expression prenne le dessus

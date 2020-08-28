@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Antlr4.Runtime;
 using lib.antlr;
+using lib.console;
 using lib.extension;
 using lib.parser.exception;
 using lib.parser.type;
@@ -22,6 +23,10 @@ namespace lib.parser.visitor
         private const string DATE_VAR_MINUTE = DATE_VAR_PREFIX + "minute";
         private const string DATE_VAR_SECOND = DATE_VAR_PREFIX + "seconde";
 
+        private const string KEY_VAR_PREFIX = "##touche";
+        private readonly string KEY_VAR_AVAILABLE = $"{KEY_VAR_PREFIX}.disponible";
+        private readonly string KEY_VAR_KEY = $"{KEY_VAR_PREFIX}";
+
         private readonly string[] DATE_VARS = new[]{DATE_VAR_DAY,
             DATE_VAR_MONTH,
             DATE_VAR_YEAR,
@@ -30,9 +35,12 @@ namespace lib.parser.visitor
             DATE_VAR_MINUTE,
             DATE_VAR_SECOND};
 
-        public VariableVisitor(Parser parser)
+        private IConsole console;
+
+        public VariableVisitor(Parser parser,IConsole console)
         {
             this.parser = parser;
+            this.console = console;
         }
 
         public ExpressionVisitor ExpressionVisitor
@@ -48,7 +56,7 @@ namespace lib.parser.visitor
 
         public override CosmosVariable VisitLa_zone_memoire(CosmosParser.La_zone_memoireContext context)
         {
-            return GetVariable(context.VARIABLE() .GetText(), context);
+            return GetVariable(context.VARIABLE().GetText(), context);
         }
 
         public CosmosVariable GetVariable(string varName, ParserRuleContext context)
@@ -66,6 +74,15 @@ namespace lib.parser.visitor
                         break;
                     }
                 }
+            }
+            else if (varName == KEY_VAR_AVAILABLE)
+            {
+                Fill(parser.Variables,KEY_VAR_AVAILABLE,console.KeyAvailable.AsCosmosBoolean());
+            }
+            else if (varName == KEY_VAR_KEY)
+            {
+                var key = console.ReadKey;
+                Fill(parser.Variables,KEY_VAR_KEY,key?.AsCosmosString());
             }
 
             if (parser.Variables.ContainsKey(varName))

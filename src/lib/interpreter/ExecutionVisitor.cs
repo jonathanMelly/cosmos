@@ -20,20 +20,11 @@ namespace lib.interpreter
         private Random random = new Random();
 
 
-        public ExecutionVisitor(Parser parser)
+        public ExecutionVisitor(Parser parser,IConsole console)
         {
             this.parser = parser;
-            variableVisitor = new VariableVisitor(parser);
-        }
-
-        /// <summary>
-        ///     Set customized output
-        /// </summary>
-        /// <param name="console"></param>
-        public ExecutionVisitor WithConsole(IConsole console)
-        {
             executionConsole = console;
-            return this;
+            variableVisitor = new VariableVisitor(parser,executionConsole);
         }
 
         public ExecutionVisitor WithRandom(Random random)

@@ -59,5 +59,60 @@ namespace test
             //Assert
             parser.Variables[variable.Name].Value.Should().Be(expected);
         }
+
+        [Fact]
+        private void TestDirectInputEmpty()
+        {
+
+            //Arrange
+            var variable = new CosmosVariable("#input",null);
+            BuildSnippetInterpreter(BuildAllocationSnippet(variable)+
+                                    "\n\t#input = ##touche .\n"+BuildAfficherSnippet("touche:##touche"));
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            parser.Variables[variable.Name].Value.Should().BeNull();
+            testConsole.Content.Should().Match("touche:<NÉANT>");
+        }
+
+        [Fact]
+        private void TestDirectInputFilled()
+        {
+
+            //Arrange
+            var variable = new CosmosVariable("#input",null);
+            testConsole.Input.Push("A");
+            testConsole.Input.Push("B");
+            BuildSnippetInterpreter(BuildAllocationSnippet(variable)+
+                                    "\n\t#input = ##touche .\n"+
+                                    BuildAfficherSnippet("#input")+
+                                    BuildAfficherSnippet("##touche")+
+                                    BuildAfficherSnippet("##touche"));
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            testConsole.Content.Should().Match("BA<NÉANT>");
+        }
+
+        [Fact]
+        private void TestDirectInputAvailable()
+        {
+
+            //Arrange
+            var variable = new CosmosVariable("#available",null);
+            testConsole.Input.Push("A");
+            BuildSnippetInterpreter(BuildAllocationSnippet(variable)+
+                                    $"\n\t{variable.Name} = ##touche.disponible .\n");
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            parser.Variables[variable.Name].Value.Should().Be(true.AsCosmosBoolean());
+        }
     }
 }
