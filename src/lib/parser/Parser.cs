@@ -21,7 +21,7 @@ namespace lib.parser
 
         private IConsole console;
 
-        private CosmosParser.ProgrammeContext context;
+        private Cosmos.ProgrammeContext context;
 
         //Keep redirection because we may have more listeners in the future...
         public List<string> Errors => ErrorListener.Errors;
@@ -30,7 +30,7 @@ namespace lib.parser
 
         public ErrorListener ErrorListener { get; private set; }
 
-        public CosmosParser.ProgrammeContext Context => context;
+        public Cosmos.ProgrammeContext Context => context;
 
         public Parser ForFile(string file)
         {
@@ -64,7 +64,7 @@ namespace lib.parser
             var antlrInputStream = new AntlrInputStream(code);
             var lexer = new CosmosLexer(antlrInputStream);
             var tokens = new CommonTokenStream(lexer);
-            var parser = new CosmosParser(tokens);
+            var parser = new Cosmos(tokens);
 
             ErrorListener = new ErrorListener(console);
             parser.RemoveErrorListeners();

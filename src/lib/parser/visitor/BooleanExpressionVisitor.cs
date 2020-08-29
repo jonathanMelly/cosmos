@@ -15,17 +15,17 @@ namespace lib.parser.visitor
             this.expressionVisitor = expressionVisitor;
         }
 
-        public override CosmosBoolean VisitVariable(CosmosParser.VariableContext context)
+        public override CosmosBoolean VisitVariable(Cosmos.VariableContext context)
         {
             return expressionVisitor.VariableVisitor.Visit(context).Value.Boolean();
         }
 
-        public override CosmosBoolean VisitExpression_booleenne(CosmosParser.Expression_booleenneContext context)
+        public override CosmosBoolean VisitExpression_booleenne(Cosmos.Expression_booleenneContext context)
         {
             var firstChild = context.GetChild(0);
             switch (firstChild)
             {
-                case CosmosParser.Expression_booleenneContext _:
+                case Cosmos.Expression_booleenneContext _:
                     var left = Visit(context.gauche).Boolean().Value;
                     var right = context.droite;
 
@@ -45,7 +45,7 @@ namespace lib.parser.visitor
 
                     return resultb.AsCosmosBoolean();
 
-                case CosmosParser.Expression_comparableContext _:
+                case Cosmos.Expression_comparableContext _:
                     var leftNb = expressionVisitor.Visit(context.gaucheNb);
                     var rightNb = expressionVisitor.Visit(context.droiteNb);
 
@@ -63,7 +63,7 @@ namespace lib.parser.visitor
 
                     return result.AsCosmosBoolean();
 
-                case CosmosParser.VariableContext variableContext:
+                case Cosmos.VariableContext variableContext:
                     return expressionVisitor.VariableVisitor.Visit(variableContext).Value.Boolean();
 
 

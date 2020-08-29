@@ -13,7 +13,7 @@
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
-    
+
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <DebugType>pdbonly</DebugType>
         <Optimize>true</Optimize>
@@ -28,26 +28,41 @@
         <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="antlr" />
+    </ItemGroup>
+
     <!-- auto generate upon build -->
     <PropertyGroup>
-        <Grammar>$(MSBuildProjectDirectory)/../grammar/Cosmos.g4</Grammar>
+        <LexerGrammar>$(MSBuildProjectDirectory)/../grammar/CosmosLexer.g4</LexerGrammar>
+        <ParserGrammar>$(MSBuildProjectDirectory)/../grammar/Cosmos.g4</ParserGrammar>
         <Antlr>antlr</Antlr>
         <Generator>$(MSBuildProjectDirectory)/../../bin/generator/Antlr4.dll</Generator>
     </PropertyGroup>
 
     <PropertyGroup>
-        <AntlrOut>$(MSBuildProjectDirectory)/$(Antlr)</AntlrOut>
+        <AntlrOutLexer>$(MSBuildProjectDirectory)/../grammar/</AntlrOutLexer>
+        <AntlrOutParser>$(MSBuildProjectDirectory)/$(Antlr)</AntlrOutParser>
     </PropertyGroup>
 
     <PropertyGroup>
-        <ReferenceGrammar>$(AntlrOut)/Reference.g4</ReferenceGrammar>
+        <ReferenceLexerGrammar>$(AntlrOutParser)/ReferenceLexer.g4</ReferenceLexerGrammar>
+        <ReferenceParserGrammar>$(AntlrOutParser)/Reference.g4</ReferenceParserGrammar>
         <Package>lib.$(Antlr)</Package>
     </PropertyGroup>
 
-    <Target Name="GenerateAntlrCode" BeforeTargets="BeforeBuild" Inputs="$(Grammar)" Outputs="$(ReferenceGrammar)">
-        <Exec Command="mono $(Generator) -o $(AntlrOut) -Dlanguage=CSharp -visitor -package $(Package) $(Grammar)" />
+    <Target Name="GenerateAntlrLexer" BeforeTargets="GenerateAntlrParser" Inputs="$(LexerGrammar)" Outputs="$(ReferenceLexerGrammar)">
+        <Exec Command="mono $(Generator) -o $(AntlrOutLexer) -Dlanguage=CSharp -visitor -package $(Package) $(LexerGrammar)" />
         <!-- Copy source grammar for incremental build -->
-        <Copy SourceFiles="$(Grammar)" DestinationFiles="$(ReferenceGrammar)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="$(LexerGrammar)" DestinationFiles="$(ReferenceLexerGrammar)" SkipUnchangedFiles="true" />
+        <Move SourceFiles="$(AntlrOutLexer)CosmosLexer.cs" DestinationFolder="$(AntlrOutParser)/" />
+        <Copy SourceFiles="$(AntlrOutLexer)CosmosLexer.tokens" DestinationFolder="$(AntlrOutParser)/" />
     </Target>
-    
+
+    <Target Name="GenerateAntlrParser" BeforeTargets="BeforeBuild" Inputs="$(ParserGrammar)" Outputs="$(ReferenceParserGrammar)">
+        <Exec Command="mono $(Generator) -o $(AntlrOutParser) -Dlanguage=CSharp -visitor -package $(Package) $(ParserGrammar)" />
+        <!-- Copy source grammar for incremental build -->
+        <Copy SourceFiles="$(ParserGrammar)" DestinationFiles="$(ReferenceParserGrammar)" SkipUnchangedFiles="true" />
+    </Target>
+
 </Project>

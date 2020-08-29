@@ -1,5 +1,8 @@
-﻿//langage de type 'pseudo-code' pour apprendre à programmer
-grammar Cosmos ;
+//langage de type 'pseudo-code' pour apprendre à programmero
+parser grammar Cosmos ;
+
+
+options { tokenVocab = CosmosLexer; }
 
 //Removes clscompliant warning on build
 @header {#pragma warning disable 3021}
@@ -9,29 +12,16 @@ programme : entete RETOUR_DE_CHARIOT+ mainStart (instruction|noop)+ mainEnd .*? 
 entete : auteur RETOUR_DE_CHARIOT date RETOUR_DE_CHARIOT entreprise RETOUR_DE_CHARIOT description ;
 
 auteur : LABEL_AUTEUR MOT MOT? ;
-LABEL_AUTEUR : 'Auteur:' ;
 
 date : LABEL_DATE CONTENU_DATE ;
-LABEL_DATE : 'Date:' ;
-CONTENU_DATE :  CHIFFRE CHIFFRE? //jour
-                POINT
-                CHIFFRE CHIFFRE? //mois
-                POINT
-                CHIFFRE CHIFFRE (CHIFFRE CHIFFRE)? ; //année
 
 entreprise : ENTREPRISE_ENTETE MOT ;
-ENTREPRISE_ENTETE : 'Entreprise:' ;
 
 //En attendant d'utiliser la fonction island de Antlr...
 description : DESCRIPTION_ENTETE (MOT|DE|FIN|SI|ET|LE_TEXTE|DANS)+ (VIRGULE RETOUR_DE_CHARIOT MOT+)* ;
-DESCRIPTION_ENTETE : 'Description:' ;
 
 mainStart: DEBUT nomDuProgramme=MOT (BIBLIOTHEQUE bibliotheque=MOT)? DEUX_POINT ;
 mainEnd: FIN DE_LA_TRANSMISSION? POINT;
-DEBUT : 'Voici les ordres du programme' ;
-BIBLIOTHEQUE: 'à classer dans la bibliothèque' ;
-FIN   : 'Fin' ;
-DE_LA_TRANSMISSION : 'de la transmission' ;
 
 instruction : TABULATION+ (instruction_simple | instruction_complexe) ;
 noop:TABULATION* RETOUR_DE_CHARIOT ;
@@ -49,56 +39,18 @@ dormir: ATTENDRE expression_numerique MS;
 colorier: CHOISIR_COULEUR (red=ROUGE|green=VERT|blue=BLEU|white=BLANC|black=NOIR|gray=GRIS) dark=FONCE? POUR_LE (text=TEXTE|background=FOND);
 decouper: DECOUPER source=expression SUR separateur=expression;
 
-SUR:'sur';
-CHOISIR_COULEUR:'Choisir la couleur';
-RECUPERER:'Récupérer la saisie et la stocker dans';
-DECOUPER:'Découper';
-PLACER_LE_CURSEUR:'Placer le curseur à la';
-LIGNE:'ligne';
-COLONNE:'colonne';
-PLACER_ALEATOIRE:'Placer un nombre aléatoire compris entre ';
 
-DANS:'dans';
-AFFICHER:'Afficher';
-INSERER: 'Insérer'|'Copier';
-ATTENDRE:'Attendre';
-MS:'ms';
-ROUGE:'rouge';
-VERT:'vert';
-BLEU:'bleu';
-BLANC:'blanc';
-NOIR:'noir';
-GRIS:'gris';
-FONCE:'foncé';
-POUR_LE:'pour le';
-TEXTE:'texte';
-FOND:'fond';
-
-ALLOUER_TERME : 'Allouer' | 'Créer' ;
-INITIALISATION_TERME : 'avec' | 'et y enregistrer' ;
-
-LA:'la';
-UNE:'une';
-VALEUR:'valeur';
-VARIABLE : PREFIXE_VARIABLE PREFIXE_VARIABLE? (MOT|VALEUR_NOMBRE|(LETTRE (POINT? (LETTRE|CHIFFRE))*)) ; //double préfixe pour les variables internes...
 variable : (LA VALEUR DE)? la_zone_memoire;
-DE: 'de' | 'enregistrée dans';
 
 la_zone_memoire : (LA ZONE_MEMOIRE ZONE_NOM?)? VARIABLE;
 une_zone_memoire : (UNE ZONE_MEMOIRE ZONE_NOM?)? VARIABLE;
-ZONE_MEMOIRE : 'zone mémoire' ;
-ZONE_NOM : 'nommée' ;
-
-REPETER:'Répéter';
 
 boucle :
-     REPETER (expression_numerique FOIS | 'tant que' expression_booleenne | boucle_avec_variable) RETOUR_DE_CHARIOT
+     REPETER (expression_numerique FOIS | TANT_QUE expression_booleenne | boucle_avec_variable) RETOUR_DE_CHARIOT
     (instruction|noop)+
     TABULATION+ SUIVANT RETOUR_DE_CHARIOT ;
 
 boucle_avec_variable : AUTANT_DE_FOIS VARIABLE | LE_NOMBRE_DE_FOIS  variable;
-AUTANT_DE_FOIS:'autant de fois qu\'il y a de ' ;
-LE_NOMBRE_DE_FOIS:'le nombre de fois correspondant à';
 
 
 selection :
@@ -107,34 +59,9 @@ selection :
     sinon?
     TABULATION+ POINT_INTERROGATION RETOUR_DE_CHARIOT ;
 
-base_si : condition=expression_booleenne 'alors' RETOUR_DE_CHARIOT (instruction|noop)+ ;
+base_si : condition=expression_booleenne ALORS RETOUR_DE_CHARIOT (instruction|noop)+ ;
 sinon_si : TABULATION+ SINON_SI base_si ;
 sinon : TABULATION+ ET_SINON RETOUR_DE_CHARIOT (instruction|noop)+ ;
-
-SI:'Si';
-SINON_SI:'sinon si';
-ET_SINON:'et sinon';
-
-
-OPERATEUR_COMPARAISON_EQUIVALENT : 'vaut' | 'est égal à' | '==' | 'est égale à' ;
-OPERATEUR_COMPARAISON_DIFFERENT : 'est différent de' | 'n\'est pas égal à' | '!=' | '<>' | 'est différente de' | 'n\'est pas égale à' ;
-OPERATEUR_COMPARAISON_PLUS_GRAND : 'est plus grand que' | 'est supérieur à' | '>' | 'est plus grande que' | 'est supérieure à'  ;
-OPERATEUR_COMPARAISON_PLUS_PETIT : 'est plus petit que' | 'est inférieur à' | '<' | 'est plus petite que' | 'est inférieure à';
-OPERATEUR_COMPARAISON_PLUS_GRAND_OU_EGAL : 'est plus grand ou égal à' | 'est supérieur ou égal à' | '>=' |'est plus grande ou égale à' | 'est supérieure ou égale à'  ;
-OPERATEUR_COMPARAISON_PLUS_PETIT_OU_EGAL : 'est plus petit ou égal à' | 'est inférieur ou égal à' | '<=' | 'est plus petite ou égale à' | 'est inférieure ou égale à';
-
-VRAI: 'vrai'|'OK' ;
-FAUX: 'faux'|'KO' ;
-
-ET : 'et' ;
-OPERATEUR_LOGIQUE_ET: '&&' ;
-OPERATEUR_LOGIQUE_OU: 'ou' | '||' ;
-OPERATEUR_LOGIQUE_OU_EXCLUSIF: 'ou au contraire' | 'xor' ;
-OPERATEUR_LOGIQUE_EST : 'est' ;
-OPERATEUR_LOGIQUE_NON : 'l\'inverse de' | '!' | 'not' ;
-
-OPERATEUR_MATH_EGAL : '=' ;
-PREFIXE_VARIABLE : '#' ;
 
 //Variable doublé pour éviter que la première règle de sous-expression prenne le dessus
 expression
@@ -184,51 +111,6 @@ expression_textuelle : atome_textuel ;
 atome_textuel : chaine_de_caractere ;
 atome_numerique : nombre ;
 
-PARENTHESE_GAUCHE : '(' ;
-PARENTHESE_DROITE : ')' ;
-
 chaine_de_caractere : LE_TEXTE? VALEUR_TEXTE ;
-LE_TEXTE : 'le texte' ;
-VALEUR_TEXTE : '"' ~["]* '"' ;
 
 nombre : (LE_NOMBRE|LA VALEUR)? VALEUR_NOMBRE ;
-LE_NOMBRE : 'le nombre' ;
-VALEUR_NOMBRE : CHIFFRE+ (POINT CHIFFRE+)? ;
-
-OPERATEUR_MATH_PLUS : '+' | 'plus' ;
-OPERATEUR_MATH_MOINS : '-' | 'moins' ;
-OPERATEUR_MATH_FOIS : '*' | 'fois' ;
-OPERATEUR_MATH_DIVISE : '/' | 'divisé par';
-OPERATEUR_MATH_PUISSANCE : '^' | 'élevé '? 'à la puissance';
-OPERATEUR_MATH_RACINE_CARREE : 'racine carrée de' ;
-
-fragment CHIFFRE : '0'..'9' ;
-
-fragment MINUSCULE : 'a'..'z' ;
-fragment MAJUSCULE : 'A'..'Z' ;
-fragment SYMBOLES_LETTRE : [-_] ;
-fragment LETTRE : MINUSCULE | MAJUSCULE | SYMBOLES_LETTRE ;
-
-VIRGULE : ',' ;
-POINT: '.' ;
-POINT_INTERROGATION: '?' ;
-SUIVANT : '>>' ;
-DEUX_POINT: ':' ;
-FOIS: 'x' ;
-
-
-TABULATION : '\t' | '    ' ;
-RETOUR_DE_CHARIOT : '\r'? '\n' ;
-
-//fragment CARACTERE : ~[."\\\r\n ] ;
-
-//Tout le reste...
-MOT : LETTRE (LETTRE|CHIFFRE)* ;
-ESPACE: ' ' -> skip ;
-COMMENTAIRE_LIGNE: (TABULATION? | TABULATION+) '//' ~[\n]* RETOUR_DE_CHARIOT -> skip ;
-COMMENTAIRE : '/*' .*? '*/' -> skip ;
-
-
-//WS: [ \t\r\n\u000C]+ -> channel(HIDDEN);
-//WS : [ \r\n\t] + -> skip ;
-//WS : [ ] + -> channel(HIDDEN) ;

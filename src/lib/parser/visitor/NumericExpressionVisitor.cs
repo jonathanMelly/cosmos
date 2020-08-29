@@ -17,16 +17,16 @@ namespace lib.parser.visitor
             this.random = random;
         }
 
-        public override CosmosNumber VisitVariable(CosmosParser.VariableContext context)
+        public override CosmosNumber VisitVariable(Cosmos.VariableContext context)
         {
             return variableVisitor.Visit(context).Value.Number();
         }
 
-        public override CosmosNumber VisitExpression_numerique(CosmosParser.Expression_numeriqueContext context)
+        public override CosmosNumber VisitExpression_numerique(Cosmos.Expression_numeriqueContext context)
         {
             switch (context.GetChild(0))
             {
-                case CosmosParser.Expression_numeriqueContext _:
+                case Cosmos.Expression_numeriqueContext _:
                     var left = Visit(context.gauche);
                     var right = Visit(context.droite);
                     return context.operateur.Type switch
@@ -41,13 +41,13 @@ namespace lib.parser.visitor
                         _ => throw new MissingTokenHandlerException(context.operateur)
                     };
 
-                case CosmosParser.Atome_numeriqueContext atomeNumeriqueContext:
+                case Cosmos.Atome_numeriqueContext atomeNumeriqueContext:
                     return Visit(atomeNumeriqueContext.nombre());
 
-                case CosmosParser.NombreContext nombreContext:
+                case Cosmos.NombreContext nombreContext:
                     return VisitNombre(nombreContext);
 
-                case CosmosParser.VariableContext variableContext:
+                case Cosmos.VariableContext variableContext:
                     return variableVisitor.Visit(variableContext).Value.Number();
 
                 default:
@@ -66,7 +66,7 @@ namespace lib.parser.visitor
 
         }
 
-        public override CosmosNumber VisitNombre(CosmosParser.NombreContext context)
+        public override CosmosNumber VisitNombre(Cosmos.NombreContext context)
         {
             return new CosmosNumber(context.VALEUR_NOMBRE().GetText());
         }
