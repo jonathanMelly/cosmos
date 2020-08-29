@@ -1,4 +1,4 @@
-//langage de type 'pseudo-code' pour apprendre à programmero
+//langage de type 'pseudo-code' pour apprendre à programmer
 parser grammar Cosmos ;
 
 

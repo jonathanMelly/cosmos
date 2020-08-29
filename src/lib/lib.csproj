@@ -51,16 +51,26 @@
         <Package>lib.$(Antlr)</Package>
     </PropertyGroup>
 
+    <!-- LEXER PART -->
     <Target Name="GenerateAntlrLexer" BeforeTargets="GenerateAntlrParser" Inputs="$(LexerGrammar)" Outputs="$(ReferenceLexerGrammar)">
+        <Message Text="Generate Lexer files" />
         <Exec Command="mono $(Generator) -o $(AntlrOutLexer) -Dlanguage=CSharp -visitor -package $(Package) $(LexerGrammar)" />
-        <!-- Copy source grammar for incremental build -->
-        <Copy SourceFiles="$(LexerGrammar)" DestinationFiles="$(ReferenceLexerGrammar)" SkipUnchangedFiles="true" />
+        
+        <!-- Handles generated files -->
         <Move SourceFiles="$(AntlrOutLexer)CosmosLexer.cs" DestinationFolder="$(AntlrOutParser)/" />
         <Copy SourceFiles="$(AntlrOutLexer)CosmosLexer.tokens" DestinationFolder="$(AntlrOutParser)/" />
+        
+        <!-- Copy source grammar for incremental build -->
+        <Copy SourceFiles="$(LexerGrammar)" DestinationFiles="$(ReferenceLexerGrammar)" SkipUnchangedFiles="true" />
+        
+        <!-- If Lexer has changed, then parser needs rebuild, update timestamp to force (i was not able to use multiple inputs/outputs) -->
+        <Touch Files="$(ParserGrammar)" />
     </Target>
 
-    <Target Name="GenerateAntlrParser" BeforeTargets="BeforeBuild" Inputs="$(ParserGrammar);$(LexerGrammar)" Outputs="$(ReferenceParserGrammar);$(ReferenceLexerGrammar)">
+    <Target Name="GenerateAntlrParser" BeforeTargets="BeforeBuild" Inputs="$(ParserGrammar)" Outputs="$(ReferenceParserGrammar)">
+        <Message Text="Generate Parser files" />
         <Exec Command="mono $(Generator) -o $(AntlrOutParser) -Dlanguage=CSharp -visitor -package $(Package) $(ParserGrammar)" />
+        
         <!-- Copy source grammar for incremental build -->
         <Copy SourceFiles="$(ParserGrammar)" DestinationFiles="$(ReferenceParserGrammar)" SkipUnchangedFiles="true" />
     </Target>
