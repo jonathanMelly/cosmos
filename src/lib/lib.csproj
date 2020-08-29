@@ -54,7 +54,7 @@
     <!-- LEXER PART -->
     <Target Name="GenerateAntlrLexer" BeforeTargets="GenerateAntlrParser" Inputs="$(LexerGrammar)" Outputs="$(ReferenceLexerGrammar)">
         <Message Text="Generate Lexer files" />
-        <Exec Command="mono $(Generator) -o $(AntlrOutLexer) -Dlanguage=CSharp -visitor -package $(Package) $(LexerGrammar)" />
+        <Exec Command="mono $(Generator) -o $(AntlrOutLexer) -Dlanguage=CSharp -package $(Package) $(LexerGrammar)" />
         
         <!-- Handles generated files -->
         <Move SourceFiles="$(AntlrOutLexer)CosmosLexer.cs" DestinationFolder="$(AntlrOutParser)/" />
@@ -65,6 +65,8 @@
         
         <!-- If Lexer has changed, then parser needs rebuild, update timestamp to force (i was not able to use multiple inputs/outputs) -->
         <Touch Files="$(ParserGrammar)" />
+        
+        <RemoveDir Directories="$(MSBuildProjectDirectory)/../../gen" />
     </Target>
 
     <Target Name="GenerateAntlrParser" BeforeTargets="BeforeBuild" Inputs="$(ParserGrammar)" Outputs="$(ReferenceParserGrammar)">
