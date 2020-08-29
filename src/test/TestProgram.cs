@@ -28,7 +28,7 @@ namespace test
 
             //Assert
             exitCode.Should().Be((int) Program.ExitCode.ErreurSyntaxe);
-            fakeConsole.Content.Should().Contain("attendu 'Date:'").And.Contain("il manque 'Description:'");
+            fakeConsole.Content.Should().Contain("attendu 'Date:'").And.Contain("il manque 'Voici les ordres du programme' à l'endroit ou il y a 'Voici'");
         }
 
         [Fact]

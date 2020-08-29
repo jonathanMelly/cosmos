@@ -7,18 +7,18 @@ options { tokenVocab = CosmosLexer; }
 //Removes clscompliant warning on build
 @header {#pragma warning disable 3021}
 
-programme : entete RETOUR_DE_CHARIOT+ mainStart (instruction|noop)+ mainEnd .*? EOF ;
+programme : entete mainStart (instruction|noop)+ mainEnd .*? EOF ;
 
-entete : auteur RETOUR_DE_CHARIOT date RETOUR_DE_CHARIOT entreprise RETOUR_DE_CHARIOT description ;
+entete : auteur date entreprise description ;
 
-auteur : LABEL_AUTEUR MOT MOT? ;
+auteur : LABEL_AUTEUR TEXTE_LIBRE_MONOLIGNE ;
 
-date : LABEL_DATE CONTENU_DATE ;
+date : LABEL_DATE CONTENU_DATE RETOUR_DE_CHARIOT ;
 
-entreprise : ENTREPRISE_ENTETE MOT ;
+entreprise : ENTREPRISE_ENTETE TEXTE_LIBRE_MONOLIGNE ;
 
-//En attendant d'utiliser la fonction island de Antlr...
-description : DESCRIPTION_ENTETE (MOT|DE|FIN|SI|ET|LE_TEXTE|DANS)+ (VIRGULE RETOUR_DE_CHARIOT MOT+)* ;
+//Active le mode island dans le lexer
+description : DESCRIPTION_ENTETE TEXTE_LIBRE_MULTILIGNE;
 
 mainStart: DEBUT nomDuProgramme=MOT (BIBLIOTHEQUE bibliotheque=MOT)? DEUX_POINT ;
 mainEnd: FIN DE_LA_TRANSMISSION? POINT;

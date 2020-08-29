@@ -4,7 +4,7 @@ lexer grammar CosmosLexer ;
 //Removes clscompliant warning on build
 @header {#pragma warning disable 3021}
 
-LABEL_AUTEUR : 'Auteur:' ;
+LABEL_AUTEUR : 'Auteur:' -> pushMode(TEXTE_1LIGNE);
 
 LABEL_DATE : 'Date:' ;
 CONTENU_DATE :  CHIFFRE CHIFFRE? //jour
@@ -13,9 +13,9 @@ CONTENU_DATE :  CHIFFRE CHIFFRE? //jour
                 POINT
                 CHIFFRE CHIFFRE (CHIFFRE CHIFFRE)? ; //année
 
-ENTREPRISE_ENTETE : 'Entreprise:' ;
+ENTREPRISE_ENTETE : 'Entreprise:' -> pushMode(TEXTE_1LIGNE) ;
 
-DESCRIPTION_ENTETE : 'Description:' ;
+DESCRIPTION_ENTETE : 'Description:' -> pushMode(TEXTE_NLIGNES) ;
 
 DEBUT : 'Voici les ordres du programme' ;
 BIBLIOTHEQUE: 'à classer dans la bibliothèque' ;
@@ -141,3 +141,9 @@ COMMENTAIRE : '/*' .*? '*/' -> skip ;
 //WS: [ \t\r\n\u000C]+ -> channel(HIDDEN);
 //WS : [ \r\n\t] + -> skip ;
 //WS : [ ] + -> channel(HIDDEN) ;
+
+mode TEXTE_1LIGNE;
+TEXTE_LIBRE_MONOLIGNE: ~[\n]+ RETOUR_DE_CHARIOT -> popMode ;
+
+mode TEXTE_NLIGNES;
+TEXTE_LIBRE_MULTILIGNE: ~[\n]+ (RETOUR_DE_CHARIOT~[\n]+)* RETOUR_DE_CHARIOT RETOUR_DE_CHARIOT+ -> popMode;//arrêt à au moins 2 retour à la lignes ;

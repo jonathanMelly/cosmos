@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Antlr4.Runtime;
-using Antlr4.Runtime.Tree.Xpath;
 using lib.antlr;
 using lib.console;
 using lib.parser.listener;
@@ -82,7 +81,7 @@ namespace lib.parser
             return $"Auteur: {Environment.UserName}{Environment.NewLine}" +
                    $"Date: {date ?? DateTime.Now.ToString("dd.MM.yyyy")}{Environment.NewLine}" +
                    $"Entreprise: {Environment.UserDomainName}{Environment.NewLine}" +
-                   $"Description: {name}{Environment.NewLine}" +
+                   $"Description: {name}{Environment.NewLine}{Environment.NewLine}" +
                    $"Voici les ordres du programme {name} {(library==null?"":$"à classer dans la bibliothèque {library}")} :{Environment.NewLine}";
         }
     }

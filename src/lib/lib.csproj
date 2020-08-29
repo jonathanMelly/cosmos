@@ -59,7 +59,7 @@
         <Copy SourceFiles="$(AntlrOutLexer)CosmosLexer.tokens" DestinationFolder="$(AntlrOutParser)/" />
     </Target>
 
-    <Target Name="GenerateAntlrParser" BeforeTargets="BeforeBuild" Inputs="$(ParserGrammar)" Outputs="$(ReferenceParserGrammar)">
+    <Target Name="GenerateAntlrParser" BeforeTargets="BeforeBuild" Inputs="$(ParserGrammar);$(LexerGrammar)" Outputs="$(ReferenceParserGrammar);$(ReferenceLexerGrammar)">
         <Exec Command="mono $(Generator) -o $(AntlrOutParser) -Dlanguage=CSharp -visitor -package $(Package) $(ParserGrammar)" />
         <!-- Copy source grammar for incremental build -->
         <Copy SourceFiles="$(ParserGrammar)" DestinationFiles="$(ReferenceParserGrammar)" SkipUnchangedFiles="true" />
