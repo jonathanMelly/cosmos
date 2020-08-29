@@ -22,7 +22,8 @@ CONTENU_DATE :  CHIFFRE CHIFFRE? //jour
 entreprise : ENTREPRISE_ENTETE MOT ;
 ENTREPRISE_ENTETE : 'Entreprise:' ;
 
-description : DESCRIPTION_ENTETE MOT+ (VIRGULE RETOUR_DE_CHARIOT MOT+)* ;
+//En attendant d'utiliser la fonction island de Antlr...
+description : DESCRIPTION_ENTETE (MOT|DE|FIN|SI|ET|LE_TEXTE|DANS)+ (VIRGULE RETOUR_DE_CHARIOT MOT+)* ;
 DESCRIPTION_ENTETE : 'Description:' ;
 
 mainStart: DEBUT nomDuProgramme=MOT (BIBLIOTHEQUE bibliotheque=MOT)? DEUX_POINT ;
@@ -38,44 +39,86 @@ noop:TABULATION* RETOUR_DE_CHARIOT ;
 instruction_simple   : (afficher|allouer|affecter|recuperer|generer_aleatoire|placer_curseur|dormir|colorier|decouper) POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
 instruction_complexe : selection|boucle ; //terminaison spécifique pour chaque
 
-afficher : 'Afficher' expression;
+afficher : AFFICHER expression;
 allouer : ALLOUER_TERME une_zone_memoire (INITIALISATION_TERME? expression)? ;
-affecter : (('Insérer'|'Copier') expression 'dans' la_zone_memoire) | (variable OPERATEUR_MATH_EGAL expression ) ;
-recuperer: 'Récupérer la saisie et la stocker dans'?  la_zone_memoire;
-placer_curseur: 'Placer le curseur à la' (ligne='ligne'|colonne='colonne') expression_numerique;
-generer_aleatoire: 'Placer un nombre aléatoire compris entre ' min=expression_numerique ET max=expression_numerique 'dans' la_zone_memoire;
-dormir: 'Attendre' expression_numerique 'ms';
-colorier: 'Choisir la couleur' (red='rouge'|green='vert'|blue='bleu'|white='blanc'|black='noir'|gray='gris') dark='foncé'? 'pour le' (text='texte'|background='fond');
-decouper: 'Découper' source=expression 'sur' separateur=expression;
+affecter : ( INSERER expression DANS la_zone_memoire) | (variable OPERATEUR_MATH_EGAL expression ) ;
+recuperer: RECUPERER  la_zone_memoire;
+placer_curseur: PLACER_LE_CURSEUR (ligne=LIGNE|colonne=COLONNE) expression_numerique;
+generer_aleatoire:  PLACER_ALEATOIRE min=expression_numerique ET max=expression_numerique DANS la_zone_memoire;
+dormir: ATTENDRE expression_numerique MS;
+colorier: CHOISIR_COULEUR (red=ROUGE|green=VERT|blue=BLEU|white=BLANC|black=NOIR|gray=GRIS) dark=FONCE? POUR_LE (text=TEXTE|background=FOND);
+decouper: DECOUPER source=expression SUR separateur=expression;
+
+SUR:'sur';
+CHOISIR_COULEUR:'Choisir la couleur';
+RECUPERER:'Récupérer la saisie et la stocker dans';
+DECOUPER:'Découper';
+PLACER_LE_CURSEUR:'Placer le curseur à la';
+LIGNE:'ligne';
+COLONNE:'colonne';
+PLACER_ALEATOIRE:'Placer un nombre aléatoire compris entre ';
+
+DANS:'dans';
+AFFICHER:'Afficher';
+INSERER: 'Insérer'|'Copier';
+ATTENDRE:'Attendre';
+MS:'ms';
+ROUGE:'rouge';
+VERT:'vert';
+BLEU:'bleu';
+BLANC:'blanc';
+NOIR:'noir';
+GRIS:'gris';
+FONCE:'foncé';
+POUR_LE:'pour le';
+TEXTE:'texte';
+FOND:'fond';
 
 ALLOUER_TERME : 'Allouer' | 'Créer' ;
 INITIALISATION_TERME : 'avec' | 'et y enregistrer' ;
 
-la_zone_memoire : ('la' ZONE_MEMOIRE ZONE_NOM?)? VARIABLE;
-une_zone_memoire : ('une' ZONE_MEMOIRE ZONE_NOM?)? VARIABLE;
+LA:'la';
+UNE:'une';
+VALEUR:'valeur';
+VARIABLE : PREFIXE_VARIABLE PREFIXE_VARIABLE? (MOT|VALEUR_NOMBRE|(LETTRE (POINT? (LETTRE|CHIFFRE))*)) ; //double préfixe pour les variables internes...
+variable : (LA VALEUR DE)? la_zone_memoire;
+DE: 'de' | 'enregistrée dans';
+
+la_zone_memoire : (LA ZONE_MEMOIRE ZONE_NOM?)? VARIABLE;
+une_zone_memoire : (UNE ZONE_MEMOIRE ZONE_NOM?)? VARIABLE;
 ZONE_MEMOIRE : 'zone mémoire' ;
 ZONE_NOM : 'nommée' ;
 
+REPETER:'Répéter';
+
 boucle :
-    'Répéter' (expression_numerique FOIS | 'tant que' expression_booleenne | boucle_avec_variable) RETOUR_DE_CHARIOT
+     REPETER (expression_numerique FOIS | 'tant que' expression_booleenne | boucle_avec_variable) RETOUR_DE_CHARIOT
     (instruction|noop)+
     TABULATION+ SUIVANT RETOUR_DE_CHARIOT ;
 
-boucle_avec_variable : 'autant de fois qu\'il y a de ' VARIABLE | 'le nombre de fois correspondant à' variable;
+boucle_avec_variable : AUTANT_DE_FOIS VARIABLE | LE_NOMBRE_DE_FOIS  variable;
+AUTANT_DE_FOIS:'autant de fois qu\'il y a de ' ;
+LE_NOMBRE_DE_FOIS:'le nombre de fois correspondant à';
+
 
 selection :
-    'Si' base_si
+    SI base_si
     sinon_si*
     sinon?
     TABULATION+ POINT_INTERROGATION RETOUR_DE_CHARIOT ;
 
 base_si : condition=expression_booleenne 'alors' RETOUR_DE_CHARIOT (instruction|noop)+ ;
-sinon_si : TABULATION+ 'sinon si' base_si ;
-sinon : TABULATION+ 'et sinon' RETOUR_DE_CHARIOT (instruction|noop)+ ;
+sinon_si : TABULATION+ SINON_SI base_si ;
+sinon : TABULATION+ ET_SINON RETOUR_DE_CHARIOT (instruction|noop)+ ;
+
+SI:'Si';
+SINON_SI:'sinon si';
+ET_SINON:'et sinon';
+
 
 OPERATEUR_COMPARAISON_EQUIVALENT : 'vaut' | 'est égal à' | '==' | 'est égale à' ;
-OPERATEUR_COMPARAISON_DIFFERENT : 'est différent de' | 'n\'est pas égal à' | '!=' | '<>' | 'est différente de' | 'n\'est pas égale à' |;
-OPERATEUR_COMPARAISON_PLUS_GRAND : 'est plus grand que' | 'est supérieur à' | '>' | 'est plus grande que' | 'est supérieure à' |  ;
+OPERATEUR_COMPARAISON_DIFFERENT : 'est différent de' | 'n\'est pas égal à' | '!=' | '<>' | 'est différente de' | 'n\'est pas égale à' ;
+OPERATEUR_COMPARAISON_PLUS_GRAND : 'est plus grand que' | 'est supérieur à' | '>' | 'est plus grande que' | 'est supérieure à'  ;
 OPERATEUR_COMPARAISON_PLUS_PETIT : 'est plus petit que' | 'est inférieur à' | '<' | 'est plus petite que' | 'est inférieure à';
 OPERATEUR_COMPARAISON_PLUS_GRAND_OU_EGAL : 'est plus grand ou égal à' | 'est supérieur ou égal à' | '>=' |'est plus grande ou égale à' | 'est supérieure ou égale à'  ;
 OPERATEUR_COMPARAISON_PLUS_PETIT_OU_EGAL : 'est plus petit ou égal à' | 'est inférieur ou égal à' | '<=' | 'est plus petite ou égale à' | 'est inférieure ou égale à';
@@ -91,7 +134,6 @@ OPERATEUR_LOGIQUE_EST : 'est' ;
 OPERATEUR_LOGIQUE_NON : 'l\'inverse de' | '!' | 'not' ;
 
 OPERATEUR_MATH_EGAL : '=' ;
-VARIABLE : PREFIXE_VARIABLE PREFIXE_VARIABLE? (MOT|VALEUR_NOMBRE|(LETTRE (POINT? (LETTRE|CHIFFRE))*)) ; //double préfixe pour les variables internes...
 PREFIXE_VARIABLE : '#' ;
 
 //Variable doublé pour éviter que la première règle de sous-expression prenne le dessus
@@ -145,15 +187,11 @@ atome_numerique : nombre ;
 PARENTHESE_GAUCHE : '(' ;
 PARENTHESE_DROITE : ')' ;
 
-LA_VALEUR : 'la valeur' ;
-
-variable : (LA_VALEUR ('de' | 'enregistrée dans'))? la_zone_memoire;
-
 chaine_de_caractere : LE_TEXTE? VALEUR_TEXTE ;
 LE_TEXTE : 'le texte' ;
 VALEUR_TEXTE : '"' ~["]* '"' ;
 
-nombre : (LE_NOMBRE|LA_VALEUR)? VALEUR_NOMBRE ;
+nombre : (LE_NOMBRE|LA VALEUR)? VALEUR_NOMBRE ;
 LE_NOMBRE : 'le nombre' ;
 VALEUR_NOMBRE : CHIFFRE+ (POINT CHIFFRE+)? ;
 
@@ -189,8 +227,6 @@ MOT : LETTRE (LETTRE|CHIFFRE)* ;
 ESPACE: ' ' -> skip ;
 COMMENTAIRE_LIGNE: (TABULATION? | TABULATION+) '//' ~[\n]* RETOUR_DE_CHARIOT -> skip ;
 COMMENTAIRE : '/*' .*? '*/' -> skip ;
-
-
 
 
 //WS: [ \t\r\n\u000C]+ -> channel(HIDDEN);

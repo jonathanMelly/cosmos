@@ -160,6 +160,12 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitDecouper([NotNull] CosmosParser.DecouperContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CosmosParser.variable"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitVariable([NotNull] CosmosParser.VariableContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -249,12 +255,6 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitAtome_numerique([NotNull] CosmosParser.Atome_numeriqueContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.variable"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitVariable([NotNull] CosmosParser.VariableContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CosmosParser.chaine_de_caractere"/>.
 	/// </summary>

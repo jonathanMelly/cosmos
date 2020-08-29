@@ -243,6 +243,16 @@ public interface ICosmosListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitDecouper([NotNull] CosmosParser.DecouperContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.variable"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterVariable([NotNull] CosmosParser.VariableContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.variable"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitVariable([NotNull] CosmosParser.VariableContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -392,16 +402,6 @@ public interface ICosmosListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitAtome_numerique([NotNull] CosmosParser.Atome_numeriqueContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.variable"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterVariable([NotNull] CosmosParser.VariableContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.variable"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitVariable([NotNull] CosmosParser.VariableContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.chaine_de_caractere"/>.
 	/// </summary>

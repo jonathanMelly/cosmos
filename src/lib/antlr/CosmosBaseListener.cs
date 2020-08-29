@@ -289,6 +289,18 @@ public partial class CosmosBaseListener : ICosmosListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitDecouper([NotNull] CosmosParser.DecouperContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.variable"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterVariable([NotNull] CosmosParser.VariableContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.variable"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitVariable([NotNull] CosmosParser.VariableContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -468,18 +480,6 @@ public partial class CosmosBaseListener : ICosmosListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitAtome_numerique([NotNull] CosmosParser.Atome_numeriqueContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="CosmosParser.variable"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterVariable([NotNull] CosmosParser.VariableContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="CosmosParser.variable"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitVariable([NotNull] CosmosParser.VariableContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.chaine_de_caractere"/>.
 	/// <para>The default implementation does nothing.</para>
