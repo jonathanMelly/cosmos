@@ -36,7 +36,7 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 [System.CLSCompliant(false)]
 public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, ICosmosVisitor<Result> {
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.programme"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.programme"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -44,9 +44,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitProgramme([NotNull] CosmosParser.ProgrammeContext context) { return VisitChildren(context); }
+	public virtual Result VisitProgramme([NotNull] Cosmos.ProgrammeContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.entete"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.entete"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -54,9 +54,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitEntete([NotNull] CosmosParser.EnteteContext context) { return VisitChildren(context); }
+	public virtual Result VisitEntete([NotNull] Cosmos.EnteteContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.auteur"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.auteur"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -64,9 +64,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitAuteur([NotNull] CosmosParser.AuteurContext context) { return VisitChildren(context); }
+	public virtual Result VisitAuteur([NotNull] Cosmos.AuteurContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.date"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.date"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -74,9 +74,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitDate([NotNull] CosmosParser.DateContext context) { return VisitChildren(context); }
+	public virtual Result VisitDate([NotNull] Cosmos.DateContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.entreprise"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.entreprise"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -84,9 +84,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitEntreprise([NotNull] CosmosParser.EntrepriseContext context) { return VisitChildren(context); }
+	public virtual Result VisitEntreprise([NotNull] Cosmos.EntrepriseContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.description"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.description"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -94,9 +94,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitDescription([NotNull] CosmosParser.DescriptionContext context) { return VisitChildren(context); }
+	public virtual Result VisitDescription([NotNull] Cosmos.DescriptionContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.mainStart"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.mainStart"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -104,9 +104,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitMainStart([NotNull] CosmosParser.MainStartContext context) { return VisitChildren(context); }
+	public virtual Result VisitMainStart([NotNull] Cosmos.MainStartContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.mainEnd"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.mainEnd"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -114,9 +114,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitMainEnd([NotNull] CosmosParser.MainEndContext context) { return VisitChildren(context); }
+	public virtual Result VisitMainEnd([NotNull] Cosmos.MainEndContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.instruction"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.instruction"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -124,9 +124,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitInstruction([NotNull] CosmosParser.InstructionContext context) { return VisitChildren(context); }
+	public virtual Result VisitInstruction([NotNull] Cosmos.InstructionContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.noop"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.noop"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -134,9 +134,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitNoop([NotNull] CosmosParser.NoopContext context) { return VisitChildren(context); }
+	public virtual Result VisitNoop([NotNull] Cosmos.NoopContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.instruction_simple"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.instruction_simple"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -144,9 +144,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitInstruction_simple([NotNull] CosmosParser.Instruction_simpleContext context) { return VisitChildren(context); }
+	public virtual Result VisitInstruction_simple([NotNull] Cosmos.Instruction_simpleContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.instruction_complexe"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.instruction_complexe"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -154,9 +154,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitInstruction_complexe([NotNull] CosmosParser.Instruction_complexeContext context) { return VisitChildren(context); }
+	public virtual Result VisitInstruction_complexe([NotNull] Cosmos.Instruction_complexeContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.afficher"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.afficher"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -164,9 +164,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitAfficher([NotNull] CosmosParser.AfficherContext context) { return VisitChildren(context); }
+	public virtual Result VisitAfficher([NotNull] Cosmos.AfficherContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.allouer"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.allouer"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -174,9 +174,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitAllouer([NotNull] CosmosParser.AllouerContext context) { return VisitChildren(context); }
+	public virtual Result VisitAllouer([NotNull] Cosmos.AllouerContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.affecter"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.affecter"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -184,9 +184,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitAffecter([NotNull] CosmosParser.AffecterContext context) { return VisitChildren(context); }
+	public virtual Result VisitAffecter([NotNull] Cosmos.AffecterContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.recuperer"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.recuperer"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -194,9 +194,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitRecuperer([NotNull] CosmosParser.RecupererContext context) { return VisitChildren(context); }
+	public virtual Result VisitRecuperer([NotNull] Cosmos.RecupererContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.placer_curseur"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.placer_curseur"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -204,9 +204,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPlacer_curseur([NotNull] CosmosParser.Placer_curseurContext context) { return VisitChildren(context); }
+	public virtual Result VisitPlacer_curseur([NotNull] Cosmos.Placer_curseurContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.generer_aleatoire"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.generer_aleatoire"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -214,9 +214,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitGenerer_aleatoire([NotNull] CosmosParser.Generer_aleatoireContext context) { return VisitChildren(context); }
+	public virtual Result VisitGenerer_aleatoire([NotNull] Cosmos.Generer_aleatoireContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.dormir"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.dormir"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -224,9 +224,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitDormir([NotNull] CosmosParser.DormirContext context) { return VisitChildren(context); }
+	public virtual Result VisitDormir([NotNull] Cosmos.DormirContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.colorier"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.colorier"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -234,9 +234,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitColorier([NotNull] CosmosParser.ColorierContext context) { return VisitChildren(context); }
+	public virtual Result VisitColorier([NotNull] Cosmos.ColorierContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.decouper"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.decouper"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -244,9 +244,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitDecouper([NotNull] CosmosParser.DecouperContext context) { return VisitChildren(context); }
+	public virtual Result VisitDecouper([NotNull] Cosmos.DecouperContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.variable"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -254,9 +254,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitLa_zone_memoire([NotNull] CosmosParser.La_zone_memoireContext context) { return VisitChildren(context); }
+	public virtual Result VisitVariable([NotNull] Cosmos.VariableContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.une_zone_memoire"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.la_zone_memoire"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -264,9 +264,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitUne_zone_memoire([NotNull] CosmosParser.Une_zone_memoireContext context) { return VisitChildren(context); }
+	public virtual Result VisitLa_zone_memoire([NotNull] Cosmos.La_zone_memoireContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.boucle"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.une_zone_memoire"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -274,9 +274,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitBoucle([NotNull] CosmosParser.BoucleContext context) { return VisitChildren(context); }
+	public virtual Result VisitUne_zone_memoire([NotNull] Cosmos.Une_zone_memoireContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.boucle_avec_variable"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.boucle"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -284,9 +284,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitBoucle_avec_variable([NotNull] CosmosParser.Boucle_avec_variableContext context) { return VisitChildren(context); }
+	public virtual Result VisitBoucle([NotNull] Cosmos.BoucleContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.selection"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.boucle_avec_variable"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -294,9 +294,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitSelection([NotNull] CosmosParser.SelectionContext context) { return VisitChildren(context); }
+	public virtual Result VisitBoucle_avec_variable([NotNull] Cosmos.Boucle_avec_variableContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.base_si"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.selection"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -304,9 +304,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitBase_si([NotNull] CosmosParser.Base_siContext context) { return VisitChildren(context); }
+	public virtual Result VisitSelection([NotNull] Cosmos.SelectionContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.sinon_si"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.base_si"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -314,9 +314,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitSinon_si([NotNull] CosmosParser.Sinon_siContext context) { return VisitChildren(context); }
+	public virtual Result VisitBase_si([NotNull] Cosmos.Base_siContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.sinon"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.sinon_si"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -324,9 +324,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitSinon([NotNull] CosmosParser.SinonContext context) { return VisitChildren(context); }
+	public virtual Result VisitSinon_si([NotNull] Cosmos.Sinon_siContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.expression"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.sinon"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -334,9 +334,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitExpression([NotNull] CosmosParser.ExpressionContext context) { return VisitChildren(context); }
+	public virtual Result VisitSinon([NotNull] Cosmos.SinonContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.expression_comparable"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.expression"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -344,9 +344,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitExpression_comparable([NotNull] CosmosParser.Expression_comparableContext context) { return VisitChildren(context); }
+	public virtual Result VisitExpression([NotNull] Cosmos.ExpressionContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.expression_booleenne"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.expression_comparable"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -354,9 +354,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitExpression_booleenne([NotNull] CosmosParser.Expression_booleenneContext context) { return VisitChildren(context); }
+	public virtual Result VisitExpression_comparable([NotNull] Cosmos.Expression_comparableContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.expression_numerique"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.expression_booleenne"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -364,9 +364,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitExpression_numerique([NotNull] CosmosParser.Expression_numeriqueContext context) { return VisitChildren(context); }
+	public virtual Result VisitExpression_booleenne([NotNull] Cosmos.Expression_booleenneContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.expression_textuelle"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.expression_numerique"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -374,9 +374,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitExpression_textuelle([NotNull] CosmosParser.Expression_textuelleContext context) { return VisitChildren(context); }
+	public virtual Result VisitExpression_numerique([NotNull] Cosmos.Expression_numeriqueContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.atome_textuel"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.expression_textuelle"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -384,9 +384,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitAtome_textuel([NotNull] CosmosParser.Atome_textuelContext context) { return VisitChildren(context); }
+	public virtual Result VisitExpression_textuelle([NotNull] Cosmos.Expression_textuelleContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.atome_numerique"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.atome_textuel"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -394,9 +394,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitAtome_numerique([NotNull] CosmosParser.Atome_numeriqueContext context) { return VisitChildren(context); }
+	public virtual Result VisitAtome_textuel([NotNull] Cosmos.Atome_textuelContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.variable"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.atome_numerique"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -404,9 +404,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitVariable([NotNull] CosmosParser.VariableContext context) { return VisitChildren(context); }
+	public virtual Result VisitAtome_numerique([NotNull] Cosmos.Atome_numeriqueContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.chaine_de_caractere"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.chaine_de_caractere"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -414,9 +414,9 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitChaine_de_caractere([NotNull] CosmosParser.Chaine_de_caractereContext context) { return VisitChildren(context); }
+	public virtual Result VisitChaine_de_caractere([NotNull] Cosmos.Chaine_de_caractereContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CosmosParser.nombre"/>.
+	/// Visit a parse tree produced by <see cref="Cosmos.nombre"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -424,6 +424,6 @@ public partial class CosmosBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitNombre([NotNull] CosmosParser.NombreContext context) { return VisitChildren(context); }
+	public virtual Result VisitNombre([NotNull] Cosmos.NombreContext context) { return VisitChildren(context); }
 }
 } // namespace lib.antlr

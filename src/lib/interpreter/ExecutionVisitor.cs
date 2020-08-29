@@ -33,7 +33,7 @@ namespace lib.interpreter
             return this;
         }
 
-        public override ExecutionContext VisitProgramme(CosmosParser.ProgrammeContext context)
+        public override ExecutionContext VisitProgramme(Cosmos.ProgrammeContext context)
         {
             expressionVisitor = new ExpressionVisitor(variableVisitor,parser,random);
             variableVisitor.ExpressionVisitor=expressionVisitor;
@@ -54,7 +54,7 @@ namespace lib.interpreter
 
         }
 
-        public override ExecutionContext VisitSelection(CosmosParser.SelectionContext context)
+        public override ExecutionContext VisitSelection(Cosmos.SelectionContext context)
         {
             var evaluation = expressionVisitor.Visit(context.base_si().condition);
             if (evaluation.Boolean().Value)
@@ -75,7 +75,7 @@ namespace lib.interpreter
             return null;
         }
 
-        public override ExecutionContext VisitBoucle(CosmosParser.BoucleContext context)
+        public override ExecutionContext VisitBoucle(Cosmos.BoucleContext context)
         {
 
             //WHILE
@@ -119,7 +119,7 @@ namespace lib.interpreter
             return null;
         }
 
-        public override ExecutionContext VisitAffecter(CosmosParser.AffecterContext context)
+        public override ExecutionContext VisitAffecter(Cosmos.AffecterContext context)
         {
 
             var variable = context.variable() != null ?
@@ -132,14 +132,14 @@ namespace lib.interpreter
             return null;
         }
 
-        public override ExecutionContext VisitAfficher(CosmosParser.AfficherContext context)
+        public override ExecutionContext VisitAfficher(Cosmos.AfficherContext context)
         {
             executionConsole.Write(expressionVisitor.Visit(context.expression()).ToString());
 
             return null;
         }
 
-        public override ExecutionContext VisitAllouer(CosmosParser.AllouerContext context)
+        public override ExecutionContext VisitAllouer(Cosmos.AllouerContext context)
         {
             var variable = variableVisitor.Visit(context);
             parser.Variables[variable.Name] = variable;
@@ -147,7 +147,7 @@ namespace lib.interpreter
             return null;
         }
 
-        public override ExecutionContext VisitRecuperer(CosmosParser.RecupererContext context)
+        public override ExecutionContext VisitRecuperer(Cosmos.RecupererContext context)
         {
             var input = executionConsole.ReadLine();
             CosmosTypedValue typedValue;
@@ -171,7 +171,7 @@ namespace lib.interpreter
             return null;
         }
 
-        public override ExecutionContext VisitGenerer_aleatoire(CosmosParser.Generer_aleatoireContext context)
+        public override ExecutionContext VisitGenerer_aleatoire(Cosmos.Generer_aleatoireContext context)
         {
             var min = Convert.ToInt32(expressionVisitor.Visit(context.min).Number().Value);
             var max = Convert.ToInt32(expressionVisitor.Visit(context.max).Number().Value);
@@ -185,7 +185,7 @@ namespace lib.interpreter
             return null;
         }
 
-        public override ExecutionContext VisitPlacer_curseur(CosmosParser.Placer_curseurContext context)
+        public override ExecutionContext VisitPlacer_curseur(Cosmos.Placer_curseurContext context)
         {
             var index = (int) expressionVisitor.Visit(context.expression_numerique()).Number().Value;
             if (context.ligne != null)
@@ -200,14 +200,14 @@ namespace lib.interpreter
             return null;
         }
 
-        public override ExecutionContext VisitDormir(CosmosParser.DormirContext context)
+        public override ExecutionContext VisitDormir(Cosmos.DormirContext context)
         {
             var time = (int) expressionVisitor.Visit(context.expression_numerique()).Number().Value;
             Thread.Sleep(time);
             return null;
         }
 
-        public override ExecutionContext VisitColorier(CosmosParser.ColorierContext context)
+        public override ExecutionContext VisitColorier(Cosmos.ColorierContext context)
         {
             var dark ="";
             var translatedColor = "";
@@ -259,7 +259,7 @@ namespace lib.interpreter
             return null;
         }
 
-        public override ExecutionContext VisitDecouper(CosmosParser.DecouperContext context)
+        public override ExecutionContext VisitDecouper(Cosmos.DecouperContext context)
         {
             //split detected
             if (context.separateur != null)

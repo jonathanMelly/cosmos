@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Antlr4.Runtime;
-using Antlr4.Runtime.Tree.Xpath;
 using lib.antlr;
 using lib.console;
 using lib.parser.listener;
@@ -21,7 +20,7 @@ namespace lib.parser
 
         private IConsole console;
 
-        private CosmosParser.ProgrammeContext context;
+        private Cosmos.ProgrammeContext context;
 
         //Keep redirection because we may have more listeners in the future...
         public List<string> Errors => ErrorListener.Errors;
@@ -30,7 +29,7 @@ namespace lib.parser
 
         public ErrorListener ErrorListener { get; private set; }
 
-        public CosmosParser.ProgrammeContext Context => context;
+        public Cosmos.ProgrammeContext Context => context;
 
         public Parser ForFile(string file)
         {
@@ -64,7 +63,7 @@ namespace lib.parser
             var antlrInputStream = new AntlrInputStream(code);
             var lexer = new CosmosLexer(antlrInputStream);
             var tokens = new CommonTokenStream(lexer);
-            var parser = new CosmosParser(tokens);
+            var parser = new Cosmos(tokens);
 
             ErrorListener = new ErrorListener(console);
             parser.RemoveErrorListeners();
@@ -77,13 +76,17 @@ namespace lib.parser
             return !ErrorListener.HadError;
         }
 
-        public static string BuildValidHeader(string name,string library=null,string date=null)
+        public static string BuildValidHeader(string name,string library=null,string date=null,string newLine =null)
         {
-            return $"Auteur: {Environment.UserName}{Environment.NewLine}" +
-                   $"Date: {date ?? DateTime.Now.ToString("dd.MM.yyyy")}{Environment.NewLine}" +
-                   $"Entreprise: {Environment.UserDomainName}{Environment.NewLine}" +
-                   $"Description: {name}{Environment.NewLine}" +
-                   $"Voici les ordres du programme {name} {(library==null?"":$"à classer dans la bibliothèque {library}")} :{Environment.NewLine}";
+            if (newLine == null)
+            {
+                newLine = Environment.NewLine;
+            }
+            return $"Auteur: {Environment.UserName}{newLine}" +
+                   $"Date: {date ?? DateTime.Now.ToString("dd.MM.yyyy")}{newLine}" +
+                   $"Entreprise: {Environment.UserDomainName}{newLine}" +
+                   $"Description: {name}{newLine}{newLine}" +
+                   $"Voici les ordres du programme {name} {(library==null?"":$"à classer dans la bibliothèque {library}")} :{newLine}";
         }
     }
 }

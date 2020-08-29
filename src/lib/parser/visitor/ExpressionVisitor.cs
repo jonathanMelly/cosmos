@@ -22,27 +22,27 @@ namespace lib.parser.visitor
 
         public VariableVisitor VariableVisitor => variableVisitor;
 
-        public override CosmosTypedValue VisitExpression_booleenne(CosmosParser.Expression_booleenneContext context)
+        public override CosmosTypedValue VisitExpression_booleenne(Cosmos.Expression_booleenneContext context)
         {
             return booleanExpressionVisitor.Visit(context);
         }
 
-        public override CosmosTypedValue VisitExpression_textuelle(CosmosParser.Expression_textuelleContext context)
+        public override CosmosTypedValue VisitExpression_textuelle(Cosmos.Expression_textuelleContext context)
         {
             return stringExpressionVisitor.Visit(context);
         }
 
-        public override CosmosTypedValue VisitExpression_numerique(CosmosParser.Expression_numeriqueContext context)
+        public override CosmosTypedValue VisitExpression_numerique(Cosmos.Expression_numeriqueContext context)
         {
             return numericExpressionVisitor.Visit(context);
         }
 
-        public override CosmosTypedValue VisitNombre(CosmosParser.NombreContext context)
+        public override CosmosTypedValue VisitNombre(Cosmos.NombreContext context)
         {
             return numericExpressionVisitor.VisitNombre(context);
         }
 
-        public override CosmosTypedValue VisitVariable(CosmosParser.VariableContext context)
+        public override CosmosTypedValue VisitVariable(Cosmos.VariableContext context)
         {
             return variableVisitor.VisitVariable(context).Value;
         }

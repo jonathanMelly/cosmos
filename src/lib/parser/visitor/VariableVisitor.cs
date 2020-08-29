@@ -49,12 +49,12 @@ namespace lib.parser.visitor
             set => expressionVisitor = value;
         }
 
-        public override CosmosVariable VisitVariable(CosmosParser.VariableContext context)
+        public override CosmosVariable VisitVariable(Cosmos.VariableContext context)
         {
             return VisitLa_zone_memoire(context.la_zone_memoire());
         }
 
-        public override CosmosVariable VisitLa_zone_memoire(CosmosParser.La_zone_memoireContext context)
+        public override CosmosVariable VisitLa_zone_memoire(Cosmos.La_zone_memoireContext context)
         {
             return GetVariable(context.VARIABLE().GetText(), context);
         }
@@ -93,7 +93,7 @@ namespace lib.parser.visitor
             throw new UnknownVariableException(varName,context);
         }
 
-        public override CosmosVariable VisitAllouer(CosmosParser.AllouerContext context)
+        public override CosmosVariable VisitAllouer(Cosmos.AllouerContext context)
         {
             return new CosmosVariable
             (

@@ -20,11 +20,11 @@ namespace lib.parser.visitor
             this.variableVisitor = variableVisitor;
         }
 
-        public override CosmosString VisitExpression_textuelle(CosmosParser.Expression_textuelleContext context)
+        public override CosmosString VisitExpression_textuelle(Cosmos.Expression_textuelleContext context)
         {
             switch (context.GetChild(0))
             {
-                case CosmosParser.Atome_textuelContext atomeTextuelContext:
+                case Cosmos.Atome_textuelContext atomeTextuelContext:
                     var valueExpression = atomeTextuelContext.chaine_de_caractere().VALEUR_TEXTE().GetText();
 
                     //For each match, it returns the stored value (if found)
