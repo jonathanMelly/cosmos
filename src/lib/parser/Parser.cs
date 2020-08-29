@@ -76,13 +76,17 @@ namespace lib.parser
             return !ErrorListener.HadError;
         }
 
-        public static string BuildValidHeader(string name,string library=null,string date=null)
+        public static string BuildValidHeader(string name,string library=null,string date=null,string newLine =null)
         {
-            return $"Auteur: {Environment.UserName}{Environment.NewLine}" +
-                   $"Date: {date ?? DateTime.Now.ToString("dd.MM.yyyy")}{Environment.NewLine}" +
-                   $"Entreprise: {Environment.UserDomainName}{Environment.NewLine}" +
-                   $"Description: {name}{Environment.NewLine}{Environment.NewLine}" +
-                   $"Voici les ordres du programme {name} {(library==null?"":$"à classer dans la bibliothèque {library}")} :{Environment.NewLine}";
+            if (newLine == null)
+            {
+                newLine = Environment.NewLine;
+            }
+            return $"Auteur: {Environment.UserName}{newLine}" +
+                   $"Date: {date ?? DateTime.Now.ToString("dd.MM.yyyy")}{newLine}" +
+                   $"Entreprise: {Environment.UserDomainName}{newLine}" +
+                   $"Description: {name}{newLine}{newLine}" +
+                   $"Voici les ordres du programme {name} {(library==null?"":$"à classer dans la bibliothèque {library}")} :{newLine}";
         }
     }
 }

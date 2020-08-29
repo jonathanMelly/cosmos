@@ -143,7 +143,7 @@ COMMENTAIRE : '/*' .*? '*/' -> skip ;
 //WS : [ ] + -> channel(HIDDEN) ;
 
 mode TEXTE_1LIGNE;
-TEXTE_LIBRE_MONOLIGNE: ~[\n]+ RETOUR_DE_CHARIOT -> popMode ;
+TEXTE_LIBRE_MONOLIGNE: .+? RETOUR_DE_CHARIOT -> popMode ;
 
 mode TEXTE_NLIGNES;
-TEXTE_LIBRE_MULTILIGNE: ~[\n]+ (RETOUR_DE_CHARIOT~[\n]+)* RETOUR_DE_CHARIOT RETOUR_DE_CHARIOT+ -> popMode;//arrêt à au moins 2 retour à la lignes ;
+TEXTE_LIBRE_MULTILIGNE: .+? RETOUR_DE_CHARIOT RETOUR_DE_CHARIOT+ -> popMode;//arrêt à au moins 2 retour à la lignes ;
