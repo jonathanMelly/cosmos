@@ -35,6 +35,8 @@ namespace test
 
         private Stack<string> input = new Stack<string>();
 
+        public bool KeyAvailable => input.Count>0;
+        public string ReadKey => KeyAvailable?input.Pop():null;
 
         public void Write(string text, Channel channel)
         {

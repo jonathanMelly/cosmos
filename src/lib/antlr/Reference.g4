@@ -1,4 +1,4 @@
-﻿﻿﻿//langage de type 'pseudo-code' pour apprendre à programmer
+﻿//langage de type 'pseudo-code' pour apprendre à programmer
 grammar Cosmos ;
 
 //Removes clscompliant warning on build
@@ -35,7 +35,7 @@ DE_LA_TRANSMISSION : 'de la transmission' ;
 instruction : TABULATION+ (instruction_simple | instruction_complexe) ;
 noop:TABULATION* RETOUR_DE_CHARIOT ;
 
-instruction_simple   : (afficher|allouer|affecter|recuperer|generer_aleatoire|placer_curseur|dormir|colorier) POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
+instruction_simple   : (afficher|allouer|affecter|recuperer|generer_aleatoire|placer_curseur|dormir|colorier|decouper) POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
 instruction_complexe : selection|boucle ; //terminaison spécifique pour chaque
 
 afficher : 'Afficher' expression;
@@ -46,6 +46,7 @@ placer_curseur: 'Placer le curseur à la' (ligne='ligne'|colonne='colonne') expr
 generer_aleatoire: 'Placer un nombre aléatoire compris entre ' min=expression_numerique ET max=expression_numerique 'dans' la_zone_memoire;
 dormir: 'Attendre' expression_numerique 'ms';
 colorier: 'Choisir la couleur' (red='rouge'|green='vert'|blue='bleu'|white='blanc'|black='noir'|gray='gris') dark='foncé'? 'pour le' (text='texte'|background='fond');
+decouper: 'Découper' source=expression 'sur' separateur=expression;
 
 ALLOUER_TERME : 'Allouer' | 'Créer' ;
 INITIALISATION_TERME : 'avec' | 'et y enregistrer' ;
@@ -90,7 +91,7 @@ OPERATEUR_LOGIQUE_EST : 'est' ;
 OPERATEUR_LOGIQUE_NON : 'l\'inverse de' | '!' | 'not' ;
 
 OPERATEUR_MATH_EGAL : '=' ;
-VARIABLE : PREFIXE_VARIABLE (MOT|VALEUR_NOMBRE) ;
+VARIABLE : PREFIXE_VARIABLE PREFIXE_VARIABLE? (MOT|VALEUR_NOMBRE|(LETTRE (POINT? (LETTRE|CHIFFRE))*)) ; //double préfixe pour les variables internes...
 PREFIXE_VARIABLE : '#' ;
 
 //Variable doublé pour éviter que la première règle de sous-expression prenne le dessus
@@ -136,7 +137,7 @@ expression_numerique
         | PARENTHESE_GAUCHE sousExpression=expression_numerique PARENTHESE_DROITE
         ;
 
-expression_textuelle : atome_textuel ; //todo ou concaténation ... ?
+expression_textuelle : atome_textuel ;
 
 atome_textuel : chaine_de_caractere ;
 atome_numerique : nombre ;

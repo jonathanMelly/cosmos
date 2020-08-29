@@ -1,3 +1,4 @@
+#nullable enable
 namespace lib.console
 {
     public interface IConsole
@@ -8,6 +9,9 @@ namespace lib.console
             Error = 2,
             Debug = 3
         }
+
+        bool KeyAvailable { get; }
+        string? ReadKey { get; }
 
         /// <summary>
         ///     Appends text to the output placeholder

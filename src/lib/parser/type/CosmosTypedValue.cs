@@ -43,24 +43,24 @@ namespace lib.parser.type
             return new CosmosString(value);
         }
 
-        public static CosmosNumber Number(int value)
+        public static CosmosNumber Number(int value,bool leading0=false)
         {
-            return new CosmosNumber(value);
+            return new CosmosNumber(value,leading0);
         }
 
-        public static CosmosNumber Number(float value)
+        public static CosmosNumber Number(float value,bool leading0=false)
         {
-            return new CosmosNumber(value);
+            return new CosmosNumber(value,leading0);
         }
 
-        public static CosmosNumber Number(double value)
+        public static CosmosNumber Number(double value,bool leading0=false)
         {
-            return new CosmosNumber(value);
+            return new CosmosNumber(value,leading0);
         }
 
-        public static CosmosNumber Number(decimal value)
+        public static CosmosNumber Number(decimal value,bool leading0=false)
         {
-            return new CosmosNumber(value);
+            return new CosmosNumber(value,leading0);
         }
 
         //Runtime checked getters
@@ -131,141 +131,5 @@ namespace lib.parser.type
         {
             return Comparer<CosmosTypedValue>.Default.Compare(left, right) >= 0;
         }
-
-
-        /*
-        protected bool Equals(CosmosTypedValue other)
-        {
-            return Equals(rawValue, other.rawValue);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((CosmosTypedValue) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return (rawValue != null ? rawValue.GetHashCode() : 0);
-        }
-
-        public static bool operator ==(CosmosTypedValue a, CosmosTypedValue b)
-        {
-            if (a == null)
-            {
-                return b == null;
-            }
-
-            if (b == null)
-            {
-                return false;
-            }
-            return a.rawValue == b.rawValue;
-        }
-
-        public static bool operator !=(CosmosTypedValue a, CosmosTypedValue b)
-        {
-            if (a == null)
-            {
-
-            }
-
-            if (a?.rawValue == null)
-            {
-                return b?.rawValue != null;
-            }
-
-            if (b?.rawValue == null)
-            {
-                return true;
-            }
-            return a.rawValue != b.rawValue;
-        }
-
-        public static bool operator >(CosmosTypedValue a, CosmosTypedValue b)
-        {
-            if (a == null)
-            {
-                return false;
-            }
-
-            if (b == null)
-            {
-                return true;
-            }
-
-            if (a.rawValue is IComparable ac && b.rawValue is IComparable bc)
-            {
-                return ac.CompareTo(bc)>0;
-            }
-
-            throw new InvalidComparisonException($"Cannot compare {a} with {b} for operator >");
-
-        }
-
-
-        public static bool operator <(CosmosTypedValue a, CosmosTypedValue b)
-        {
-            if (a == null)
-            {
-                return false;
-            }
-
-            if (b == null)
-            {
-                return false;
-            }
-
-            if (a.rawValue is IComparable ac && b.rawValue is IComparable bc)
-            {
-                return ac.CompareTo(bc)<0;
-            }
-
-            throw new InvalidComparisonException($"Cannot compare {a} with {b} for operator <");
-        }
-
-        public static bool operator <=(CosmosTypedValue a, CosmosTypedValue b)
-        {
-            if (a == null)
-            {
-                return b==null;
-            }
-
-            if (b == null)
-            {
-                return false;
-            }
-
-            if (a.rawValue is IComparable ac && b.rawValue is IComparable bc)
-            {
-                return ac.CompareTo(bc)<=0;
-            }
-
-            throw new InvalidComparisonException($"Cannot compare {a} with {b} for operator <=");
-        }
-
-        public static bool operator >=(CosmosTypedValue a, CosmosTypedValue b)
-        {
-            if (a == null)
-            {
-                return b==null;
-            }
-
-            if (b == null)
-            {
-                return true;
-            }
-
-            if (a.rawValue is IComparable ac && b.rawValue is IComparable bc)
-            {
-                return ac.CompareTo(bc)>=0;
-            }
-
-            throw new InvalidComparisonException($"Cannot compare {a} with {b} for operator >=");
-        }
-        */
     }
 }

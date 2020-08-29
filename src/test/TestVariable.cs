@@ -1,4 +1,6 @@
+using System;
 using FluentAssertions;
+using lib;
 using lib.extension;
 using lib.parser.type;
 using Xunit;
@@ -213,6 +215,31 @@ namespace test
 
             //Assert
             testConsole.Content.Should().Be("<NÉANT>");
+        }
+
+        [Fact]
+        private void TestDate()
+        {
+            //Arrange
+            BuildSnippetInterpreter(
+                BuildAfficherSnippet("{##date.jour}.{##date.mois}.{##date.année} ##date.heure:##date.minute:##date.seconde"
+                    ));
+            var year = 2020;
+            var month = 12;
+            var day = 31;
+            var hour = 23;
+            var minute = 59;
+            var second = "05";
+
+            using (Clock.NowIs(new DateTime(year, month, day, hour, minute, Convert.ToInt32(second))))
+            {
+                //Act
+                interpreter.Execute().Should().BeTrue();
+
+                //Assert
+                testConsole.Content.Should().Be($"{day}.{month}.{year} {hour}:{minute}:{second}");
+            }
+
         }
     }
 }

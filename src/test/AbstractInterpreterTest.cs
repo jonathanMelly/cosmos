@@ -63,7 +63,7 @@ namespace test
                 programWithLines.Append(i++).Append(" ").Append(line).Append("\n");
             }
 
-            helper.WriteLine($"///Code source----\n{programWithLines}\n///Fin du code source----\n\nRésultat d'éxécution:\n",IConsole.Channel.Debug);
+            testConsole.WriteLine($"///Code source----\n{programWithLines}\n///Fin du code source----\n\nRésultat d'éxécution:\n",IConsole.Channel.Debug);
 
             parser = new Parser().ForSnippet(program).WithConsole(testConsole);
             interpreter = new Interpreter(parser,testConsole).WithRandom(random);
@@ -116,7 +116,17 @@ namespace test
         protected string BuildAllocationSnippet(CosmosVariable variable)
         {
             string value = null;
-            if (variable.Value != null) value = variable.Value.ToString();
+            if (variable.Value != null)
+            {
+                value = variable.Value.ToString();
+                //auto add string delimiters ""
+                if (variable.Value.IsString)
+                {
+                    value = $"\"{value}\"";
+                }
+            }
+
+
 
             return BuildAllocationSnippet(variable.Name, value);
         }

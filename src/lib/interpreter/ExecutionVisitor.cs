@@ -20,20 +20,11 @@ namespace lib.interpreter
         private Random random = new Random();
 
 
-        public ExecutionVisitor(Parser parser)
+        public ExecutionVisitor(Parser parser,IConsole console)
         {
             this.parser = parser;
-            variableVisitor = new VariableVisitor(parser);
-        }
-
-        /// <summary>
-        ///     Set customized output
-        /// </summary>
-        /// <param name="console"></param>
-        public ExecutionVisitor WithConsole(IConsole console)
-        {
             executionConsole = console;
-            return this;
+            variableVisitor = new VariableVisitor(parser,executionConsole);
         }
 
         public ExecutionVisitor WithRandom(Random random)
@@ -105,7 +96,7 @@ namespace lib.interpreter
                 if (context.boucle_avec_variable() != null)
                 {
                     var variable = context.boucle_avec_variable().VARIABLE() != null ?
-                        variableVisitor.GetVariable(context.boucle_avec_variable().VARIABLE(),context.boucle_avec_variable()) :
+                        variableVisitor.GetVariable(context.boucle_avec_variable().VARIABLE().GetText(),context.boucle_avec_variable()) :
                         variableVisitor.Visit(context.boucle_avec_variable().variable());
 
                     iterations = variable.Value.Number().Value;
@@ -133,7 +124,7 @@ namespace lib.interpreter
 
             var variable = context.variable() != null ?
                 variableVisitor.Visit(context.variable()) :
-                variableVisitor.GetVariable(context.la_zone_memoire().VARIABLE(), context.la_zone_memoire());
+                variableVisitor.GetVariable(context.la_zone_memoire().VARIABLE().GetText(), context.la_zone_memoire());
 
             var newValue = variable.UpdatedTo(expressionVisitor.Visit(context.expression()));
 
@@ -185,7 +176,7 @@ namespace lib.interpreter
             var min = Convert.ToInt32(expressionVisitor.Visit(context.min).Number().Value);
             var max = Convert.ToInt32(expressionVisitor.Visit(context.max).Number().Value);
 
-            var variable = variableVisitor.GetVariable(context.la_zone_memoire().VARIABLE(), context.la_zone_memoire());
+            var variable = variableVisitor.GetVariable(context.la_zone_memoire().VARIABLE().GetText(), context.la_zone_memoire());
 
             var newValue = variable.UpdatedTo(new CosmosNumber(random.Next(min,max+1)));
 
@@ -264,6 +255,36 @@ namespace lib.interpreter
                 {
                     executionConsole.SetFrontColorTo(newColor.ToString());
                 }
+            }
+            return null;
+        }
+
+        public override ExecutionContext VisitDecouper(CosmosParser.DecouperContext context)
+        {
+            //split detected
+            if (context.separateur != null)
+            {
+                var source = expressionVisitor.Visit(context.source);
+                var separator = expressionVisitor.Visit(context.separateur);
+
+                if (source != null && separator != null)
+                {
+                    var split = source.ToString().Split(separator.ToString());
+                    for (var index = 0; index < split.Length; index++)
+                    {
+                        var part = split[index];
+
+                        //Allocate a special variable for result
+                        var variable = $"##decoupage.{index + 1}".AsCosmosVariable(part.AsCosmosString());
+                        parser.Variables[variable.Name] = variable;
+                    }
+                }
+                else
+                {
+                    throw new WrongTypeException("Un découpage doit être réalisé sur des caractères");
+                }
+
+
             }
             return null;
         }

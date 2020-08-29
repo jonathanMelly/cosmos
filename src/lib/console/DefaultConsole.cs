@@ -10,6 +10,10 @@ namespace lib.console
         // ReSharper disable once InconsistentNaming
         private const int CONSOLE_WIDTH = 120;
 
+        public bool KeyAvailable => Console.KeyAvailable;
+
+        public string ReadKey => KeyAvailable ? Console.ReadKey().Key.ToString() : null;
+
         public void Write(string text, IConsole.Channel channel)
         {
             switch (channel)

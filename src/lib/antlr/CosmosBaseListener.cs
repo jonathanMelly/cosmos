@@ -277,6 +277,18 @@ public partial class CosmosBaseListener : ICosmosListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitColorier([NotNull] CosmosParser.ColorierContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="CosmosParser.decouper"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterDecouper([NotNull] CosmosParser.DecouperContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CosmosParser.decouper"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitDecouper([NotNull] CosmosParser.DecouperContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="CosmosParser.la_zone_memoire"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

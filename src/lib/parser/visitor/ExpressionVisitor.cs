@@ -15,7 +15,7 @@ namespace lib.parser.visitor
         {
             this.variableVisitor = variableVisitor;
 
-            stringExpressionVisitor = new StringExpressionVisitor(parser);
+            stringExpressionVisitor = new StringExpressionVisitor(parser,variableVisitor);
             numericExpressionVisitor = new NumericExpressionVisitor(variableVisitor,random);
             booleanExpressionVisitor = new BooleanExpressionVisitor(this);
         }
