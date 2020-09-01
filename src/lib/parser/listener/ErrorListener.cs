@@ -47,7 +47,8 @@ namespace lib.parser.listener
                 Replace(" at ", " à l'endroit ou il y a ").
                 Replace("mismatched input", "élément invalide").
                 Replace("expecting", "attendu").
-                Replace("missing", "il manque");
+                Replace("missing", "il manque").
+                Replace("extraneous input","élément inconnu");
         }
     }
 }
