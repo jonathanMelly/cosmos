@@ -31,16 +31,21 @@ namespace lib.parser
 
         public Cosmos.ProgrammeContext Context => context;
 
+        public bool AlreadyParsed { get; private set; }
+        public bool ParseResult { get; private set; }
+
         public Parser ForFile(string file)
         {
             codeFile = file;
             code = File.ReadAllText(file);
+            AlreadyParsed = false;
             return this;
         }
 
         public Parser ForSnippet(string snippet,bool addHeader = false)
         {
             code = $"{(addHeader?ValidHeaderSnippet:"")}{snippet}{ValidEnd}";
+            AlreadyParsed = false;
             return this;
         }
 
@@ -58,8 +63,17 @@ namespace lib.parser
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>true if parsing had no errors</returns>
         public bool Parse()
         {
+            if (AlreadyParsed)
+            {
+                return ParseResult;
+            }
+
             var antlrInputStream = new AntlrInputStream(code);
             var lexer = new CosmosLexer(antlrInputStream);
             var tokens = new CommonTokenStream(lexer);
@@ -71,9 +85,12 @@ namespace lib.parser
 
             context = parser.programme();
 
-            //TODO : add variablecheckerVisitor ;-)
+            var result = !ErrorListener.HadError;
 
-            return !ErrorListener.HadError;
+            AlreadyParsed = true;
+            ParseResult = result;
+
+            return result;
         }
 
         public static string BuildValidHeader(string name,string library=null,string date=null,string newLine =null)
