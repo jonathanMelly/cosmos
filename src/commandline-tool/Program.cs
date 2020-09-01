@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -107,7 +108,13 @@ namespace commandline_tool
                 //SNIPPET
                 if (args[0].IsMatch(optSnippet))
                 {
-                    parser = GetParserForEmbeddedSnippet(String.Join(" ",args[1..]));
+                    var codeContent = new List<string>();
+                    foreach (var arg in args[1..])
+                    {
+                        if(!arg.StartsWith("-"))
+                            codeContent.Add(arg);
+                    }
+                    parser = GetParserForEmbeddedSnippet(String.Join(" ",codeContent.ToArray()));
                 }
                 //VERSION
                 else if (args[0].IsMatch(optVersion))
@@ -151,49 +158,60 @@ namespace commandline_tool
 
 
                 }
-                // Devrait être un fichier passé en paramètre
+                //Devrait être un fichier passé en paramètre
                 else
                 {
                     //Vérifie si pas un argument invalide
-                    var invalidArgs = new List<string>(args);
+                    var remainingArgs = new List<string>(args);
 
                     //Enlève les options valides
                     foreach (var option in options)
                     {
                         foreach (var optionName in option.Names)
                         {
-                            invalidArgs.Remove(optionName);
+                            remainingArgs.Remove(optionName);
                         }
                     }
-                    if (invalidArgs.Any(s => s.StartsWith("-")))
+
+                    //S'il reste un option, elle est invalide
+                    var invalidArgs = remainingArgs.Where(s => s.StartsWith("-")).ToList();
+
+                    if (invalidArgs.Count>0)
                     {
-                        Console.Error.WriteLine($"Erreur, argument(s) invalide(s): {String.Join(", ",invalidArgs)}.\nPour consulter l'aide, saisissez \"cosmos -h\".");
+                        Console.Error.WriteLine($"Erreur, argument(s) invalide(s): {String.Join(", ",invalidArgs)}.\nPour consulter l'aide, saisissez \"cosmos -h\".");
                         return (int) ExitCode.ArgumentInvalide;
-                    }
-
-                    var sourceFile = args[0];
-                    //Prend en compte les fichiers sans spécifier l'extension par défaut de .cosmos
-                    if (!File.Exists(sourceFile))
-                    {
-                        sourceFile = $"{sourceFile}.cosmos";
-                    }
-
-                    if (File.Exists(sourceFile))
-                    {
-                        parser = new Parser().ForFile(sourceFile);
                     }
                     else
                     {
-                        if (sourceFile.StartsWith("-"))
+                        if (remainingArgs.Count == 0)
                         {
                             Console.Error.WriteLine($"Erreur, aucun fichier spécifié.");
+                            return (int) ExitCode.ArgumentInvalide;
+                        }
+                        else if(remainingArgs.Count>1)
+                        {
+                            Console.Error.WriteLine($"Erreur, trop de fichiers spécifiés.");
+                            return (int) ExitCode.ArgumentInvalide;
                         }
                         else
                         {
-                           Console.Error.WriteLine($"Erreur, le fichier <{sourceFile}> est introuvable.");
-                        }
+                            var sourceFile = remainingArgs[0];
+                            //Prend en compte les fichiers sans spécifier l'extension par défaut de .cosmos
+                            if (!File.Exists(sourceFile))
+                            {
+                                sourceFile = $"{sourceFile}.cosmos";
+                            }
 
-                        return (int) ExitCode.FichierNonTrouve;
+                            if (File.Exists(sourceFile))
+                            {
+                                parser = new Parser().ForFile(sourceFile);
+                            }
+                            else
+                            {
+                                Console.Error.WriteLine($"Erreur, le fichier <{sourceFile}> est introuvable.");
+                                return (int) ExitCode.FichierNonTrouve;
+                            }
+                        }
                     }
                 }
             }
@@ -214,12 +232,28 @@ namespace commandline_tool
                 {
                     var interpreter = new Interpreter(parser);
 
+                    var timer = new Stopwatch();
+                    timer.Start();
                     var result = interpreter.Execute();
+                    timer.Stop();
 
                     if (!direct)
                     {
-                        Console.WriteLine("\n----->Programme terminé, appuyez sur une touche pour quitter<-----");
-                        Console.ReadKey();
+                        var mainMessage = "|Programme cosmos terminé, appuyez sur une touche pour quitter|";
+                        var size = mainMessage.Length;
+                        var executionTime = $"|Temps d'éxécution: {timer.Elapsed}";
+                        executionTime += $"{new String(' ', size - executionTime.Length - 1)}|";
+
+                        var hide = $"|Pour masquer ce message, ajoutez l'option -d ou --direct";
+                        hide += $"{new String(' ', size - hide.Length - 1)}|";
+
+                        Console.Write($"{Environment.NewLine}{Environment.NewLine}");
+                        Console.WriteLine( new String('_',size));
+                        Console.WriteLine(mainMessage);
+                        Console.WriteLine(executionTime);
+                        Console.WriteLine(hide);
+                        Console.WriteLine( new String('‾',size));
+                        Console.ReadKey(true);
                     }
 
                     return (int) (result ? ExitCode.Ok : !parseResult?ExitCode.ErreurSyntaxe: ExitCode.ErreurExecution);
