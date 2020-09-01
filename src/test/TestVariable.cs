@@ -241,5 +241,20 @@ namespace test
             }
 
         }
+
+        [Fact]
+        private void TestBadAllocation()
+        {
+            //Arrange
+
+            BuildSnippetInterpreter("Créer la zone mémoire #bad",false);
+
+            //Act
+            interpreter.Execute().Should().BeFalse();
+
+            //Assert
+            testConsole.ErrorContent.Should().Be("Erreur, ligne 7:0 élément inconnu 'Créer' attendu {'Fin', TABULATION, RETOUR_DE_CHARIOT}\n");
+        }
+
     }
 }
