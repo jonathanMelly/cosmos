@@ -58,19 +58,28 @@ namespace lib.interpreter
         {
             var evaluation = expressionVisitor.Visit(context.base_si().condition);
             if (evaluation.Boolean().Value)
+            {
                 foreach (var instructionIntegree in context.base_si().instruction())
                     Visit(instructionIntegree);
+
+                return null;
+            }
             else if (context.sinon_si() != null)
+            {
                 foreach (var elsif in context.sinon_si())
                     if (expressionVisitor.Visit(elsif.base_si().condition).Boolean().Value)
                     {
                         foreach (var instructionIntegree in elsif.base_si().instruction()) Visit(instructionIntegree);
                         return null; //only 1 elsif branch
                     }
+            }
 
-            if (context.sinon() != null)
+            //The check is redundant with the return in the if... but double security
+            if (evaluation.Boolean().Value==false && context.sinon() != null)
+            {
                 foreach (var instructionIntegree in context.sinon().instruction())
                     Visit(instructionIntegree);
+            }
 
             return null;
         }

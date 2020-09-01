@@ -70,6 +70,20 @@ namespace test
         }
 
         [Fact]
+        public void TestIfTrueElseFalse()
+        {
+            //Arrange
+            BuildSnippetInterpreter(BuildIfStatement(true,
+                null, false));
+
+            //Act
+            interpreter.Execute();
+
+            //Assert
+            testConsole.Content.Should().Match(TrueCondition);
+        }
+
+        [Fact]
         public void TestIfFalseElsifFalseTrueFalseElseFalse()
         {
             //Arrange
