@@ -94,7 +94,10 @@ namespace test
                     result.Append(
                         $"sinon si {(elsif ? TrueCondition : FalseCondition)} alors\n\t{function} \"{(elsif ? TrueCondition : FalseCondition)}\".\n\t");
 
-            if (elsee != null) result.Append($"et sinon\n\t{function} \"{TrueCondition}\".\n\t");
+            if (elsee != null)
+            {
+                result.Append($"et sinon\n\t{function} \"{(elsee.Value ? TrueCondition : FalseCondition)}\".\n\t");
+            }
 
             result.Append("?\n");
 
