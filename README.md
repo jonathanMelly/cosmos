@@ -5,10 +5,31 @@
 # COSMOS
 Un langage pour apprendre à programmer de manière intuitive et naturelle (a french based language to learn programming).
 
-# Mission
+## Mission
 Offrir un support d'apprentissage de la programmation pour un public francophone en utilisant le langage naturel (la langue française)
 comme guide didactique. Autrement dit, cosmos se veut être une zone proximale de développement pour toute personne parlant la langue française et
 voulant apprendre à programmer.
 
-# Tutoriel
-Cet [atelier](https://labs.section-inf.ch/codelabs/cosmos-base-00-hello/index.html) permet de découvrir le langage.
+## Pourquoi ce projet
+
+### Réalité
+- 2 jours pendant 6 mois pour préparer une classe MSIG à la HES en informatique de gestion.
+- Difficultés récurrentes chez certains apprenants CFC/FPA
+
+### Conflit cognitif principal
+Analogique VS Numérique : Traduire des pensées analogiques en ordres numériques.
+Il faut donc réduire la distance entre ces deux visions.
+
+### Véhicule pédagogique préconisé
+Un langage de programmation type 'pseudo-code' éxécutable.
+
+# Tutoriels
+
+## Premiers pas
+Cet [atelier1](https://labs.section-inf.ch/codelabs/cosmos-base-00-hello/index.html) permet de découvrir le langage.
+
+## Gagner des millions ?
+Cet [atelier2](https://labs.section-inf.ch/codelabs/cosmos-base-01-million/index.html) présente quelques fondamentaux au travers d'un jeu connu.
+
+# Exemple
+![Exemple](https://drive.infomaniak.com/app/share/131184/69febc98-1e29-4b12-8fc8-7e12db4e7861/127458/preview?width=2500&height=1500&quality=80&t=1599039481)
