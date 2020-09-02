@@ -32,4 +32,4 @@ Cet [atelier1](https://labs.section-inf.ch/codelabs/cosmos-base-00-hello/index.h
 Cet [atelier2](https://labs.section-inf.ch/codelabs/cosmos-base-01-million/index.html) présente quelques fondamentaux au travers d'un jeu connu.
 
 # Exemple
-![Exemple](https://drive.infomaniak.com/app/share/131184/69febc98-1e29-4b12-8fc8-7e12db4e7861/127458/preview?width=2500&height=1500&quality=80&t=1599039481)
+![Exemple](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cosmos-exemple.gif)
