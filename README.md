@@ -26,10 +26,10 @@ Un langage de programmation type 'pseudo-code' éxécutable.
 # Tutoriels
 
 ## Premiers pas
-Cet [atelier1](https://labs.section-inf.ch/codelabs/cosmos-base-00-hello/index.html) permet de découvrir le langage.
+Ce [premier atelier](https://labs.section-inf.ch/codelabs/cosmos-base-00-hello/index.html) permet de découvrir le langage.
 
 ## Gagner des millions ?
-Cet [atelier2](https://labs.section-inf.ch/codelabs/cosmos-base-01-million/index.html) présente quelques fondamentaux au travers d'un jeu connu.
+Ce [deuxième atelier](https://labs.section-inf.ch/codelabs/cosmos-base-01-million/index.html) présente quelques fondamentaux au travers d'un jeu connu.
 
 # Exemple
 ![Exemple](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cosmos-exemple.gif)
