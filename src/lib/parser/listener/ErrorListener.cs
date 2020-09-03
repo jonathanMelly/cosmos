@@ -44,11 +44,13 @@ namespace lib.parser.listener
         private string Translate(string message)
         {
             return message.
+                Replace(" at input ", " à l'endroit ou il y a ").
                 Replace(" at ", " à l'endroit ou il y a ").
                 Replace("mismatched input", "élément invalide").
                 Replace("expecting", "attendu").
                 Replace("missing", "il manque").
-                Replace("extraneous input","élément inconnu");
+                Replace("extraneous input","élément inconnu").
+                Replace("no viable alternative","pas d'alternative viable");
         }
     }
 }

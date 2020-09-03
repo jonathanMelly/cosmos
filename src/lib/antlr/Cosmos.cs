@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from /Volumes/nFo/data/etml/codespace/csharp/cosmos/src/lib/../grammar/Cosmos.g4 by ANTLR 4.6.6
+// Generated from C:\Users\jonmelly\kDrive\data\etml\codespace\csharp\cosmos\src\lib/../grammar/Cosmos.g4 by ANTLR 4.6.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -79,15 +79,15 @@ public partial class Cosmos : Parser {
 		null, "'Auteur:'", "'Date:'", null, "'Entreprise:'", "'Description:'", 
 		"'Voici les ordres du programme'", "'à classer dans la bibliothèque'", 
 		"'Fin'", "'de la transmission'", "'sur'", "'Choisir la couleur'", "'Récupérer la saisie et la stocker dans'", 
-		"'Découper'", "'Placer le curseur à la'", "'ligne'", "'colonne'", "'Placer un nombre aléatoire compris entre '", 
-		"'dans'", "'Afficher'", null, "'Attendre'", "'ms'", "'rouge'", "'vert'", 
+		"'Découper'", "'Placer le curseur à la '", "'ligne '", "'colonne '", "'Placer un nombre aléatoire compris entre '", 
+		"'dans '", "'Afficher '", null, "'Attendre '", "'ms'", "'rouge'", "'vert'", 
 		"'bleu'", "'blanc'", "'noir'", "'gris'", "'foncé'", "'pour le'", "'texte'", 
-		"'fond'", null, null, "'la'", "'une'", "'valeur'", null, null, "'zone mémoire'", 
-		"'nommée'", "'Répéter'", "'tant que'", "'autant de fois qu'il y a de '", 
-		"'le nombre de fois correspondant à'", "'Si'", "'sinon si'", "'et sinon'", 
-		"'alors'", null, null, null, null, null, null, null, null, "'et'", "'&&'", 
-		null, null, "'est'", null, "'='", "'#'", "'('", "')'", "'le texte'", null, 
-		"'le nombre'", null, null, null, null, null, null, "'racine carrée de'", 
+		"'fond'", null, null, "'la '", "'une '", "'valeur '", null, null, "'zone mémoire '", 
+		"'nommée '", "'Répéter '", "'tant que '", "'autant de fois qu'il y a de '", 
+		"'le nombre de fois correspondant à '", "'Si '", "'sinon si '", "'et sinon'", 
+		"'alors'", null, null, null, null, null, null, null, null, "'et '", "'&&'", 
+		null, null, "'est '", null, "'='", "'#'", "'('", "')'", "'le texte '", 
+		null, "'le nombre '", null, null, null, null, null, null, "'racine carrée de '", 
 		"','", "'.'", "'?'", "'>>'", "':'", "'x'", null, null, null, "' '"
 	};
 	private static readonly string[] _SymbolicNames = {
