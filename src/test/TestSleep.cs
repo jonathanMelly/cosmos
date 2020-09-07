@@ -24,7 +24,7 @@ namespace test
             stopWatch.Stop();
 
             //Assert
-            stopWatch.Elapsed.Milliseconds.Should().BeGreaterOrEqualTo(500);
+            stopWatch.Elapsed.Milliseconds.Should().BeGreaterOrEqualTo(450);
         }
     }
 }
