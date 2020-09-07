@@ -201,6 +201,25 @@ namespace test
             //Assert
             testConsole.Content.Should().Be(newVal.ToString());
         }
+        
+        [Fact]
+        public void TestNoViableInputError()
+        {
+            //Arrange
+            var variableRef = "#ref".AsCosmosVariable(12.AsCosmosNumber());
+            var newVal = "la valeur de (5+5)";
+
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
+                                    BuildCopySnippet(newVal,$"{variableRef.Name}",1)+
+                                    BuildAfficherSnippet(variableRef.Name.ToString()),false);
+
+
+            //Act
+            interpreter.Execute().Should().BeFalse();
+
+            //Assert
+            testConsole.ErrorContent.Should().Be("Erreur, ligne 8:22 pas d'alternative viable à l'endroit ou il y a 'la valeur de ('\n");
+        }
 
         [Fact]
         private void TestEmptyVariable()
@@ -253,7 +272,7 @@ namespace test
             interpreter.Execute().Should().BeFalse();
 
             //Assert
-            testConsole.ErrorContent.Should().Be("Erreur, ligne 7:0 élément inconnu 'Créer' attendu {'Fin', TABULATION, RETOUR_DE_CHARIOT}\n");
+            testConsole.ErrorContent.Should().Be("Erreur, ligne 7:0 élément inconnu 'Créer ' attendu {'Fin', TABULATION, RETOUR_DE_CHARIOT}\n");
         }
 
     }

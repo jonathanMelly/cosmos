@@ -32,7 +32,7 @@ namespace lib.parser
         public Cosmos.ProgrammeContext Context => context;
 
         public bool AlreadyParsed { get; private set; }
-        public bool ParseResult { get; private set; }
+        public bool ParsingWasSuccessfull { get; private set; }
 
         public Parser ForFile(string file)
         {
@@ -71,7 +71,7 @@ namespace lib.parser
         {
             if (AlreadyParsed)
             {
-                return ParseResult;
+                return ParsingWasSuccessfull;
             }
 
             var antlrInputStream = new AntlrInputStream(code);
@@ -88,7 +88,7 @@ namespace lib.parser
             var result = !ErrorListener.HadError;
 
             AlreadyParsed = true;
-            ParseResult = result;
+            ParsingWasSuccessfull = result;
 
             return result;
         }

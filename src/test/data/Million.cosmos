@@ -1,0 +1,46 @@
+Auteur: Jonathan Melly
+Date: 29.08.2020
+Entreprise: ETML
+Description: Un clone du jeu "qui veut gagner des millions"
+
+Voici les ordres du programme Million  :
+
+	Créer une zone mémoire #texteReponse avec le texte "\nVotre reponse (validez avec ENTER): ".
+
+	Afficher "En quelle année est né le langage Cosmos ?\n\n" .
+
+	Afficher "A. En 1934            B. En 2001\n".
+	Afficher "C. En 2016            D. En 2019\n".
+
+	Afficher "#texteReponse".
+
+	Créer une zone mémoire nommée #reponse.
+	Récupérer la saisie et la stocker dans la zone mémoire nommée #reponse.
+
+	Si la valeur enregistrée dans la zone mémoire nommée #reponse est égale à "D" alors
+		Afficher "Bravo, vous êtes sur le chemin du million !".
+
+		//Deuxième question
+		Afficher "\n\nCosmos est un langage de programmation proche de ?\n\n" .
+
+		Afficher "A. La langue française    B. L'allemagne\n".
+		Afficher "C. La langue russe        D. Rien\n".
+
+		Afficher "#texteReponse".
+
+		Récupérer la saisie et la stocker dans la zone mémoire nommée #reponse.
+
+		Si la valeur enregistrée dans la zone mémoire nommée #reponse est égale à "A" alors
+			Afficher "Bravo, vous continuez sur le chemin du million !".
+
+			//Et ainsi de suite pour les autres questions
+
+		et sinon
+			Afficher "L'aventure est malheureusement terminée après 1 succès !".
+		?
+	et sinon
+		Afficher "L'aventure est malheureusement terminée, à bientôt !".
+	?
+
+Fin de la transmission.
+

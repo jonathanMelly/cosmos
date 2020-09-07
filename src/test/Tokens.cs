@@ -18,16 +18,16 @@ namespace test
 
         public const string Xor = "ou au contraire";
         
-        public static readonly string[] Gt = {"est plus grand que",">"};
+        public static readonly string[] Gt = {"est plus grand que ",">"};
 
-        public static readonly string[] Lt = {"est plus petit que","<"};
+        public static readonly string[] Lt = {"est plus petit que ","<"};
 
-        public static readonly string[] IsEqual = {"est égal à","vaut","=="};
+        public static readonly string[] IsEqual = {"est égal à ","vaut ","=="};
         
-        public static readonly string[] IsDifferent = {"est différent de","<>","!="};
+        public static readonly string[] IsDifferent = {"est différent de ","<>","!="};
 
-        public static readonly string[] Gte = {"est plus grand ou égal à",">="};
+        public static readonly string[] Gte = {"est plus grand ou égal à ",">="};
         
-        public static readonly string[] Lte = {"est plus petit ou égal à","<="};
+        public static readonly string[] Lte = {"est plus petit ou égal à ","<="};
     }
 }

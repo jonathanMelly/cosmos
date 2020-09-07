@@ -236,8 +236,10 @@ namespace commandline_tool
                     timer.Start();
                     var result = interpreter.Execute();
                     timer.Stop();
-
-                    if (!direct)
+                    
+                    
+                    //Affiche la cartouche uniquement en cas de parsing/éxécution réussie et si pas en mode direct
+                    if (!direct && parser.ParsingWasSuccessfull)
                     {
                         var mainMessage = "|Programme cosmos terminé, appuyez sur une touche pour quitter|";
                         var size = mainMessage.Length;
@@ -248,11 +250,11 @@ namespace commandline_tool
                         hide += $"{new String(' ', size - hide.Length - 1)}|";
 
                         Console.Write($"{Environment.NewLine}{Environment.NewLine}");
-                        Console.WriteLine( new String('_',size));
+                        Console.WriteLine($"+{new String('-',size-2)}+");
                         Console.WriteLine(mainMessage);
                         Console.WriteLine(executionTime);
                         Console.WriteLine(hide);
-                        Console.WriteLine( new String('‾',size));
+                        Console.WriteLine($"+{new String('-',size-2)}+");
                         Console.ReadKey(true);
                     }
 
