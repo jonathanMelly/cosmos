@@ -297,5 +297,22 @@ namespace lib.interpreter
             }
             return null;
         }
+
+        public override ExecutionContext VisitAfficher_curseur(Cosmos.Afficher_curseurContext context)
+        {
+            ToggleCursor(true);
+            return null;
+        }
+
+        public override ExecutionContext VisitMasquer_curseur(Cosmos.Masquer_curseurContext context)
+        {
+            ToggleCursor(false);
+            return null;
+        }
+
+        private void ToggleCursor(bool visible)
+        {
+            executionConsole.CursorVisible = visible;
+        }
     }
 }

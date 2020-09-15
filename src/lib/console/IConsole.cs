@@ -13,6 +13,8 @@ namespace lib.console
         bool KeyAvailable { get; }
         string? ReadKey { get; }
 
+        bool CursorVisible { get; set; }
+
         /// <summary>
         ///     Appends text to the output placeholder
         /// </summary>

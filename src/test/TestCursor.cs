@@ -35,5 +35,32 @@ namespace test
             //Assert
             testConsole.Content.Should().Match("@@Set cursor x to 40");
         }
+
+        [Fact]
+        public void TestCursorVisibleTrue()
+        {
+            //Arrange
+            BuildSnippetInterpreter("\tAfficher le curseur.");
+
+            //Act
+            interpreter.Execute();
+
+            //Assert
+            testConsole.CursorVisible.Should().BeTrue();
+        }
+
+        [Fact]
+        public void TestCursorVisibleFalse()
+        {
+            //Arrange
+            BuildSnippetInterpreter("\tMasquer le curseur.");
+
+            //Act
+            interpreter.Execute();
+
+            //Assert
+            testConsole.CursorVisible.Should().BeFalse();
+        }
+
     }
 }

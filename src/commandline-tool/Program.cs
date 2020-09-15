@@ -59,7 +59,6 @@ namespace commandline_tool
         /// <returns>Un code d'erreur selon ExitCode</returns>
         public static int Main(string[] args)
         {
-
             Parser parser=null;
             if (args == null || args.Length==0 || args[0].IsMatch(optInteractive))
             {
@@ -101,6 +100,7 @@ namespace commandline_tool
 
                 }
 
+                ResetCursor();
                 return (int) ExitCode.Ok;
             }
             else
@@ -217,7 +217,7 @@ namespace commandline_tool
             }
 
 
-            if (args!=null && parser != null)
+            if (parser != null)
             {
                 var syntaxOnly = optSyntax.IsActive(args);
                 var direct = optDirect.IsActive(args);
@@ -236,8 +236,8 @@ namespace commandline_tool
                     timer.Start();
                     var result = interpreter.Execute();
                     timer.Stop();
-                    
-                    
+
+
                     //Affiche la cartouche uniquement en cas de parsing/éxécution réussie et si pas en mode direct
                     if (!direct && parser.ParsingWasSuccessfull)
                     {
@@ -258,16 +258,32 @@ namespace commandline_tool
                         Console.ReadKey(true);
                     }
 
+                    ResetCursor();
+
                     return (int) (result ? ExitCode.Ok : !parseResult?ExitCode.ErreurSyntaxe: ExitCode.ErreurExecution);
                 }
 
-
             }
-
 
             //On ne devrait jamais arriver ici
             Console.Error.WriteLine("Erreur inconnue, veuillez consulter l'aide en ligne.");
             return (int)ExitCode.ErreurInconnue;
+
+        }
+
+        /// <summary>
+        /// Remet le curseur pour éviter de le cacher dans la console active...
+        /// </summary>
+        private static void ResetCursor()
+        {
+            try
+            {
+                Console.CursorVisible = true;
+            }
+            catch (Exception)
+            {
+                //It only is a nice to have feature...
+            }
 
         }
 

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\jonmelly\kDrive\data\etml\codespace\csharp\cosmos\src\lib/../grammar/Cosmos.g4 by ANTLR 4.6.6
+// Generated from /Volumes/nFo/data/etml/codespace/csharp/cosmos/src/lib/../grammar/Cosmos.g4 by ANTLR 4.6.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -288,6 +288,30 @@ public partial class CosmosBaseListener : ICosmosListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitDecouper([NotNull] Cosmos.DecouperContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Cosmos.afficher_curseur"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterAfficher_curseur([NotNull] Cosmos.Afficher_curseurContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Cosmos.afficher_curseur"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitAfficher_curseur([NotNull] Cosmos.Afficher_curseurContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Cosmos.masquer_curseur"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterMasquer_curseur([NotNull] Cosmos.Masquer_curseurContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Cosmos.masquer_curseur"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitMasquer_curseur([NotNull] Cosmos.Masquer_curseurContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="Cosmos.variable"/>.
 	/// <para>The default implementation does nothing.</para>
