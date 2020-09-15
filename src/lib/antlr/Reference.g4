@@ -26,7 +26,21 @@ mainEnd: FIN DE_LA_TRANSMISSION? POINT;
 instruction : TABULATION+ (instruction_simple | instruction_complexe) ;
 noop:TABULATION* RETOUR_DE_CHARIOT ;
 
-instruction_simple   : (afficher|allouer|affecter|recuperer|generer_aleatoire|placer_curseur|dormir|colorier|decouper) POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
+instruction_simple   :
+    (
+          afficher
+        | allouer
+        | affecter
+        | recuperer
+        | generer_aleatoire
+        | placer_curseur
+        | dormir
+        | colorier
+        | decouper
+        | afficher_curseur
+        | masquer_curseur
+    )
+    POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
 instruction_complexe : selection|boucle ; //terminaison spécifique pour chaque
 
 afficher : AFFICHER expression;
@@ -38,6 +52,8 @@ generer_aleatoire:  PLACER_ALEATOIRE min=expression_numerique ET max=expression_
 dormir: ATTENDRE expression_numerique MS;
 colorier: CHOISIR_COULEUR (red=ROUGE|green=VERT|blue=BLEU|white=BLANC|black=NOIR|gray=GRIS) dark=FONCE? POUR_LE (text=TEXTE|background=FOND);
 decouper: DECOUPER source=expression SUR separateur=expression;
+afficher_curseur: AFFICHER LE_CURSEUR;
+masquer_curseur: MASQUER LE_CURSEUR;
 
 
 variable : (LA VALEUR DE)? la_zone_memoire;

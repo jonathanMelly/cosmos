@@ -33,6 +33,8 @@ PLACER_ALEATOIRE:'Placer un nombre aléatoire compris entre ';
 
 DANS:'dans ';
 AFFICHER:'Afficher ';
+MASQUER:'Masquer ';
+LE_CURSEUR:'le curseur';
 INSERER: 'Insérer '|'Copier ';
 ATTENDRE:'Attendre ';
 MS:'ms';

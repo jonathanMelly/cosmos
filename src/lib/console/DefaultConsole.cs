@@ -13,6 +13,11 @@ namespace lib.console
         public bool KeyAvailable => Console.KeyAvailable;
 
         public string ReadKey => KeyAvailable ? Console.ReadKey().Key.ToString() : null;
+        public bool CursorVisible
+        {
+            get => Console.CursorVisible;
+            set => Console.CursorVisible = value;
+        }
 
         public void Write(string text, IConsole.Channel channel)
         {

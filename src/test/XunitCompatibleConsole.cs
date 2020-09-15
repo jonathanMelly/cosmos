@@ -37,6 +37,7 @@ namespace test
 
         public bool KeyAvailable => input.Count>0;
         public string ReadKey => KeyAvailable?input.Pop():null;
+        public bool CursorVisible { get; set; }
 
         public void Write(string text, Channel channel)
         {
