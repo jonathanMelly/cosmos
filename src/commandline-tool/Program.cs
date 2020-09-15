@@ -265,7 +265,6 @@ namespace commandline_tool
 
             }
 
-
             //On ne devrait jamais arriver ici
             Console.Error.WriteLine("Erreur inconnue, veuillez consulter l'aide en ligne.");
             return (int)ExitCode.ErreurInconnue;
@@ -277,7 +276,15 @@ namespace commandline_tool
         /// </summary>
         private static void ResetCursor()
         {
-            Console.CursorVisible = true;
+            try
+            {
+                Console.CursorVisible = true;
+            }
+            catch (Exception)
+            {
+                //It only is a nice to have feature...
+            }
+
         }
 
         private static void ShowVersion()
