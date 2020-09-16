@@ -222,6 +222,25 @@ namespace test
         }
 
         [Fact]
+        public void TestLeResultatDe()
+        {
+            //Arrange
+            var variableRef = "#ref".AsCosmosVariable(12.AsCosmosNumber());
+            var newVal = "le résultat de (5+5)";
+
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
+                                    BuildCopySnippet(newVal,$"{variableRef.Name}",1)+
+                                    BuildAfficherSnippet(variableRef.Name.ToString()));
+
+
+            //Act
+            interpreter.Execute();
+
+            //Assert
+            testConsole.Content.Should().Be("10");
+        }
+
+        [Fact]
         private void TestEmptyVariable()
         {
             //Arrange

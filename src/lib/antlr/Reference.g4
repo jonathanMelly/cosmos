@@ -109,7 +109,7 @@ expression_booleenne
         | gauche=expression_booleenne operateur=OPERATEUR_LOGIQUE_EST (VRAI|FAUX) //construction sympa ;-)
         | OPERATEUR_LOGIQUE_NON sousExpression=expression_booleenne
         | (VRAI | FAUX | variable)
-        | PARENTHESE_GAUCHE sousExpression=expression_booleenne PARENTHESE_DROITE
+        | LE_RESULTAT_DE? PARENTHESE_GAUCHE sousExpression=expression_booleenne PARENTHESE_DROITE
         ;
 
 //Exprimée dans l'ordre de priorité des opérateurs
@@ -119,7 +119,7 @@ expression_numerique
         | gauche=expression_numerique operateur=(OPERATEUR_MATH_PLUS | OPERATEUR_MATH_MOINS) droite=expression_numerique
         | (atome_numerique | variable)
         | operateur=(OPERATEUR_MATH_PLUS | OPERATEUR_MATH_MOINS) sousExpression=expression_numerique
-        | PARENTHESE_GAUCHE sousExpression=expression_numerique PARENTHESE_DROITE
+        | LE_RESULTAT_DE? PARENTHESE_GAUCHE sousExpression=expression_numerique PARENTHESE_DROITE
         ;
 
 expression_textuelle : atome_textuel ;
