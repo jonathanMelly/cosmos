@@ -201,7 +201,7 @@ namespace test
             //Assert
             testConsole.Content.Should().Be(newVal.ToString());
         }
-        
+
         [Fact]
         public void TestNoViableInputError()
         {
@@ -219,6 +219,25 @@ namespace test
 
             //Assert
             testConsole.ErrorContent.Should().Be("Erreur, ligne 8:22 pas d'alternative viable à l'endroit ou il y a 'la valeur de ('\n");
+        }
+
+        [Fact]
+        public void TestLeResultatDe()
+        {
+            //Arrange
+            var variableRef = "#ref".AsCosmosVariable(12.AsCosmosNumber());
+            var newVal = "le résultat de (5+5)";
+
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
+                                    BuildCopySnippet(newVal,$"{variableRef.Name}",1)+
+                                    BuildAfficherSnippet(variableRef.Name.ToString()));
+
+
+            //Act
+            interpreter.Execute();
+
+            //Assert
+            testConsole.Content.Should().Be("10");
         }
 
         [Fact]
@@ -262,17 +281,31 @@ namespace test
         }
 
         [Fact]
-        private void TestBadAllocation()
+        private void TestBadAllocationWrongKeyword()
         {
             //Arrange
 
-            BuildSnippetInterpreter("Créer la zone mémoire #bad",false);
+            BuildSnippetInterpreter("\tCréer la zone mémoire #bad.",false);
 
             //Act
             interpreter.Execute().Should().BeFalse();
 
             //Assert
-            testConsole.ErrorContent.Should().Be("Erreur, ligne 7:0 élément inconnu 'Créer ' attendu {'Fin', TABULATION, RETOUR_DE_CHARIOT}\n");
+            testConsole.ErrorContent.Should().Be("Erreur, ligne 7:7 élément invalide 'la ' attendu {'une ', VARIABLE}\n");
+        }
+
+        [Fact]
+        private void TestBadAllocationBadCharacter()
+        {
+            //Arrange
+
+            BuildSnippetInterpreter("\tCréer une zone mémoire #arc-en-ciel.",false);
+
+            //Act
+            interpreter.Execute().Should().BeFalse();
+
+            //Assert
+            testConsole.ErrorContent.Should().Be("Erreur, ligne 7:29 pas d'alternative viable à l'endroit ou il y a '-en'\n");
         }
 
     }

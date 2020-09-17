@@ -113,11 +113,13 @@ OPERATEUR_MATH_DIVISE : '/' | 'divisé par ';
 OPERATEUR_MATH_PUISSANCE : '^' | 'élevé '? 'à la puissance ';
 OPERATEUR_MATH_RACINE_CARREE : 'racine carrée de ' ;
 
+LE_RESULTAT_DE : 'le résultat de ' ;
+
 fragment CHIFFRE : '0'..'9' ;
 
 fragment MINUSCULE : 'a'..'z' ;
 fragment MAJUSCULE : 'A'..'Z' ;
-fragment SYMBOLES_LETTRE : [-_] ;
+fragment SYMBOLES_LETTRE : [_] ;
 fragment LETTRE : MINUSCULE | MAJUSCULE | SYMBOLES_LETTRE ;
 
 VIRGULE : ',' ;
