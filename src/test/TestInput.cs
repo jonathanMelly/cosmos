@@ -1,3 +1,4 @@
+using System.Threading;
 using FluentAssertions;
 using lib.extension;
 using lib.parser.type;
@@ -113,6 +114,44 @@ namespace test
 
             //Assert
             parser.Variables[variable.Name].Value.Should().Be(true.AsCosmosBoolean());
+        }
+
+        [Fact]
+        private void TestDirectInputNotAvailable()
+        {
+
+            //Arrange
+            var variable = new CosmosVariable("#available",null);
+            BuildSnippetInterpreter(BuildAllocationSnippet(variable)+
+                                    $"\n\t{variable.Name} = ##touche.disponible .\n");
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            parser.Variables[variable.Name].Value.Should().Be(false.AsCosmosBoolean());
+        }
+
+        [Fact]
+        private void TestFakeReadKey()
+        {
+
+            //Arrange
+            var variable = new CosmosVariable("#press",null);
+            //testConsole.Input.Push("A");
+            BuildSnippetInterpreter(BuildAllocationSnippet(variable)+
+                                    $"\n\tAttendre la prochaine touche et la stocker dans {variable.Name} .\n");
+
+            //Act
+            new Thread(() =>
+            {
+                Thread.Sleep(800);
+                testConsole.Input.Push("A");
+            }).Start();
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            parser.Variables[variable.Name].Value.Should().Be("A".AsCosmosString());
         }
     }
 }

@@ -24,7 +24,8 @@ DE_LA_TRANSMISSION : 'de la transmission' ;
 
 SUR:'sur';
 CHOISIR_COULEUR:'Choisir la couleur';
-RECUPERER:'Récupérer la saisie et la stocker dans';
+RECUPERER:'Récupérer la saisie et la stocker dans ';
+RECUPERER_TOUCHE:'Attendre la prochaine touche et la stocker dans ';
 DECOUPER:'Découper';
 PLACER_LE_CURSEUR:'Placer le curseur à la ';
 LIGNE:'ligne ';
@@ -48,6 +49,8 @@ FONCE:'foncé';
 POUR_LE:'pour le';
 TEXTE:'texte';
 FOND:'fond';
+
+PRESSION_TOUCHE:'la pression d\'une touche';
 
 ALLOUER_TERME : 'Allouer ' | 'Créer ' ;
 INITIALISATION_TERME : 'avec ' | 'et y enregistrer ' ;

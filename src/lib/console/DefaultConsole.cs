@@ -81,6 +81,11 @@ namespace lib.console
             Console.BackgroundColor = ExtractColor(color);
         }
 
+        public string WaitForKeyPress(bool eatKey = true)
+        {
+            return Console.ReadKey(eatKey).Key.ToString();
+        }
+
         private ConsoleColor ExtractColor(string color,bool back=false)
         {
             if (ConsoleColor.TryParse(color, out ConsoleColor result))

@@ -25,7 +25,7 @@ namespace lib.parser.visitor
 
         private const string KEY_VAR_PREFIX = "##touche";
         private readonly string KEY_VAR_AVAILABLE = $"{KEY_VAR_PREFIX}.disponible";
-        private readonly string KEY_VAR_KEY = $"{KEY_VAR_PREFIX}";
+        public readonly string KEY_VAR_KEY = $"{KEY_VAR_PREFIX}";
 
         private readonly string[] DATE_VARS = new[]{DATE_VAR_DAY,
             DATE_VAR_MONTH,
@@ -130,7 +130,7 @@ namespace lib.parser.visitor
             }
         }
 
-        private void Fill(IDictionary<string, CosmosVariable> variables, string varName, CosmosTypedValue value)
+        public void Fill(IDictionary<string, CosmosVariable> variables, string varName, CosmosTypedValue value)
         {
             variables[varName] = varName.AsCosmosVariable(value);
         }

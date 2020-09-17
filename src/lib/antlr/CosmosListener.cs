@@ -263,6 +263,16 @@ public interface ICosmosListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitMasquer_curseur([NotNull] Cosmos.Masquer_curseurContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Cosmos.lire_touche"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLire_touche([NotNull] Cosmos.Lire_toucheContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Cosmos.lire_touche"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLire_touche([NotNull] Cosmos.Lire_toucheContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Cosmos.variable"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

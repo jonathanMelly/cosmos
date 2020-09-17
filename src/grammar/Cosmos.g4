@@ -39,6 +39,7 @@ instruction_simple   :
         | decouper
         | afficher_curseur
         | masquer_curseur
+        | lire_touche
     )
     POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
 instruction_complexe : selection|boucle ; //terminaison spécifique pour chaque
@@ -54,6 +55,7 @@ colorier: CHOISIR_COULEUR (red=ROUGE|green=VERT|blue=BLEU|white=BLANC|black=NOIR
 decouper: DECOUPER source=expression SUR separateur=expression;
 afficher_curseur: AFFICHER LE_CURSEUR;
 masquer_curseur: MASQUER LE_CURSEUR;
+lire_touche: RECUPERER_TOUCHE la_zone_memoire;
 
 
 variable : (LA VALEUR DE)? la_zone_memoire;
