@@ -172,6 +172,12 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitMasquer_curseur([NotNull] Cosmos.Masquer_curseurContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="Cosmos.lire_touche"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitLire_touche([NotNull] Cosmos.Lire_toucheContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="Cosmos.variable"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

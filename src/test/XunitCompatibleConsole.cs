@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using lib.console;
 using Xunit.Abstractions;
+using Xunit.Sdk;
 using static lib.console.IConsole;
 
 namespace test
@@ -88,6 +90,22 @@ namespace test
         public void SetBackColorTo(string color)
         {
             WriteLine($"@@Set back color to {color}");
+        }
+
+        public string WaitForKeyPress(bool eatKey = true)
+        {
+            var attempt = 0;
+            while (input.Count == 0)
+            {
+                Thread.Sleep(100);
+
+                if (attempt++ > 10)
+                {
+                    throw new XunitException("No input after 1 second...");
+                }
+            }
+
+            return input.Pop();
         }
     }
 }

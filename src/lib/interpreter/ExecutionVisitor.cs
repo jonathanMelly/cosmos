@@ -314,5 +314,14 @@ namespace lib.interpreter
         {
             executionConsole.CursorVisible = visible;
         }
+
+        public override ExecutionContext VisitLire_touche(Cosmos.Lire_toucheContext context)
+        {
+            var variable = variableVisitor.Visit(context.la_zone_memoire());
+            var key = executionConsole.WaitForKeyPress();
+
+            variableVisitor.Fill(parser.Variables,variable.Name,key.AsCosmosString());
+            return null;
+        }
     }
 }

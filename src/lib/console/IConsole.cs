@@ -57,5 +57,7 @@ namespace lib.console
         /// </summary>
         /// <param name="color">the color name</param>
         void SetBackColorTo(string color);
+
+        string WaitForKeyPress(bool eatKey = true);
     }
 }
