@@ -10,6 +10,10 @@ namespace lib
         {
         }
 
+        public CosmosException(ParserRuleContext context,string specificMessage) :
+            base($"{BuildParseErrorHeader(context)} {specificMessage}")
+        {}
+
         public static string BuildParseErrorHeader(ParserRuleContext context)
         {
             return BuildParseErrorHeader(context.start);

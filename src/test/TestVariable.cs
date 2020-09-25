@@ -140,7 +140,7 @@ namespace test
             interpreter.Execute().Should().BeFalse();
 
             //Assert
-            testConsole.ErrorContent.Should().Contain("inconnue");
+            testConsole.ErrorContent.Should().Contain("inconnu");
         }
 
         [Fact]
@@ -306,6 +306,20 @@ namespace test
 
             //Assert
             testConsole.ErrorContent.Should().Be("Erreur, ligne 7:29 pas d'alternative viable à l'endroit ou il y a '-en'\n");
+        }
+
+        [Fact]
+        private void TestEmptyNumericVariable()
+        {
+            //Arrange
+
+            BuildSnippetInterpreter("\tCréer une zone mémoire #null.\n\tCopier (#null+2) dans #null.");
+
+            //Act
+            interpreter.Execute().Should().BeFalse();
+
+            //Assert
+            testConsole.ErrorContent.Should().Be("Erreur, ligne 8:9 La variable #null n'a pas de valeur définie\n");
         }
 
     }
