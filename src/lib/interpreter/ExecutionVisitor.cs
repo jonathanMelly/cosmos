@@ -15,7 +15,7 @@ namespace lib.interpreter
         private ExpressionVisitor expressionVisitor;
 
         private readonly Parser parser;
-        private readonly VariableVisitor variableVisitor;
+        private VariableVisitor variableVisitor;
         private IConsole executionConsole;
         private Random random = new Random();
 
@@ -24,7 +24,6 @@ namespace lib.interpreter
         {
             this.parser = parser;
             executionConsole = console;
-            variableVisitor = new VariableVisitor(parser,executionConsole);
         }
 
         public ExecutionVisitor WithRandom(Random random)
@@ -35,13 +34,18 @@ namespace lib.interpreter
 
         public override ExecutionContext VisitProgramme(Cosmos.ProgrammeContext context)
         {
-            expressionVisitor = new ExpressionVisitor(variableVisitor,parser,random);
-            variableVisitor.ExpressionVisitor=expressionVisitor;
 
             var result = new ExecutionContext {Success = false};
             try
             {
+                //Sets default console if needed
                 executionConsole ??= new DefaultConsole();
+
+                variableVisitor = new VariableVisitor(parser,executionConsole);
+
+                expressionVisitor = new ExpressionVisitor(variableVisitor,parser,random);
+                variableVisitor.ExpressionVisitor=expressionVisitor;
+
                 base.VisitProgramme(context);
                 result.Success = true;
             }
