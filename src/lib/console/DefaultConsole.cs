@@ -12,7 +12,11 @@ namespace lib.console
 
         public bool KeyAvailable => Console.KeyAvailable;
 
-        public string ReadKey => KeyAvailable ? Console.ReadKey().Key.ToString() : null;
+        string IConsole.ReadKey(bool eatKey)
+        {
+            return  KeyAvailable ? Console.ReadKey(eatKey).Key.ToString() : null;
+        }
+
         public bool CursorVisible
         {
             get => Console.CursorVisible;
