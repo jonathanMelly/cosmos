@@ -1,0 +1,32 @@
+Auteur: Jonathan Melly
+Date: 10.09.2020
+Entreprise: ETML
+Description: Ecran2D
+
+Voici les ordres du programme Ecran2D  :
+	
+	Créer #index.
+	
+	Afficher "\nColonnes:\n".
+	Répéter 5x
+		#index = 0.
+		Répéter 5x
+			Afficher #index.
+			#index = #index + 1.
+		>>
+		Afficher "\n".
+	>>
+	
+	Afficher "\nLignes:\n".
+	#index = 0.
+	Répéter 5x
+		
+		Répéter 5x
+			Afficher #index.
+		>>
+		#index = #index + 1.
+		Afficher "\n".
+	>>
+		
+	
+Fin de la transmission.

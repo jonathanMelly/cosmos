@@ -1,0 +1,67 @@
+Auteur: Jonathan Melly
+Date: 24.09.2020
+Entreprise: ETML
+Description: CollecteurDePluie
+
+Voici les ordres du programme CollecteurDePluie  :
+	Masquer le curseur.
+	
+    Afficher "+-------------------+\n".
+	Afficher "|Collecteur de Pluie|\n".
+	Afficher "+-------------------+".
+	
+	Afficher "\n\n*MENU*\n\n".
+	
+	Choisir la couleur rouge foncé pour le fond.
+	Afficher "Jouer".
+	Afficher "\n".
+	Choisir la couleur noir pour le fond.
+	Afficher "Quitter".
+	
+	Créer une zone mémoire nommée #lignePremiereOption avec la valeur 7.
+	Créer une zone mémoire nommée #ligneDerniereOption avec la valeur 8. 
+	Créer une zone mémoire nommée #ligneOptionCourante avec #lignePremiereOption. 
+	Créer une zone mémoire nommée #touchePressee avec le texte "pasEnter" .
+
+	
+	
+	Répéter tant que #touchePressee est différente de "Enter"
+		
+		Attendre la prochaine touche et la stocker dans #touchePressee.
+		
+		//L'option jouer est choisie et qu'on est pas déjà dessus
+		Si #touchePressee est égale à "UpArrow" et #ligneOptionCourante est différente de #lignePremiereOption alors
+			
+			Placer le curseur à la ligne #lignePremiereOption.
+			Placer le curseur à la colonne 0.
+			Choisir la couleur rouge foncé pour le fond.
+			Afficher "Jouer".
+			Afficher "\n".
+			Choisir la couleur noir pour le fond.
+			Afficher "Quitter".
+			
+			//On met à jour l'option courante choisie
+			Copier le résultat de (#ligneOptionCourante - 1) dans #ligneOptionCourante.
+		
+		//L'option quitter est choisie et on est pas déjà dessus
+		sinon si #touchePressee est égale à "DownArrow" et #ligneOptionCourante est différente de #ligneDerniereOption alors
+			
+			Placer le curseur à la ligne #lignePremiereOption.
+			Placer le curseur à la colonne 0.
+			Choisir la couleur noir pour le fond.
+			Afficher "Jouer".
+			Afficher "\n".
+			Choisir la couleur rouge foncé pour le fond.
+			Afficher "Quitter".
+			
+			//On met à jour l'option courante choisie
+			Copier le résultat de (#ligneOptionCourante + 1) dans #ligneOptionCourante.
+		?
+		
+		//Remise à zéro
+		Choisir la couleur noir pour le fond.
+		
+	>>
+	
+Fin de la transmission.
+

@@ -1,0 +1,52 @@
+Auteur: Jonathan Melly
+Date: 17.09.2020
+Entreprise: ETML
+Description: Fleches
+
+Voici les ordres du programme Fleches  :
+	
+	Masquer le curseur.
+	
+	Créer une zone mémoire nommée #colonne avec la valeur 1.
+	Créer une zone mémoire nommée #touchePressee avec le texte "a".
+	
+	//Arrête la répétition si on appuie sur la touche Esc (en haut à gauche du clavier)
+	Répéter tant que #touchePressee est différente de "Escape"
+	
+		Attendre la prochaine touche et la stocker dans #touchePressee.
+		
+		Si #touchePressee est égale à "RightArrow" alors
+		
+			//Efface l'ancien symbole
+			Placer le curseur à la colonne #colonne.
+			Afficher " ".
+			
+			//Incrémente le numéro de colonne
+			Copier le résultat de (#colonne + 1) dans #colonne.
+			
+			//Dessine le symbole à la nouvelle position
+			Placer le curseur à la colonne #colonne.
+			Afficher ">".
+	
+		?
+		
+		Si #touchePressee est égale à "LeftArrow" alors
+		
+			//Efface l'ancien symbole
+			Placer le curseur à la colonne #colonne.
+			Afficher " ".
+			
+			//Incrémente le numéro de colonne
+			Copier le résultat de (#colonne - 1) dans #colonne.
+			
+			//Dessine le symbole à la nouvelle position
+			Placer le curseur à la colonne #colonne.
+			Afficher "<".
+	
+		?
+	
+	>>
+	
+Fin de la transmission.
+
+
