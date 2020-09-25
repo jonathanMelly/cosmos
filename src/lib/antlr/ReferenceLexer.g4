@@ -52,6 +52,8 @@ FOND:'fond';
 
 PRESSION_TOUCHE:'la pression d\'une touche';
 
+EFFACER_ECRAN: 'Effacer l\'écran';
+
 ALLOUER_TERME : 'Allouer ' | 'Créer ' ;
 INITIALISATION_TERME : 'avec ' | 'et y enregistrer ' ;
 
@@ -89,8 +91,12 @@ OPERATEUR_COMPARAISON_PLUS_PETIT_OU_EGAL : 'est plus petit ou égal à ' | 'est 
 VRAI: 'vrai'|'OK' ;
 FAUX: 'faux'|'KO' ;
 
+//On ne peut pas avoir deux entrées pour la même définition
+//Le 'et' étant utilisé à plusieurs endroits, il faut le gérer pour la partie logique
+//à partir de la définition 'ET'...
 ET : 'et ' ;
 OPERATEUR_LOGIQUE_ET: '&&' ;
+
 OPERATEUR_LOGIQUE_OU: 'ou' | '||' ;
 OPERATEUR_LOGIQUE_OU_EXCLUSIF: 'ou au contraire ' | 'xor' ;
 OPERATEUR_LOGIQUE_EST : 'est ' ;

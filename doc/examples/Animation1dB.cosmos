@@ -1,0 +1,49 @@
+Auteur: Jonathan Melly
+Date: 03.09.2020
+Entreprise: ETML
+Description: Animation horizontale
+
+Voici les ordres du programme AnimationHorizontale  :
+	Afficher "\n\n\n".
+	//Permet d'adapter la vitesse
+	Créer une zone mémoire nommée #delai.
+	
+	//Demande le temps de pause à l'utilisateur
+	Afficher "Temps de pause (en milliseconde): ".
+	Récupérer la saisie et la stocker dans #delai.
+	
+	//Attente initiale
+	Attendre 1000ms.
+	
+	Créer une zone mémoire nommée #symbole.
+	Afficher "Symbole: ".
+	Récupérer la saisie et la stocker dans #symbole.
+	
+	Placer le curseur à la colonne 1.
+	Afficher #symbole.
+	Attendre #delai ms.
+	
+	//Permet de faire varier #colonne de 1 à 4 dans la répétition
+	Créer une zone mémoire nommée #colonne avec la valeur 1.
+	
+	Répéter 4x
+		//On efface le premier caractère précédent
+		Placer le curseur à la colonne #colonne.
+		Afficher " ".
+		
+		//Incrémente et met à jour la zone mémoire #colonne 
+		//(Si #colonne contenait la valeur 1, alors maintenant #colonne contient 2)
+		Copier le résultat de (#colonne + 1) dans la zone mémoire nommée #colonne. 
+		
+		//Puis on affiche le message décalé
+		Placer le curseur à la colonne #colonne.
+		Afficher #symbole.
+		Attendre #delai ms.
+	>>
+	
+	
+	
+	
+	
+Fin de la transmission.
+

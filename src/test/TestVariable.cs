@@ -25,7 +25,7 @@ namespace test
             var variableName = "#maVariable";
             var expectedResult = variableName.AsCosmosVariable(expectedValue);
 
-            BuildSnippetInterpreter(BuildAllocationSnippet(variableName, variableExpression, variablePrefix));
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableName, variableExpression));
 
             //Act
             interpreter.Execute().Should().BeTrue();
@@ -35,12 +35,12 @@ namespace test
                 .BeEquivalentTo(expectedResult);
         }
 
-        private void TestInValidAllocationWithValue(string variableExpression, string variablePrefix = "")
+        private void TestInValidAllocationWithValue(string variableExpression)
         {
             //Arrange
             var variableName = "#maVariable";
 
-            BuildSnippetInterpreter(BuildAllocationSnippet(variableName, variableExpression, variablePrefix), false);
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableName, variableExpression), false);
 
             //Act-assert
             interpreter.Execute().Should().BeFalse();
@@ -140,14 +140,14 @@ namespace test
             interpreter.Execute().Should().BeFalse();
 
             //Assert
-            testConsole.ErrorContent.Should().Contain("inconnue");
+            testConsole.ErrorContent.Should().Contain("inconnu");
         }
 
         [Fact]
         public void TestStringAllocationVariant1BadPrefix()
         {
             var value = "StringAllocation1BadPrefix";
-            TestInValidAllocationWithValue($"\"{value}\"", "le exte");
+            TestInValidAllocationWithValue($"le (t)exte \"{value}\"");
         }
 
         [Fact]
@@ -306,6 +306,35 @@ namespace test
 
             //Assert
             testConsole.ErrorContent.Should().Be("Erreur, ligne 7:29 pas d'alternative viable à l'endroit ou il y a '-en'\n");
+        }
+
+        [Fact]
+        private void TestEmptyNumericVariable()
+        {
+            //Arrange
+
+            BuildSnippetInterpreter("\tCréer une zone mémoire #null.\n\tCopier (#null+2) dans #null.");
+
+            //Act
+            interpreter.Execute().Should().BeFalse();
+
+            //Assert
+            testConsole.ErrorContent.Should().Be("Erreur, ligne 8:9 La variable #null n'a pas de valeur définie\n");
+        }
+
+        [Fact]
+        private void Test1LetterVariable()
+        {
+            //Arrange
+
+            BuildSnippetInterpreter($"{BuildAllocationSnippet("#i","3")}\n" +
+                                    $"{BuildAfficherSnippet("var:#i-")}\n\tAfficher #i.\n{BuildAfficherSnippet("#i")}");
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            testConsole.Content.Should().Match("var:3-33");
         }
 
     }

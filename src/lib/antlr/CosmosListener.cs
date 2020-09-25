@@ -273,6 +273,16 @@ public interface ICosmosListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitLire_touche([NotNull] Cosmos.Lire_toucheContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Cosmos.effacer_ecran"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterEffacer_ecran([NotNull] Cosmos.Effacer_ecranContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Cosmos.effacer_ecran"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitEffacer_ecran([NotNull] Cosmos.Effacer_ecranContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Cosmos.variable"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

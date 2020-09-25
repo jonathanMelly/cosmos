@@ -48,7 +48,16 @@ namespace lib.parser.visitor
                     return VisitNombre(nombreContext);
 
                 case Cosmos.VariableContext variableContext:
-                    return variableVisitor.Visit(variableContext).Value.Number();
+                    var variable = variableVisitor.Visit(variableContext);
+                    if (variable.Value == null)
+                    {
+                        throw new EmptyVariableException(variable,variableContext);
+                    }
+                    else
+                    {
+                        return variable.Value.Number();
+                    }
+
 
                 default:
                     if (context.PARENTHESE_GAUCHE() != null)

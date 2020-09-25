@@ -1,0 +1,17 @@
+Auteur: Jonathan Melly
+Date: 17.09.2020
+Entreprise: ETML
+Description: Lecture clavier directe
+
+Voici les ordres du programme ReadKey  :
+	
+	Créer une zone mémoire nommée #touchePressee.
+	
+	Afficher "Appuyez sur une touche".
+	Attendre la prochaine touche et la stocker dans #touchePressee.
+
+	Afficher "\nVous avez appuyé sur la touche #touchePressee".
+	
+Fin de la transmission.
+
+

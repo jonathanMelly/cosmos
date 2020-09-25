@@ -108,11 +108,10 @@ namespace test
             return resultString;
         }
 
-        protected string BuildAllocationSnippet(string variableName, string variableExpression,
-            string variablePrefix = "")
+        protected string BuildAllocationSnippet(string variableName, string variableExpression)
         {
             var result =
-                $"{Allocation} {variableName} {(variableExpression != null ? $"avec {variablePrefix} {variableExpression}" : "")}.\n";
+                $"{Allocation} {variableName} {(variableExpression != null ? $"avec {variableExpression}" : "")}.\n";
             return result;
         }
 

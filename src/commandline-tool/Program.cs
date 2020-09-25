@@ -52,6 +52,9 @@ namespace commandline_tool
             optVersion
         };
 
+        private static ConsoleColor defaultForeColor = ConsoleColor.White;
+        private static ConsoleColor defaultBackColor = ConsoleColor.Black;
+
 
         /// <summary>
         /// Interpréteur du langage Cosmos
@@ -59,6 +62,17 @@ namespace commandline_tool
         /// <returns>Un code d'erreur selon ExitCode</returns>
         public static int Main(string[] args)
         {
+
+            try
+            {
+                defaultForeColor = Console.ForegroundColor;
+                defaultBackColor = Console.BackgroundColor;
+            }
+            catch (Exception)
+            {
+                //
+            }
+
             Parser parser=null;
             if (args == null || args.Length==0 || args[0].IsMatch(optInteractive))
             {
@@ -100,7 +114,7 @@ namespace commandline_tool
 
                 }
 
-                ResetCursor();
+                ResetConsole();
                 return (int) ExitCode.Ok;
             }
             else
@@ -258,7 +272,7 @@ namespace commandline_tool
                         Console.ReadKey(true);
                     }
 
-                    ResetCursor();
+                    ResetConsole();
 
                     return (int) (result ? ExitCode.Ok : !parseResult?ExitCode.ErreurSyntaxe: ExitCode.ErreurExecution);
                 }
@@ -274,11 +288,14 @@ namespace commandline_tool
         /// <summary>
         /// Remet le curseur pour éviter de le cacher dans la console active...
         /// </summary>
-        private static void ResetCursor()
+        private static void ResetConsole()
         {
             try
             {
+                Console.ForegroundColor = defaultForeColor;
+                Console.BackgroundColor = defaultBackColor;
                 Console.CursorVisible = true;
+
             }
             catch (Exception)
             {

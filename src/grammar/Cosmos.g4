@@ -40,6 +40,7 @@ instruction_simple   :
         | afficher_curseur
         | masquer_curseur
         | lire_touche
+        | effacer_ecran
     )
     POINT RETOUR_DE_CHARIOT ; //terminaison identique pour chaque
 instruction_complexe : selection|boucle ; //terminaison spécifique pour chaque
@@ -56,6 +57,7 @@ decouper: DECOUPER source=expression SUR separateur=expression;
 afficher_curseur: AFFICHER LE_CURSEUR;
 masquer_curseur: MASQUER LE_CURSEUR;
 lire_touche: RECUPERER_TOUCHE la_zone_memoire;
+effacer_ecran: EFFACER_ECRAN;
 
 
 variable : (LA VALEUR DE)? la_zone_memoire;

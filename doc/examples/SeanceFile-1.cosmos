@@ -1,0 +1,33 @@
+Auteur: Jonathan Melly
+Date: 03.09.2020
+Entreprise: ETML
+Description: Animation1
+
+Voici les ordres du programme Animation1  :
+	
+	Créer une zone mémoire nommée #taille.
+	Afficher "Taille: ".
+	Récupérer la saisie et la stocker dans la zone mémoire nommée #taille.
+	
+	Créer une zone mémoire nommée #ligne avec la valeur 1.
+	Allouer une zone mémoire nommée #colonne.
+	
+	Répéter le nombre de fois correspondant à #taille
+		Copier 1 dans #colonne.
+		Répéter le nombre de fois correspondant à #taille
+			Si #ligne est égale à 1 ou #ligne == #taille alors
+				Afficher "+".
+			sinon si #colonne == 1 ou #colonne == #taille alors
+				Afficher "|".
+			et sinon
+				Afficher #ligne.
+			?
+			#colonne = #colonne+1.
+			
+			Attendre 100ms.
+		>>
+		Afficher "\n".
+		#ligne = #ligne +1.
+	>>
+	
+Fin de la transmission.

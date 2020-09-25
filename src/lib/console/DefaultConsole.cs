@@ -86,6 +86,11 @@ namespace lib.console
             return Console.ReadKey(eatKey).Key.ToString();
         }
 
+        public void ClearScreen()
+        {
+            Console.Clear();
+        }
+
         private ConsoleColor ExtractColor(string color,bool back=false)
         {
             if (ConsoleColor.TryParse(color, out ConsoleColor result))

@@ -35,7 +35,7 @@ namespace lib.parser.visitor
             DATE_VAR_MINUTE,
             DATE_VAR_SECOND};
 
-        private IConsole console;
+        private readonly IConsole console;
 
         public VariableVisitor(Parser parser,IConsole console)
         {
