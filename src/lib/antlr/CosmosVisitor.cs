@@ -178,6 +178,12 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitLire_touche([NotNull] Cosmos.Lire_toucheContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="Cosmos.effacer_ecran"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitEffacer_ecran([NotNull] Cosmos.Effacer_ecranContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="Cosmos.variable"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

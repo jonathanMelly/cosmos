@@ -52,6 +52,8 @@ FOND:'fond';
 
 PRESSION_TOUCHE:'la pression d\'une touche';
 
+EFFACER_ECRAN: 'Effacer l\'écran';
+
 ALLOUER_TERME : 'Allouer ' | 'Créer ' ;
 INITIALISATION_TERME : 'avec ' | 'et y enregistrer ' ;
 

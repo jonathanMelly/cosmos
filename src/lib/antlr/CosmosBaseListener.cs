@@ -325,6 +325,18 @@ public partial class CosmosBaseListener : ICosmosListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitLire_touche([NotNull] Cosmos.Lire_toucheContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Cosmos.effacer_ecran"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterEffacer_ecran([NotNull] Cosmos.Effacer_ecranContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Cosmos.effacer_ecran"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitEffacer_ecran([NotNull] Cosmos.Effacer_ecranContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Cosmos.variable"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

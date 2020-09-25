@@ -323,5 +323,11 @@ namespace lib.interpreter
             variableVisitor.Fill(parser.Variables,variable.Name,key.AsCosmosString());
             return null;
         }
+
+        public override ExecutionContext VisitEffacer_ecran(Cosmos.Effacer_ecranContext context)
+        {
+            executionConsole.ClearScreen();
+            return null;
+        }
     }
 }
