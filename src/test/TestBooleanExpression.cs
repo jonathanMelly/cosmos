@@ -134,6 +134,13 @@ namespace test
         }
 
         [Fact]
+        public void TestEst()
+        {
+            TestBoolean("le résultat de (vrai est faux)", false);
+            TestBoolean("le résultat de (vrai est vrai)", true);
+        }
+
+        [Fact]
         public void TestBigger()
         {
             for (var i = 0; i < Tokens.Gt.Length; i++)

@@ -28,20 +28,34 @@ namespace lib.parser.visitor
                 case Cosmos.Expression_booleenneContext _:
                     var left = Visit(context.gauche).Boolean().Value;
                     var right = context.droite;
+                    var booleanOperator = context.operateur;
 
-                    var resultb = context.operateur.Type switch
+                    bool resultb;
+                    switch (booleanOperator.Type)
                     {
-                        OPERATEUR_LOGIQUE_OU => left || Visit(right).Boolean().Value,
-
-                        OPERATEUR_LOGIQUE_ET => left && Visit(right).Boolean().Value,
-                        ET => left && Visit(right).Boolean().Value,
-
-                        OPERATEUR_LOGIQUE_OU_EXCLUSIF => left ^ Visit(right).Boolean().Value,
-                        OPERATEUR_COMPARAISON_EQUIVALENT => left == Visit(right).Boolean().Value,
-                        OPERATEUR_COMPARAISON_DIFFERENT => left != Visit(right).Boolean().Value,
-
-                        _ => throw new MissingTokenHandlerException(context.operateurNb)
-                    };
+                        case OPERATEUR_LOGIQUE_OU:
+                            resultb = left || Visit(right).Boolean().Value;
+                            break;
+                        case OPERATEUR_LOGIQUE_ET:
+                        case ET:
+                            resultb = left && Visit(right).Boolean().Value;
+                            break;
+                        case OPERATEUR_LOGIQUE_EST:
+                            var rightValue = context.VRAI() != null;
+                            resultb = left == rightValue;
+                            break;
+                        case OPERATEUR_LOGIQUE_OU_EXCLUSIF:
+                            resultb = left ^ Visit(right).Boolean().Value;
+                            break;
+                        case OPERATEUR_COMPARAISON_EQUIVALENT:
+                            resultb = left == Visit(right).Boolean().Value;
+                            break;
+                        case OPERATEUR_COMPARAISON_DIFFERENT:
+                            resultb = left != Visit(right).Boolean().Value;
+                            break;
+                        default:
+                            throw new MissingTokenHandlerException(booleanOperator);
+                    }
 
                     return resultb.AsCosmosBoolean();
 
