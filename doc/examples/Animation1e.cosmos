@@ -1,0 +1,33 @@
+Auteur: Jonathan Melly
+Date: 03.09.2020
+Entreprise: ETML
+Description: Animation horizontale
+
+Voici les ordres du programme AnimationHorizontale  :
+	Masquer le curseur.
+	Afficher "\n\n".
+	//Permet d'adapter la vitesse
+	Créer une zone mémoire nommée #delai avec la valeur 300.
+	
+	Créer une zone mémoire nommée #symbole1 avec le texte "|".
+	Créer une zone mémoire nommée #symbole2 avec le texte "v".
+	
+	Créer une zone mémoire nommée #colonne avec la valeur 1.
+	Créer une zone mémoire nommée #ligne avec la valeur 1.
+	Répéter 10x
+		Placer le curseur à la colonne 3.
+		//Puis on affiche le message décalé
+		Copier (#ligne + 1) dans la zone mémoire nommée #ligne.
+		Placer le curseur à la ligne #ligne.
+		Afficher "#symbole1\n   #symbole2".
+		Attendre #delai ms.
+		
+		//Efface le précédent
+		Placer le curseur à la ligne (#ligne - 1).
+		Afficher " ".
+	>>
+	
+	Afficher "\n\n".
+	
+Fin de la transmission.
+

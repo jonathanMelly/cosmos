@@ -1,0 +1,32 @@
+Auteur: Jonathan Melly
+Date: 03.09.2020
+Entreprise: ETML
+Description: Animation1
+
+Voici les ordres du programme Animation1  :
+
+	Masquer le curseur.
+	Créer une zone mémoire nommée #colonne avec la valeur 1.
+
+	
+	Afficher "\n\n".
+	
+	Répéter 20x
+	
+		//Efface le caractère à la colonne précédente
+		Placer le curseur à la colonne (#colonne - 1).
+		Afficher " ".
+	
+		Placer le curseur à la colonne #colonne.
+		Afficher "Mouvement vers la droite ==>".
+		
+		//Augmente la valeur de colonne de 1
+		Copier (#colonne + 1) dans la zone mémoire #colonne.
+		
+		//Pause pour l'animation
+		Attendre 250ms.
+		
+		
+	>>
+	
+Fin de la transmission.

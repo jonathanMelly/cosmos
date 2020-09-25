@@ -59,5 +59,7 @@ namespace lib.console
         void SetBackColorTo(string color);
 
         string WaitForKeyPress(bool eatKey = true);
+
+        void ClearScreen();
     }
 }

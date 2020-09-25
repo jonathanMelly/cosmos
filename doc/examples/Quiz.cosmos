@@ -1,0 +1,25 @@
+Auteur: diurnambule
+Date: 17.09.2020
+Entreprise: radi
+Description: Quiz
+
+Voici les ordres du programme Quiz  :
+	Afficher "\n".
+	Créer une zone mémoire nommée #compteur avec la valeur 1.
+	Répéter 4x
+		Afficher "#compteur,".
+		
+		Copier le résultat de (#compteur + 1) dans la zone mémoire nommée #compteur.
+	>>
+	
+	Attendre 500ms.
+	//Afficher
+	
+	Placer le curseur à la colonne 7.
+	Afficher " ".
+	
+	Placer le curseur à la colonne 4.
+	Afficher "8".
+	
+	
+Fin de la transmission.

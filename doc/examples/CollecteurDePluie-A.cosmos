@@ -1,0 +1,19 @@
+Auteur: Jonathan Melly
+Date: 24.09.2020
+Entreprise: ETML
+Description: CollecteurDePluie
+
+Voici les ordres du programme CollecteurDePluie  :
+    Afficher "+-------------------+\n".
+	Afficher "|Collecteur de Pluie|\n".
+	Afficher "+-------------------+".
+	
+	Afficher "\n\n*MENU*\n\n".
+	
+	Choisir la couleur rouge foncé pour le fond.
+	Afficher "Jouer".
+	Afficher "\n".
+	Choisir la couleur noir pour le fond.
+	Afficher "Quitter".
+Fin de la transmission.
+

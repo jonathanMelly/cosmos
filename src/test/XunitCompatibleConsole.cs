@@ -107,5 +107,12 @@ namespace test
 
             return input.Pop();
         }
+
+        public void ClearScreen()
+        {
+            content[Channel.Standard].Clear();
+            SetCursorToLine(0);
+            SetCursorToColumn(0);
+        }
     }
 }

@@ -62,5 +62,19 @@ namespace test
             testConsole.CursorVisible.Should().BeFalse();
         }
 
+        [Fact]
+        public void TestClearScreen()
+        {
+            //Arrange
+            BuildSnippetInterpreter($"{BuildAfficherSnippet("HelloTest")}\n\tEffacer l'écran.");
+
+            //Act
+            interpreter.Execute();
+
+            //Assert
+            testConsole.Content.Should().NotContain("HelloTest").And.
+                Match("@@Set cursor y to 0\n@@Set cursor x to 0");
+        }
+
     }
 }

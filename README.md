@@ -33,7 +33,15 @@ langage en passant d'abord par l'installation.
 Ce [deuxième atelier](https://labs.section-inf.ch/codelabs/cosmos-base-01-million/index.html) présente quelques 
 fondamentaux au travers d'un jeu connu.
 
-# Exemple
+## Bases d'une animation
+On augmente l'interactivité dans ce [troisième volet](https://labs.section-inf.ch/codelabs/cosmos-base-02-animation/index.html).
+
+# Résumé du langage
+La [feuille de triche](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cheatsheet.pdf), dont voici un extrait, synthètise le vocabulaire du langage.
+
+![Cheatsheet-short](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cheatsheet-short.png)
+
+# Exemple vivant
 ![Exemple](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cosmos-exemple.gif)
 
 # Téléchargements
