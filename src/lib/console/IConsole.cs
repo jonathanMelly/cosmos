@@ -11,7 +11,7 @@ namespace lib.console
         }
 
         bool KeyAvailable { get; }
-        string? ReadKey { get; }
+        string? ReadKey(bool eatKey=true);
 
         bool CursorVisible { get; set; }
 

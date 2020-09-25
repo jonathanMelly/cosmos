@@ -81,7 +81,7 @@ namespace lib.parser.visitor
             }
             else if (varName == KEY_VAR_KEY)
             {
-                var key = console.ReadKey;
+                var key = console.ReadKey();
                 Fill(parser.Variables,KEY_VAR_KEY,key?.AsCosmosString());
             }
 
