@@ -72,19 +72,10 @@ Voici les ordres du programme CollecteurDePluie  :
 		Créer une zone mémoire nommée #colonneLimiteDroite avec la valeur 15.
 		Créer une zone mémoire nommée #collecteurX avec la valeur 7.
 		Créer une zone mémoire nommée #collecteurY avec la valeur 11.
-		//Placement initial
-		Placer le curseur à la ligne #collecteurY.
-		Placer le curseur à la colonne #collecteurX.
-		Afficher "U".
 		
 		Créer une zone mémoire nommée #ligneLimite avec la valeur 10.
 		Créer une zone mémoire nommée #goutteX avec la valeur 0.
 		Créer une zone mémoire nommée #goutteY avec #ligneLimite.
-		
-		Créer une zone mémoire nommée #score avec la valeur 0.
-		Placer le curseur à la colonne 18.
-		Placer le curseur à la ligne 3.
-		Afficher "Score: #score".
 		
 		Répéter tant que #touchePressee est différente de "Escape"
 			Si ##touche.disponible alors
@@ -94,7 +85,7 @@ Voici les ordres du programme CollecteurDePluie  :
 				Si #touchePressee est égale à "LeftArrow" et #collecteurX est différent de #colonneLimiteGauche alors
 					//On efface l'ancienne position
 					Placer le curseur à la ligne #collecteurY.
-					Placer le curseur à la colonne #collecteurX.
+					Placer le curseur à la ligne #collecteurX.
 					Afficher " ".
 					
 					//Calcule la nouvelle position
@@ -102,13 +93,13 @@ Voici les ordres du programme CollecteurDePluie  :
 					
 					//On affiche la nouvelle position
 					Placer le curseur à la ligne #collecteurY.
-					Placer le curseur à la colonne #collecteurX.
+					Placer le curseur à la ligne #collecteurX.
 					Afficher "U".
 					
 				sinon si #touchePressee est égale à "RightArrow" et #collecteurX est plus petit que #colonneLimiteDroite alors
 					//On efface l'ancienne position
 					Placer le curseur à la ligne #collecteurY.
-					Placer le curseur à la colonne #collecteurX.
+					Placer le curseur à la ligne #collecteurX.
 					Afficher " ".
 					
 					//Calcule la nouvelle position
@@ -116,7 +107,7 @@ Voici les ordres du programme CollecteurDePluie  :
 					
 					//On affiche la nouvelle position
 					Placer le curseur à la ligne #collecteurY.
-					Placer le curseur à la colonne #collecteurX.
+					Placer le curseur à la ligne #collecteurX.
 					Afficher "U".
 				?
 			?
@@ -141,14 +132,6 @@ Voici les ordres du programme CollecteurDePluie  :
 			Placer le curseur à la ligne #goutteY.
 			Placer le curseur à la colonne #goutteX.
 			Afficher "|".
-			
-			//Comparaison des positions de la goutte et du collecteur pour le score
-			Si #goutteY est égal à (#collecteurY - 1) et #goutteX est égal à #collecteurX alors
-				Copier le résultat de (#score+5) dans #score.
-				Placer le curseur à la colonne 18.
-				Placer le curseur à la ligne 3.
-				Afficher "Score: #score".
-			?
 			
 			
 			//Vitesse du jeu (20 fps ici)
