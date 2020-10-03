@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using Antlr4.Runtime;
 using lib.antlr;
 using lib.console;
+using lib.data;
 using lib.extension;
 using lib.parser.exception;
 using lib.parser.type;
@@ -104,7 +104,7 @@ namespace lib.parser.visitor
             );
         }
 
-        private void RefreshDateVariable(string variableName, IDictionary<string, CosmosVariable> variables)
+        private void RefreshDateVariable(string variableName, Variables variables)
         {
             var now = Clock.Now;
             switch (variableName)
@@ -130,7 +130,7 @@ namespace lib.parser.visitor
             }
         }
 
-        public void Fill(IDictionary<string, CosmosVariable> variables, string varName, CosmosTypedValue value)
+        public void Fill(Variables variables, string varName, CosmosTypedValue value)
         {
             variables[varName] = varName.AsCosmosVariable(value);
         }

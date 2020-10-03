@@ -4,8 +4,8 @@ using System.IO;
 using Antlr4.Runtime;
 using lib.antlr;
 using lib.console;
+using lib.data;
 using lib.parser.listener;
-using lib.parser.type;
 
 namespace lib.parser
 {
@@ -25,7 +25,7 @@ namespace lib.parser
         //Keep redirection because we may have more listeners in the future...
         public List<string> Errors => ErrorListener.Errors;
 
-        public IDictionary<string, CosmosVariable> Variables { get; } = new Dictionary<string, CosmosVariable>();
+        public Variables Variables { get; } = new Variables();
 
         public ErrorListener ErrorListener { get; private set; }
 
