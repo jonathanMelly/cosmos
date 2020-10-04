@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using ImGuiNET;
+using lib.data;
 using lib.interpreter;
 using lib.parser;
+using Veldrid;
+using Veldrid.Sdl2;
+using Veldrid.StartupUtilities;
 
 namespace commandline_tool
 {
@@ -31,30 +38,42 @@ namespace commandline_tool
 
         }
 
-        public static CliOption optInteractive = new CliOption("i", "interactif", "Mode interactif pour tester des commandes");
-        public static CliOption optSnippet = new CliOption("c", "code",
+        private static readonly CliOption OptInteractive = new CliOption("i", "interactif", "Mode interactif pour tester des commandes");
+        private static readonly CliOption OptSnippet = new CliOption("c", "code",
             "Permet de passer du code en ligne (au lieu d'un fichier), exemple: --code \"Afficher 5.\"");
-        public static CliOption optSyntax = new CliOption("s", "syntaxe", "Vérifie uniquement la syntaxe (pas d'éxécution)",true);
-        public static CliOption optDirect = new CliOption("d", "direct", "Stoppe le programme sans devoir appuyer sur Enter",true);
+        private static readonly CliOption OptSyntax = new CliOption("s", "syntaxe", "Vérifie uniquement la syntaxe (pas d'éxécution)",true);
+        private static readonly CliOption OptDirect = new CliOption("d", "direct", "Stoppe le programme sans devoir appuyer sur Enter",true);
+        private static readonly CliOption OptRam = new CliOption("r", "ram", "Affiche le contenu de la RAM",true);
 
-        public static CliOption optHelp = new CliOption("h", "help", "Affiche l'aide");
-        public static CliOption optVersion = new CliOption("v", "version", "Affiche la version");
+        public static readonly CliOption OptHelp = new CliOption("h", "help", "Affiche l'aide");
+        private static readonly CliOption OptVersion = new CliOption("v", "version", "Affiche la version");
 
-        public static CliOption optNewProgram = new CliOption("n", "nouveau", "Créee un fichier pour un nouveau programme");
+        private static readonly CliOption OptNewProgram = new CliOption("n", "nouveau", "Créee un fichier pour un nouveau programme");
 
-        public static CliOption[] options = new CliOption[]
+        private static readonly CliOption[] Options = new CliOption[]
         {
-            optInteractive,
-            optSnippet,
-            optSyntax,
-            optDirect,
-            optHelp,
-            optVersion
+            OptInteractive,
+            OptSnippet,
+            OptSyntax,
+            OptDirect,
+            OptRam,
+            OptHelp,
+            OptVersion
         };
 
-        private static ConsoleColor defaultForeColor = ConsoleColor.White;
-        private static ConsoleColor defaultBackColor = ConsoleColor.Black;
+        private static ConsoleColor _defaultForeColor = ConsoleColor.White;
+        private static ConsoleColor _defaultBackColor = ConsoleColor.Black;
 
+
+        //GUI stuff
+        private static Sdl2Window _window;
+        private static GraphicsDevice _gd=null;
+        private static CommandList _cl;
+        private static ImGuiController _controller;
+        private static readonly Vector3 ClearColor = new Vector3(0.45f, 0.55f, 0.6f);
+
+        private static volatile bool _running = true;
+        private static volatile Variables _variables;
 
         /// <summary>
         /// Interpréteur du langage Cosmos
@@ -65,8 +84,8 @@ namespace commandline_tool
 
             try
             {
-                defaultForeColor = Console.ForegroundColor;
-                defaultBackColor = Console.BackgroundColor;
+                _defaultForeColor = Console.ForegroundColor;
+                _defaultBackColor = Console.BackgroundColor;
             }
             catch (Exception)
             {
@@ -74,7 +93,7 @@ namespace commandline_tool
             }
 
             Parser parser=null;
-            if (args == null || args.Length==0 || args[0].IsMatch(optInteractive))
+            if (args == null || args.Length==0 || args[0].IsMatch(OptInteractive))
             {
                 //TODO : vérifier qu'aucune autre option n'est passée
 
@@ -120,7 +139,7 @@ namespace commandline_tool
             else
             {
                 //SNIPPET
-                if (args[0].IsMatch(optSnippet))
+                if (args[0].IsMatch(OptSnippet))
                 {
                     var codeContent = new List<string>();
                     foreach (var arg in args[1..])
@@ -131,18 +150,18 @@ namespace commandline_tool
                     parser = GetParserForEmbeddedSnippet(String.Join(" ",codeContent.ToArray()));
                 }
                 //VERSION
-                else if (args[0].IsMatch(optVersion))
+                else if (args[0].IsMatch(OptVersion))
                 {
                     ShowVersion();
                     return (int) ExitCode.Ok;
                 }
                 //HELP
-                else if (args[0].IsMatch(optHelp))
+                else if (args[0].IsMatch(OptHelp))
                 {
                     ShowHelp();
                     return (int) ExitCode.Ok;
                 }
-                else if (args[0].IsMatch(optNewProgram))
+                else if (args[0].IsMatch(OptNewProgram))
                 {
                     string programName = args.Length>1?args[1]:null;
 
@@ -179,7 +198,7 @@ namespace commandline_tool
                     var remainingArgs = new List<string>(args);
 
                     //Enlève les options valides
-                    foreach (var option in options)
+                    foreach (var option in Options)
                     {
                         foreach (var optionName in option.Names)
                         {
@@ -210,7 +229,7 @@ namespace commandline_tool
                         else
                         {
                             var sourceFile = remainingArgs[0];
-                            //Prend en compte les fichiers sans spécifier l'extension par défaut de .cosmos
+                            //Prends en compte les fichiers sans spécifier l'extension par défaut de .cosmos
                             if (!File.Exists(sourceFile))
                             {
                                 sourceFile = $"{sourceFile}.cosmos";
@@ -233,8 +252,9 @@ namespace commandline_tool
 
             if (parser != null)
             {
-                var syntaxOnly = optSyntax.IsActive(args);
-                var direct = optDirect.IsActive(args);
+                var syntaxOnly = OptSyntax.IsActive(args);
+                var direct = OptDirect.IsActive(args);
+                var gui = OptRam.IsActive(args);
 
                 var parseResult = parser.Parse();
 
@@ -245,36 +265,47 @@ namespace commandline_tool
                 else
                 {
                     var interpreter = new Interpreter(parser);
+                    _variables = parser.Variables;
 
-                    var timer = new Stopwatch();
-                    timer.Start();
-                    var result = interpreter.Execute();
-                    timer.Stop();
-
-
-                    //Affiche la cartouche uniquement en cas de parsing/éxécution réussie et si pas en mode direct
-                    if (!direct && parser.ParsingWasSuccessfull)
+                    var cosmosTask = Task.Factory.StartNew(() =>
                     {
-                        var mainMessage = "|Programme cosmos terminé, appuyez sur une touche pour quitter|";
-                        var size = mainMessage.Length;
-                        var executionTime = $"|Temps d'éxécution: {timer.Elapsed}";
-                        executionTime += $"{new String(' ', size - executionTime.Length - 1)}|";
+                        var timer = new Stopwatch();
+                        timer.Start();
+                        var result = interpreter.Execute();
+                        timer.Stop();
+                        //Affiche la cartouche uniquement en cas de parsing/éxécution réussie et si pas en mode direct
+                        if (!direct && parser.ParsingWasSuccessfull)
+                        {
+                            var mainMessage = "|Programme cosmos terminé, appuyez sur une touche pour quitter|";
+                            var size = mainMessage.Length;
+                            var executionTime = $"|Temps d'éxécution: {timer.Elapsed}";
+                            executionTime += $"{new String(' ', size - executionTime.Length - 1)}|";
 
-                        var hide = $"|Pour masquer ce message, ajoutez l'option -d ou --direct";
-                        hide += $"{new String(' ', size - hide.Length - 1)}|";
+                            var hide = $"|Pour masquer ce message, ajoutez l'option -d ou --direct";
+                            hide += $"{new String(' ', size - hide.Length - 1)}|";
 
-                        Console.Write($"{Environment.NewLine}{Environment.NewLine}");
-                        Console.WriteLine($"+{new String('-',size-2)}+");
-                        Console.WriteLine(mainMessage);
-                        Console.WriteLine(executionTime);
-                        Console.WriteLine(hide);
-                        Console.WriteLine($"+{new String('-',size-2)}+");
-                        Console.ReadKey(true);
+                            Console.Write($"{Environment.NewLine}{Environment.NewLine}");
+                            Console.WriteLine($"+{new String('-',size-2)}+");
+                            Console.WriteLine(mainMessage);
+                            Console.WriteLine(executionTime);
+                            Console.WriteLine(hide);
+                            Console.WriteLine($"+{new String('-',size-2)}+");
+                            Console.ReadKey(true);
+                        }
+
+                        ResetConsole();
+                        _running = false;
+
+                        return (int) (result ? ExitCode.Ok : !parseResult?ExitCode.ErreurSyntaxe: ExitCode.ErreurExecution);
+                    });
+
+                    if (gui)
+                    {
+                        ShowVariablesGui();
                     }
 
-                    ResetConsole();
+                    return cosmosTask.Result;
 
-                    return (int) (result ? ExitCode.Ok : !parseResult?ExitCode.ErreurSyntaxe: ExitCode.ErreurExecution);
                 }
 
             }
@@ -283,6 +314,72 @@ namespace commandline_tool
             Console.Error.WriteLine("Erreur inconnue, veuillez consulter l'aide en ligne.");
             return (int)ExitCode.ErreurInconnue;
 
+
+        }
+
+        public static void ShowVariablesGui()
+        {
+            // Create window, GraphicsDevice, and all resources necessary for the demo.
+            VeldridStartup.CreateWindowAndGraphicsDevice(
+                new WindowCreateInfo(0, 0, 350, 200, WindowState.Normal, "Cosmos - RAM"),
+                new GraphicsDeviceOptions(true, null, true),
+                out _window,
+                out _gd);
+
+            _window.Resized += () =>
+            {
+
+                _gd.MainSwapchain.Resize((uint) _window.Width, (uint) _window.Height);
+                _controller.WindowResized(_window.Width, _window.Height);
+            };
+            _cl = _gd.ResourceFactory.CreateCommandList();
+            _controller = new ImGuiController(_gd, _gd.MainSwapchain.Framebuffer.OutputDescription, _window.Width, _window.Height);
+            ImGui.GetIO().ConfigWindowsResizeFromEdges = false;
+
+            // Main application loop
+            while (_window.Exists && _running==true)
+            {
+                InputSnapshot snapshot = _window.PumpEvents();
+                if (!_window.Exists) { break; }
+                _controller.Update(1f / 60f, snapshot); // Feed the input events to our ImGui controller, which passes them through to ImGui.
+
+                bool popen=true;
+
+                ImGui.Begin("Contenu de la mémoire RAM",ref popen, ImGuiWindowFlags.None
+                        //|ImGuiWindowFlags.NoInputs
+                        | ImGuiWindowFlags.NoDecoration
+                        | ImGuiWindowFlags.NoMove
+                        | ImGuiWindowFlags.NoResize
+                        | ImGuiWindowFlags.NoSavedSettings
+                        | ImGuiWindowFlags.AlwaysVerticalScrollbar
+                        //| ImGuiWindowFlags.NoScrollbar
+                        //| ImGuiWindowFlags.NoFocusOnAppearing
+                        );
+                ImGui.SetWindowSize(new Vector2(_window.Width,_window.Height));
+                ImGui.SetWindowPos(new Vector2(0,0));
+
+                foreach (var variable in _variables.Values)
+                {
+                    ImGui.Text($"{variable.Name}{new String(' ',_variables.LongestName-variable.Name.Length)}: {variable.Value}");
+                }
+
+                ImGui.End();
+
+                _cl.Begin();
+                _cl.SetFramebuffer(_gd.MainSwapchain.Framebuffer);
+                _cl.ClearColorTarget(0, new RgbaFloat(ClearColor.X, ClearColor.Y, ClearColor.Z, 1f));
+                _controller.Render(_gd, _cl);
+                _cl.End();
+                _gd.SubmitCommands(_cl);
+                _gd.SwapBuffers(_gd.MainSwapchain);
+            }
+
+
+            // Clean up Veldrid resources
+            _gd.WaitForIdle();
+            _controller.Dispose();
+            _cl.Dispose();
+            _gd.Dispose();
         }
 
         /// <summary>
@@ -292,8 +389,8 @@ namespace commandline_tool
         {
             try
             {
-                Console.ForegroundColor = defaultForeColor;
-                Console.BackgroundColor = defaultBackColor;
+                Console.ForegroundColor = _defaultForeColor;
+                Console.BackgroundColor = _defaultBackColor;
                 Console.CursorVisible = true;
 
             }
@@ -315,14 +412,14 @@ namespace commandline_tool
 
             ShowVersion();
             Console.WriteLine($"\nUtilisation :\n" +
-                              $"{indent}Mode interactif        : cosmos [{optInteractive}]\n" +
-                              $"{indent}Mode fichier source    : cosmos <fichierSource> {optSyntax} {optDirect}\n" +
-                              $"{indent}Mode extrait de code   : cosmos {{{optSnippet}}} \"Extrait de code source...\" {optSyntax} {optDirect}\n" +
-                              $"{indent}Mode nouveau programme : cosmos {{{optNewProgram}}} <nomDuProgramme>");
+                              $"{indent}Mode interactif        : cosmos [{OptInteractive}]\n" +
+                              $"{indent}Mode fichier source    : cosmos <fichierSource> {OptSyntax} {OptDirect}\n" +
+                              $"{indent}Mode extrait de code   : cosmos {{{OptSnippet}}} \"Extrait de code source...\" {OptSyntax} {OptDirect}\n" +
+                              $"{indent}Mode nouveau programme : cosmos {{{OptNewProgram}}} <nomDuProgramme>");
 
             Console.WriteLine("\nOptions:");
 
-            foreach (var option in options)
+            foreach (var option in Options)
             {
                 Console.WriteLine($"{indent}{option.NamesForPrint(" ou ",true),-20} : {option.Description}");
             }

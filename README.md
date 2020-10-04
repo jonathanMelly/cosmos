@@ -36,13 +36,26 @@ fondamentaux au travers d'un jeu connu.
 ## Bases d'une animation
 On augmente l'interactivité dans ce [troisième volet](https://labs.section-inf.ch/codelabs/cosmos-base-02-animation/index.html).
 
+## Jeu interactif : Collecteur de pluie
+Pour terminer, voici un [tutorial](https://labs.section-inf.ch/codelabs/cosmos-base-02-animation/index.html) pour réaliser un premier jeu interactif ressemblant à ceci:
+
+![jeu](https://github.com/jonathanMelly/cosmos/raw/integration/doc/jeu.gif)
+
+
 # Résumé du langage
 La [feuille de triche](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cheatsheet.pdf), dont voici un extrait, synthètise le vocabulaire du langage.
 
 ![Cheatsheet-short](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cheatsheet-short.png)
 
-# Exemple vivant
+## Différence avec C#
+La [feuille de triche cosmos/csharp](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cheatsheet-csharp.pdf), montre les différences sur le vocabulaire élémentaire.
+En voici un extrait:
+
+![Cheatsheet-short](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cheatsheet-csharp-short.png)
+
+
+# Premiers pas en live
 ![Exemple](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cosmos-exemple.gif)
 
 # Téléchargements
-Se le premier tutorial n'est pas utile, la dernière version est téléchargeable [ici](https://github.com/jonathanMelly/cosmos/releases/latest/).
+Se le premier tutorial n'est pas utile, la dernière version est [téléchargeable ici](https://github.com/jonathanMelly/cosmos/releases/latest/).

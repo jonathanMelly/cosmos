@@ -13,7 +13,7 @@ namespace test
             var cmd = "--help";
 
             //Act
-            bool result = cmd.IsMatch(Program.optHelp);
+            bool result = cmd.IsMatch(Program.OptHelp);
 
             //Assert
             result.Should().BeTrue("la ligne de commande contient le paramètre --help");
@@ -26,7 +26,7 @@ namespace test
             var cmd = "--helpo";
 
             //Act
-            bool result = cmd.IsMatch(Program.optHelp);
+            bool result = cmd.IsMatch(Program.OptHelp);
 
             //Assert
             result.Should().BeFalse();

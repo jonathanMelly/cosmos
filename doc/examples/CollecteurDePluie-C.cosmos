@@ -1,0 +1,93 @@
+Auteur: Jonathan Melly
+Date: 24.09.2020
+Entreprise: ETML
+Description: CollecteurDePluie
+
+Voici les ordres du programme CollecteurDePluie  :
+	Masquer le curseur.
+	Effacer l'écran.
+	
+    Afficher "+-------------------+\n".
+	Afficher "|Collecteur de Pluie|\n".
+	Afficher "+-------------------+".
+	
+	Afficher "\n\n*MENU*\n\n".
+	
+	Choisir la couleur rouge foncé pour le fond.
+	Afficher "Jouer".
+	Afficher "\n".
+	Choisir la couleur noir pour le fond.
+	Afficher "Quitter".
+	
+	//Gestion du MENU
+	Créer une zone mémoire nommée #lignePremiereOption avec la valeur 6.
+	Créer une zone mémoire nommée #ligneDerniereOption avec la valeur 7. 
+	Créer une zone mémoire nommée #ligneOptionCourante avec #lignePremiereOption. 
+	Créer une zone mémoire nommée #touchePressee avec le texte "vide" .
+	
+	Répéter tant que #touchePressee est différente de "Enter"
+		
+		Attendre la prochaine touche et la stocker dans #touchePressee.
+		
+		//L'option jouer est choisie et qu'on est pas déjà dessus
+		Si #touchePressee est égale à "UpArrow" et #ligneOptionCourante est différente de #lignePremiereOption alors
+			
+			Placer le curseur à la ligne #lignePremiereOption.
+			Placer le curseur à la colonne 0.
+			Choisir la couleur rouge foncé pour le fond.
+			Afficher "Jouer".
+			Afficher "\n".
+			Choisir la couleur noir pour le fond.
+			Afficher "Quitter".
+			
+			//On met à jour l'option courante choisie
+			Copier le résultat de (#ligneOptionCourante - 1) dans #ligneOptionCourante.
+		
+		//L'option quitter est choisie et on est pas déjà dessus
+		sinon si #touchePressee est égale à "DownArrow" et #ligneOptionCourante est différente de #ligneDerniereOption alors
+			
+			Placer le curseur à la ligne #lignePremiereOption.
+			Placer le curseur à la colonne 0.
+			Choisir la couleur noir pour le fond.
+			Afficher "Jouer".
+			Afficher "\n".
+			Choisir la couleur rouge foncé pour le fond.
+			Afficher "Quitter".
+			
+			//On met à jour l'option courante choisie
+			Copier le résultat de (#ligneOptionCourante + 1) dans #ligneOptionCourante.
+		?
+		
+	>>
+	
+	//Si on est là c'est que la touche Enter a été pressée
+	//On va donc regarder l'option choisie
+	
+	//Option 'Jouer'
+	Si #ligneOptionCourante est égale à #lignePremiereOption alors
+		Choisir la couleur noir pour le fond.
+		Effacer l'écran.
+		
+		Afficher "Bienvenue dans le jeu".
+		
+		Répéter tant que #touchePressee est différente de "Escape"
+			Si ##touche.disponible alors
+				Copier ##touche dans #touchePressee.
+				
+				//Réagir à la touche (faire bouger le bac à pluie)
+			?
+			
+			//Simuler la pluie
+			
+			//Vitesse du jeu (20 fps ici)
+			//Attendre 50ms.
+		>>
+	?
+	
+	Effacer l'écran.
+	Afficher "\n\nAu revoir !".
+	
+	
+	
+Fin de la transmission.
+

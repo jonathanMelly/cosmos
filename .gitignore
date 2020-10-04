@@ -351,3 +351,4 @@ MigrationBackup/
 src/.idea
 /doc/.~lock.cheatsheet.ods#
 /gen/
+/doc/pending/

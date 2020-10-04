@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using FluentAssertions;
 using lib;
 using lib.extension;
@@ -133,7 +134,7 @@ namespace test
             var copy = "#copy".AsCosmosVariable(0.AsCosmosNumber());
 
             BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
-                                    BuildAllocationSnippet(copy.Name, variableRef.Name+$"Error"));
+                                    BuildAllocationSnippet(copy.Name, variableRef.Name + $"Error"));
 
 
             //Act
@@ -172,7 +173,7 @@ namespace test
             var newVal = 5;
 
             BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
-                                    BuildCopySnippet(newVal,variableRef.Name)+
+                                    BuildCopySnippet(newVal, variableRef.Name) +
                                     BuildAfficherSnippet(variableRef.Name.ToString()));
 
 
@@ -191,7 +192,7 @@ namespace test
             var newVal = 5;
 
             BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
-                                    BuildCopySnippet(newVal,variableRef.Name,1)+
+                                    BuildCopySnippet(newVal, variableRef.Name, 1) +
                                     BuildAfficherSnippet(variableRef.Name.ToString()));
 
 
@@ -210,15 +211,16 @@ namespace test
             var newVal = "la valeur de (5+5)";
 
             BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
-                                    BuildCopySnippet(newVal,$"{variableRef.Name}",1)+
-                                    BuildAfficherSnippet(variableRef.Name.ToString()),false);
+                                    BuildCopySnippet(newVal, $"{variableRef.Name}", 1) +
+                                    BuildAfficherSnippet(variableRef.Name.ToString()), false);
 
 
             //Act
             interpreter.Execute().Should().BeFalse();
 
             //Assert
-            testConsole.ErrorContent.Should().Be("Erreur, ligne 8:22 pas d'alternative viable à l'endroit ou il y a 'la valeur de ('\n");
+            testConsole.ErrorContent.Should()
+                .Be("Erreur, ligne 8:22 pas d'alternative viable à l'endroit ou il y a 'la valeur de ('\n");
         }
 
         [Fact]
@@ -229,7 +231,7 @@ namespace test
             var newVal = "le résultat de (5+5)";
 
             BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
-                                    BuildCopySnippet(newVal,$"{variableRef.Name}",1)+
+                                    BuildCopySnippet(newVal, $"{variableRef.Name}", 1) +
                                     BuildAfficherSnippet(variableRef.Name.ToString()));
 
 
@@ -246,7 +248,8 @@ namespace test
             //Arrange
             var variableName = "#maVariable";
 
-            BuildSnippetInterpreter(BuildAllocationSnippet(variableName.AsCosmosVariable())+"\n\t"+BuildAfficherSnippet(variableName));
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableName.AsCosmosVariable()) + "\n\t" +
+                                    BuildAfficherSnippet(variableName));
 
             //Act
             interpreter.Execute().Should().BeTrue();
@@ -260,8 +263,9 @@ namespace test
         {
             //Arrange
             BuildSnippetInterpreter(
-                BuildAfficherSnippet("{##date.jour}.{##date.mois}.{##date.année} ##date.heure:##date.minute:##date.seconde"
-                    ));
+                BuildAfficherSnippet(
+                    "{##date.jour}.{##date.mois}.{##date.année} ##date.heure:##date.minute:##date.seconde"
+                ));
             var year = 2020;
             var month = 12;
             var day = 31;
@@ -277,7 +281,6 @@ namespace test
                 //Assert
                 testConsole.Content.Should().Be($"{day}.{month}.{year} {hour}:{minute}:{second}");
             }
-
         }
 
         [Fact]
@@ -285,13 +288,14 @@ namespace test
         {
             //Arrange
 
-            BuildSnippetInterpreter("\tCréer la zone mémoire #bad.",false);
+            BuildSnippetInterpreter("\tCréer la zone mémoire #bad.", false);
 
             //Act
             interpreter.Execute().Should().BeFalse();
 
             //Assert
-            testConsole.ErrorContent.Should().Be("Erreur, ligne 7:7 élément invalide 'la ' attendu {'une ', VARIABLE}\n");
+            testConsole.ErrorContent.Should()
+                .Be("Erreur, ligne 7:7 élément invalide 'la ' attendu {'une ', VARIABLE}\n");
         }
 
         [Fact]
@@ -299,13 +303,14 @@ namespace test
         {
             //Arrange
 
-            BuildSnippetInterpreter("\tCréer une zone mémoire #arc-en-ciel.",false);
+            BuildSnippetInterpreter("\tCréer une zone mémoire #arc-en-ciel.", false);
 
             //Act
             interpreter.Execute().Should().BeFalse();
 
             //Assert
-            testConsole.ErrorContent.Should().Be("Erreur, ligne 7:29 pas d'alternative viable à l'endroit ou il y a '-en'\n");
+            testConsole.ErrorContent.Should()
+                .Be("Erreur, ligne 7:29 pas d'alternative viable à l'endroit ou il y a '-en'\n");
         }
 
         [Fact]
@@ -327,7 +332,7 @@ namespace test
         {
             //Arrange
 
-            BuildSnippetInterpreter($"{BuildAllocationSnippet("#i","3")}\n" +
+            BuildSnippetInterpreter($"{BuildAllocationSnippet("#i", "3")}\n" +
                                     $"{BuildAfficherSnippet("var:#i-")}\n\tAfficher #i.\n{BuildAfficherSnippet("#i")}");
 
             //Act
@@ -337,5 +342,57 @@ namespace test
             testConsole.Content.Should().Match("var:3-33");
         }
 
+
+        [Fact]
+        public void TestNotificationWithChange()
+        {
+            //Arrange
+            var variableRef = "#ref".AsCosmosVariable(12.AsCosmosNumber());
+            var newVal = 5;
+            var observed = false;
+            var observed2 = false;
+
+            BuildSnippetInterpreter(BuildAllocationSnippet(variableRef) +
+                                    BuildCopySnippet(newVal, variableRef.Name) +
+                                    BuildAfficherSnippet(variableRef.Name.ToString()));
+
+            parser.Variables.DataUpdated += () => { observed = true; };
+            parser.Variables.DataUpdated += () => { observed2 = true; };
+            observed.Should().BeFalse();
+            observed2.Should().BeFalse();
+
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            Thread.Sleep(500); //waits for notification thread to work
+            observed.Should().BeTrue();
+            observed2.Should().BeTrue();
+        }
+
+        [Fact]
+        public void TestNotificationWithoutChange()
+        {
+            //Arrange
+            var observed = false;
+            var observed2 = false;
+
+            BuildSnippetInterpreter(BuildAfficherSnippet("Hello"));
+
+            parser.Variables.DataUpdated += () => { observed = true; };
+            parser.Variables.DataUpdated += () => { observed2 = true; };
+            observed.Should().BeFalse();
+            observed2.Should().BeFalse();
+
+
+            //Act
+            interpreter.Execute().Should().BeTrue();
+
+            //Assert
+            Thread.Sleep(200); //waits for notification thread to work
+            observed.Should().BeFalse();
+            observed2.Should().BeFalse();
+        }
     }
 }
