@@ -358,9 +358,9 @@ namespace commandline_tool
                 ImGui.SetWindowSize(new Vector2(_window.Width,_window.Height));
                 ImGui.SetWindowPos(new Vector2(0,0));
 
-                foreach (var variable in _variables)
+                foreach (var variable in _variables.Values)
                 {
-                    ImGui.Text($"{variable.Key}{new String(' ',_variables.LongestName-variable.Key.Length)}: {variable.Value.Value}");
+                    ImGui.Text($"{variable.Name}{new String(' ',_variables.LongestName-variable.Name.Length)}: {variable.Value}");
                 }
 
                 ImGui.End();

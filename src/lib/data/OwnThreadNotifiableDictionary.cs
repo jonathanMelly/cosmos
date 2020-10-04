@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -6,7 +7,7 @@ namespace lib.data
 {
     public class OwnThreadNotifiableDictionary<TKey, TValue> : IObservableDictionary<TKey, TValue>
     {
-        private readonly IDictionary<TKey, TValue> content = new Dictionary<TKey, TValue>();
+        private readonly IDictionary<TKey, TValue> content = new ConcurrentDictionary<TKey, TValue>();
         private int longestName=0;
 
         public bool TryGetValue(TKey key, out TValue value)
