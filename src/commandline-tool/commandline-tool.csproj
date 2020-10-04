@@ -26,7 +26,7 @@
         <PublishReadyToRunShowWarnings>true</PublishReadyToRunShowWarnings>
 
         <!-- COMMAND LINES -->
-        <!-- TODO, use nuke ? -->
+        <!-- Idea of improvement: use nuke build mechanism... -->
         <!-- publish -c Release -r osx-x64 -p:PublishReadyToRun=true -->
         <!-- publish -c Release -r linux-x64 -p:PublishReadyToRun=false -->
         <!-- publish -c Release -r windows-x64 -p:PublishReadyToRun=true -->
@@ -96,6 +96,7 @@
         </EmbeddedResource>
     </ItemGroup>
 
+    <!-- I don't know if this is really usefull ??? -->
     <ItemGroup>
         <Content Include="cimgui/win-x64/cimgui.dll" CopyToOutputDirectory="PreserveNewest" />
         <Content Include="cimgui/osx-x64/cimgui.dylib" CopyToOutputDirectory="PreserveNewest" />
