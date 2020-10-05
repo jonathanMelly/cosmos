@@ -23,6 +23,10 @@ Il faut donc réduire la distance entre ces deux visions.
 ### Véhicule pédagogique préconisé
 Un langage de programmation type 'pseudo-code' éxécutable.
 
+# Solution choisie
+- Binaire en ligne de commande multiplateforme
+- Possibilité d'afficher le contenu mémoire en temps réel (option --ram)
+
 # Tutoriels
 
 ## Premiers pas
@@ -41,7 +45,6 @@ Pour terminer, voici un [tutorial](https://labs.section-inf.ch/codelabs/cosmos-b
 
 ![jeu](https://github.com/jonathanMelly/cosmos/raw/integration/doc/jeu.gif)
 
-
 # Résumé du langage
 La [feuille de triche](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cheatsheet.pdf), dont voici un extrait, synthètise le vocabulaire du langage.
 
@@ -53,9 +56,11 @@ En voici un extrait:
 
 ![Cheatsheet-short](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cheatsheet-csharp-short.png)
 
-
 # Premiers pas en live
 ![Exemple](https://github.com/jonathanMelly/cosmos/raw/integration/doc/cosmos-exemple.gif)
+
+#Exemples
+Des exemples sont disponibles [ici](https://github.com/jonathanMelly/cosmos/tree/integration/doc/examples)
 
 # Téléchargements
 Se le premier tutorial n'est pas utile, la dernière version est [téléchargeable ici](https://github.com/jonathanMelly/cosmos/releases/latest/).
