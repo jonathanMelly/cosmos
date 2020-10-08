@@ -78,6 +78,7 @@ LE_NOMBRE_DE_FOIS:'le nombre de fois correspondant à ';
 SI:'Si ';
 SINON_SI:'sinon si ';
 ET_SINON:'et sinon';
+SINON:'sinon';
 ALORS:'alors';
 
 

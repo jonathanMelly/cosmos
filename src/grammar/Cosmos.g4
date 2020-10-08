@@ -77,11 +77,11 @@ selection :
     SI base_si
     sinon_si*
     sinon?
-    TABULATION+ POINT_INTERROGATION RETOUR_DE_CHARIOT ;
+    TABULATION+ POINT_INTERROGATION TABULATION* RETOUR_DE_CHARIOT ;
 
 base_si : condition=expression_booleenne ALORS RETOUR_DE_CHARIOT (instruction|noop)+ ;
 sinon_si : TABULATION+ SINON_SI base_si ;
-sinon : TABULATION+ ET_SINON RETOUR_DE_CHARIOT (instruction|noop)+ ;
+sinon : TABULATION+ (ET_SINON|SINON) RETOUR_DE_CHARIOT (instruction|noop)+ ;
 
 //Variable doublé pour éviter que la première règle de sous-expression prenne le dessus
 expression

@@ -83,7 +83,7 @@ namespace test
             }
         }
 
-        protected string BuildIfStatement(bool condition, List<bool> elsifs = null, bool? elsee = null)
+        protected string BuildIfStatement(bool condition, List<bool> elsifs = null, bool? elsee = null,bool elseeVariant = false)
         {
             var result = new StringBuilder();
             const string function = Afficher;
@@ -96,7 +96,7 @@ namespace test
 
             if (elsee != null)
             {
-                result.Append($"et sinon\n\t{function} \"{(elsee.Value ? TrueCondition : FalseCondition)}\".\n\t");
+                result.Append($"{(elseeVariant?"":"et ")}sinon\n\t{function} \"{(elsee.Value ? TrueCondition : FalseCondition)}\".\n\t");
             }
 
             result.Append("?\n");
