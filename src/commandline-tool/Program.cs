@@ -321,7 +321,7 @@ namespace commandline_tool
         {
             // Create window, GraphicsDevice, and all resources necessary for the demo.
             VeldridStartup.CreateWindowAndGraphicsDevice(
-                new WindowCreateInfo(0, 0, 350, 200, WindowState.Normal, "Cosmos - RAM"),
+                new WindowCreateInfo(50, 50, 350, 200, WindowState.Normal, "Cosmos - RAM"),
                 new GraphicsDeviceOptions(true, null, true),
                 out _window,
                 out _gd);
