@@ -29,10 +29,10 @@ namespace lib.parser.visitor
                 case Cosmos.Expression_numeriqueContext _:
                     var left = Visit(context.gauche);
                     var right = Visit(context.droite);
+                    
                     return context.operateur.Type switch
                     {
                         OPERATEUR_MATH_PUISSANCE => left ^ right,
-                        OPERATEUR_MATH_RACINE_CARREE => left.Nroot(right),
                         OPERATEUR_MATH_FOIS => left * right,
                         OPERATEUR_MATH_DIVISE => left / right,
                         OPERATEUR_MATH_PLUS => left + right,
@@ -40,6 +40,7 @@ namespace lib.parser.visitor
 
                         _ => throw new MissingTokenHandlerException(context.operateur)
                     };
+
 
                 case Cosmos.Atome_numeriqueContext atomeNumeriqueContext:
                     return Visit(atomeNumeriqueContext.nombre());
@@ -67,6 +68,7 @@ namespace lib.parser.visitor
                         {
                             OPERATEUR_MATH_MOINS => -Visit(context.sousExpression),
                             OPERATEUR_MATH_PLUS  => Visit(context.sousExpression),
+                            OPERATEUR_MATH_RACINE_CARREE => Visit(context.gauche).Nroot(),
 
                             _ => throw new MissingTokenHandlerException(context.operateur)
                         };

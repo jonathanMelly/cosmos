@@ -118,9 +118,10 @@ expression_booleenne
 
 //Exprimée dans l'ordre de priorité des opérateurs
 expression_numerique
-        : gauche=expression_numerique operateur=(OPERATEUR_MATH_PUISSANCE | OPERATEUR_MATH_RACINE_CARREE) droite=expression_numerique
+        : gauche=expression_numerique operateur=OPERATEUR_MATH_PUISSANCE droite=expression_numerique
         | gauche=expression_numerique operateur=(OPERATEUR_MATH_FOIS | OPERATEUR_MATH_DIVISE) droite=expression_numerique
         | gauche=expression_numerique operateur=(OPERATEUR_MATH_PLUS | OPERATEUR_MATH_MOINS) droite=expression_numerique
+        | operateur=OPERATEUR_MATH_RACINE_CARREE gauche=expression_numerique
         | (atome_numerique | variable)
         | operateur=(OPERATEUR_MATH_PLUS | OPERATEUR_MATH_MOINS) sousExpression=expression_numerique
         | LE_RESULTAT_DE? PARENTHESE_GAUCHE sousExpression=expression_numerique PARENTHESE_DROITE
