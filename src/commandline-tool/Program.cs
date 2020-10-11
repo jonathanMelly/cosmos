@@ -276,6 +276,7 @@ namespace commandline_tool
                         //Affiche la cartouche uniquement en cas de parsing/éxécution réussie et si pas en mode direct
                         if (!direct && parser.ParsingWasSuccessfull)
                         {
+                            Console.CursorTop = parser.Console.BiggestRow;
                             var mainMessage = "|Programme cosmos terminé, appuyez sur une touche pour quitter|";
                             var size = mainMessage.Length;
                             var executionTime = $"|Temps d'éxécution: {timer.Elapsed}";

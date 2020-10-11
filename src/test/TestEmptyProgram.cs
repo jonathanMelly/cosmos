@@ -26,7 +26,7 @@ namespace test
             var program = $"{Parser.BuildValidHeader("noheader")}{Parser.ValidEnd}";
             testConsole.Write(program);
             parser = new Parser().ForSnippet(program).WithConsole(testConsole);
-            interpreter = new Interpreter(parser,testConsole).WithRandom(random);
+            interpreter = new Interpreter(parser).WithRandom(random);
 
             //act
             bool result = interpreter.Execute();

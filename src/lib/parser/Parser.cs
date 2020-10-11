@@ -55,6 +55,8 @@ namespace lib.parser
             return this;
         }
 
+        public IConsole Console => console;
+
         public void CopyContext(Parser parser)
         {
             foreach (var existingVariable in parser.Variables)
@@ -73,6 +75,9 @@ namespace lib.parser
             {
                 return ParsingWasSuccessfull;
             }
+
+            //Sets default console if needed
+            console ??= new DefaultConsole();
 
             var antlrInputStream = new AntlrInputStream(code);
             var lexer = new CosmosLexer(antlrInputStream);

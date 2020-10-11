@@ -49,7 +49,7 @@ namespace test
         protected virtual void BuildFileInterpreter(string file)
         {
             parser = new Parser().ForFile(file).WithConsole(testConsole);
-            interpreter = new Interpreter(parser,testConsole);
+            interpreter = new Interpreter(parser);
         }
 
         protected virtual void BuildSnippetInterpreter(string content, bool expectedParseResult = true)
@@ -66,7 +66,7 @@ namespace test
             testConsole.WriteLine($"///Code source----\n{programWithLines}\n///Fin du code source----\n\nRésultat d'éxécution:\n",IConsole.Channel.Debug);
 
             parser = new Parser().ForSnippet(program).WithConsole(testConsole);
-            interpreter = new Interpreter(parser,testConsole).WithRandom(random);
+            interpreter = new Interpreter(parser).WithRandom(random);
 
             using (var scope = new AssertionScope())
             {

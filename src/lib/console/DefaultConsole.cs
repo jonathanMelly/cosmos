@@ -10,6 +10,8 @@ namespace lib.console
         // ReSharper disable once InconsistentNaming
         private const int CONSOLE_WIDTH = 120;
 
+        private int biggestRow = 0;
+
         public bool KeyAvailable => Console.KeyAvailable;
 
         string IConsole.ReadKey(bool eatKey)
@@ -22,6 +24,8 @@ namespace lib.console
             get => Console.CursorVisible;
             set => Console.CursorVisible = value;
         }
+
+        public int BiggestRow => biggestRow;
 
         public void Write(string text, IConsole.Channel channel)
         {
@@ -36,11 +40,19 @@ namespace lib.console
                 default:
                     throw new ArgumentOutOfRangeException(nameof(channel), channel, null);
             }
+
+            UpdateBiggestRow();
+        }
+
+        private void UpdateBiggestRow()
+        {
+            biggestRow = Math.Max(Console.CursorTop, biggestRow);
         }
 
         public void WriteLine(string text, IConsole.Channel channel)
         {
             Write($"{text}\n", channel);
+            UpdateBiggestRow();
         }
 
         public string ReadLine()
@@ -59,6 +71,8 @@ namespace lib.console
             {
                 Console.CursorTop = index;
             }
+
+            UpdateBiggestRow();
 
         }
 
@@ -93,6 +107,7 @@ namespace lib.console
         public void ClearScreen()
         {
             Console.Clear();
+            biggestRow = 0;
         }
 
         private ConsoleColor ExtractColor(string color,bool back=false)

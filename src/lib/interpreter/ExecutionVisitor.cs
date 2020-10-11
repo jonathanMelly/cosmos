@@ -20,10 +20,10 @@ namespace lib.interpreter
         private Random random = new Random();
 
 
-        public ExecutionVisitor(Parser parser,IConsole console)
+        public ExecutionVisitor(Parser parser)
         {
             this.parser = parser;
-            executionConsole = console;
+            executionConsole = parser.Console;
         }
 
         public ExecutionVisitor WithRandom(Random random)
@@ -38,8 +38,6 @@ namespace lib.interpreter
             var result = new ExecutionContext {Success = false};
             try
             {
-                //Sets default console if needed
-                executionConsole ??= new DefaultConsole();
 
                 variableVisitor = new VariableVisitor(parser,executionConsole);
 

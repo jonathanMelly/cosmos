@@ -61,5 +61,7 @@ namespace lib.console
         string WaitForKeyPress(bool eatKey = true);
 
         void ClearScreen();
+
+        int BiggestRow { get; }
     }
 }
