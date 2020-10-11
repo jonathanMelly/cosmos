@@ -54,6 +54,21 @@ namespace test
             //Assert
             testConsole.Content.Should().Match(TrueCondition);
         }
+        
+        [Fact]
+        public void TestIfFalseElseIfTrueElseFalseVariant2()
+        {
+            //Arrange
+            BuildSnippetInterpreter(BuildIfStatement(false,
+                new List<bool> {true},
+                false,true));
+
+            //Act
+            interpreter.Execute();
+
+            //Assert
+            testConsole.Content.Should().Match(TrueCondition);
+        }
 
         [Fact]
         public void TestIfFalseElseTrue()
@@ -61,6 +76,20 @@ namespace test
             //Arrange
             BuildSnippetInterpreter(BuildIfStatement(false,
                 null, true));
+
+            //Act
+            interpreter.Execute();
+
+            //Assert
+            testConsole.Content.Should().Match(TrueCondition);
+        }
+        
+        [Fact]
+        public void TestIfFalseElseTrueVariant2()
+        {
+            //Arrange
+            BuildSnippetInterpreter(BuildIfStatement(false,
+                null, true,true));
 
             //Act
             interpreter.Execute();

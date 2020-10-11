@@ -29,7 +29,7 @@
         <!-- Idea of improvement: use nuke build mechanism... -->
         <!-- publish -c Release -r osx-x64 -p:PublishReadyToRun=true -->
         <!-- publish -c Release -r linux-x64 -p:PublishReadyToRun=false -->
-        <!-- publish -c Release -r windows-x64 -p:PublishReadyToRun=true -->
+        <!-- publish -c Release -r win-x64 -p:PublishReadyToRun=true -->
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

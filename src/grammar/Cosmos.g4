@@ -77,11 +77,11 @@ selection :
     SI base_si
     sinon_si*
     sinon?
-    TABULATION+ POINT_INTERROGATION RETOUR_DE_CHARIOT ;
+    TABULATION+ POINT_INTERROGATION TABULATION* RETOUR_DE_CHARIOT ;
 
 base_si : condition=expression_booleenne ALORS RETOUR_DE_CHARIOT (instruction|noop)+ ;
 sinon_si : TABULATION+ SINON_SI base_si ;
-sinon : TABULATION+ ET_SINON RETOUR_DE_CHARIOT (instruction|noop)+ ;
+sinon : TABULATION+ (ET_SINON|SINON) RETOUR_DE_CHARIOT (instruction|noop)+ ;
 
 //Variable doublé pour éviter que la première règle de sous-expression prenne le dessus
 expression
@@ -118,9 +118,12 @@ expression_booleenne
 
 //Exprimée dans l'ordre de priorité des opérateurs
 expression_numerique
-        : gauche=expression_numerique operateur=(OPERATEUR_MATH_PUISSANCE | OPERATEUR_MATH_RACINE_CARREE) droite=expression_numerique
+        : gauche=expression_numerique operateur=OPERATEUR_MATH_PUISSANCE droite=expression_numerique
         | gauche=expression_numerique operateur=(OPERATEUR_MATH_FOIS | OPERATEUR_MATH_DIVISE) droite=expression_numerique
         | gauche=expression_numerique operateur=(OPERATEUR_MATH_PLUS | OPERATEUR_MATH_MOINS) droite=expression_numerique
+        | operateur=OPERATEUR_MATH_RACINE_CARREE gauche=expression_numerique
+        | gauche=expression_numerique operateur=OPERATEUR_MATH_MODULO2 droite=expression_numerique
+        | operateur=OPERATEUR_MATH_MODULO1 gauche=expression_numerique OPERATEUR_MATH_MODULO1_PAR droite=expression_numerique
         | (atome_numerique | variable)
         | operateur=(OPERATEUR_MATH_PLUS | OPERATEUR_MATH_MOINS) sousExpression=expression_numerique
         | LE_RESULTAT_DE? PARENTHESE_GAUCHE sousExpression=expression_numerique PARENTHESE_DROITE

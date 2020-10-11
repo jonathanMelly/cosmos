@@ -119,5 +119,7 @@ namespace test
             SetCursorToLine(0);
             SetCursorToColumn(0);
         }
+
+        public int BiggestRow => 0;//not implemented...
     }
 }

@@ -1,4 +1,4 @@
-﻿//langage de type 'pseudo-code' pour apprendre à programmer
+//langage de type 'pseudo-code' pour apprendre à programmer
 lexer grammar CosmosLexer ;
 
 //Removes clscompliant warning on build
@@ -78,6 +78,7 @@ LE_NOMBRE_DE_FOIS:'le nombre de fois correspondant à ';
 SI:'Si ';
 SINON_SI:'sinon si ';
 ET_SINON:'et sinon';
+SINON:'sinon';
 ALORS:'alors';
 
 
@@ -121,6 +122,10 @@ OPERATEUR_MATH_FOIS : '*' | 'fois ' ;
 OPERATEUR_MATH_DIVISE : '/' | 'divisé par ';
 OPERATEUR_MATH_PUISSANCE : '^' | 'élevé '? 'à la puissance ';
 OPERATEUR_MATH_RACINE_CARREE : 'racine carrée de ' ;
+
+OPERATEUR_MATH_MODULO1 : 'le reste de la division entière de ';
+OPERATEUR_MATH_MODULO1_PAR: 'par ';
+OPERATEUR_MATH_MODULO2 : 'modulo ' | '%';
 
 LE_RESULTAT_DE : 'le résultat de ' ;
 

@@ -67,9 +67,9 @@ namespace lib.parser.type
                 $"Cannot compare a {GetType()} [{rawValue}] with {other.GetType()} [{other}]");
         }
 
-        public CosmosNumber Nroot(CosmosNumber n)
+        public CosmosNumber Nroot()
         {
-            return new CosmosNumber(Math.Pow(System.Convert.ToDouble(Value), System.Convert.ToDouble(n.Value)));
+            return new CosmosNumber(Math.Sqrt(System.Convert.ToDouble(Value)));
         }
 
         public static CosmosNumber operator -(CosmosNumber a, CosmosNumber b)
@@ -90,6 +90,11 @@ namespace lib.parser.type
         public static CosmosNumber operator /(CosmosNumber a, CosmosNumber b)
         {
             return new CosmosNumber(a.Value / b.Value);
+        }
+
+        public static CosmosNumber operator %(CosmosNumber a, CosmosNumber b)
+        {
+            return new CosmosNumber(a.Value % b.Value);
         }
 
         public static CosmosNumber operator ^(CosmosNumber a, CosmosNumber b)
