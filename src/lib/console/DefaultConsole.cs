@@ -25,7 +25,7 @@ namespace lib.console
             set => Console.CursorVisible = value;
         }
 
-        public int BiggestRow => biggestRow;
+        public int BiggestRow => Math.Max(Console.CursorTop, biggestRow);
 
         public void Write(string text, IConsole.Channel channel)
         {
@@ -41,18 +41,11 @@ namespace lib.console
                     throw new ArgumentOutOfRangeException(nameof(channel), channel, null);
             }
 
-            UpdateBiggestRow();
-        }
-
-        private void UpdateBiggestRow()
-        {
-            biggestRow = Math.Max(Console.CursorTop, biggestRow);
         }
 
         public void WriteLine(string text, IConsole.Channel channel)
         {
             Write($"{text}\n", channel);
-            UpdateBiggestRow();
         }
 
         public string ReadLine()
@@ -70,9 +63,8 @@ namespace lib.console
             else
             {
                 Console.CursorTop = index;
+                biggestRow = Math.Max(Console.CursorTop, biggestRow);
             }
-
-            UpdateBiggestRow();
 
         }
 
