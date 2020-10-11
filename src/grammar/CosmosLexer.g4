@@ -123,6 +123,10 @@ OPERATEUR_MATH_DIVISE : '/' | 'divisé par ';
 OPERATEUR_MATH_PUISSANCE : '^' | 'élevé '? 'à la puissance ';
 OPERATEUR_MATH_RACINE_CARREE : 'racine carrée de ' ;
 
+OPERATEUR_MATH_MODULO1 : 'le reste de la division entière de ';
+OPERATEUR_MATH_MODULO1_PAR: 'par ';
+OPERATEUR_MATH_MODULO2 : 'modulo ' | '%';
+
 LE_RESULTAT_DE : 'le résultat de ' ;
 
 fragment CHIFFRE : '0'..'9' ;

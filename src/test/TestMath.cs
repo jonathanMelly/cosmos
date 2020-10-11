@@ -9,19 +9,61 @@ namespace test
         public TestMath(ITestOutputHelper helper) : base(helper)
         {
         }
-        
+
         [Fact]
         public void TestSqrt()
         {
             //arrange
             var varName = "#number";
             BuildSnippetInterpreter(BuildAllocationSnippet(varName," racine carrée de  4"));
-            
+
             //act
             interpreter.Execute().Should().BeTrue();
 
             //assert
             parser.Variables[varName].Value.Number().Value.Should().Be(2);
+        }
+
+        [Fact]
+        public void TestModuloV1()
+        {
+            //arrange
+            var varName = "#number";
+            BuildSnippetInterpreter(BuildAllocationSnippet(varName," le reste de la division entière de 5 par 2"));
+
+            //act
+            interpreter.Execute().Should().BeTrue();
+
+            //assert
+            parser.Variables[varName].Value.Number().Value.Should().Be(1);
+        }
+
+        [Fact]
+        public void TestModuloV2()
+        {
+            //arrange
+            var varName = "#number";
+            BuildSnippetInterpreter(BuildAllocationSnippet(varName," 4 modulo 3"));
+
+            //act
+            interpreter.Execute().Should().BeTrue();
+
+            //assert
+            parser.Variables[varName].Value.Number().Value.Should().Be(1);
+        }
+
+        [Fact]
+        public void TestModuloV3()
+        {
+            //arrange
+            var varName = "#number";
+            BuildSnippetInterpreter(BuildAllocationSnippet(varName," 4 % 3"));
+
+            //act
+            interpreter.Execute().Should().BeTrue();
+
+            //assert
+            parser.Variables[varName].Value.Number().Value.Should().Be(1);
         }
     }
 }

@@ -92,6 +92,11 @@ namespace lib.parser.type
             return new CosmosNumber(a.Value / b.Value);
         }
 
+        public static CosmosNumber operator %(CosmosNumber a, CosmosNumber b)
+        {
+            return new CosmosNumber(a.Value % b.Value);
+        }
+
         public static CosmosNumber operator ^(CosmosNumber a, CosmosNumber b)
         {
             return new CosmosNumber(Math.Pow(System.Convert.ToDouble(a.Value), System.Convert.ToDouble(b.Value)));
