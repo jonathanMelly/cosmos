@@ -18,7 +18,7 @@ namespace lib.parser.visitor
         private const string DATE_VAR_PREFIX = "##date.";
         private const string DATE_VAR_DAY = DATE_VAR_PREFIX + "jour";
         private const string DATE_VAR_MONTH = DATE_VAR_PREFIX + "mois";
-        private const string DATE_VAR_YEAR = DATE_VAR_PREFIX + "année";
+        private const string DATE_VAR_YEAR = DATE_VAR_PREFIX + "annee";
         private const string DATE_VAR_HOUR = DATE_VAR_PREFIX + "heure";
         private const string DATE_VAR_MINUTE = DATE_VAR_PREFIX + "minute";
         private const string DATE_VAR_SECOND = DATE_VAR_PREFIX + "seconde";
