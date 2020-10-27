@@ -127,6 +127,10 @@ OPERATEUR_MATH_MODULO1 : 'le reste de la division entière de ';
 OPERATEUR_MATH_MODULO1_PAR: 'par ';
 OPERATEUR_MATH_MODULO2 : 'modulo ' | '%';
 
+OPERATEUR_MATH_SINUS : 'le sinus de ' | 'sin ';
+OPERATEUR_MATH_COSINUS : 'le cosinus de ' | 'cos ';
+PI: 'pi';
+
 LE_RESULTAT_DE : 'le résultat de ' ;
 
 fragment CHIFFRE : '0'..'9' ;

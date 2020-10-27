@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from /Volumes/nFo/data/etml/codespace/csharp/cosmos/src/lib/../grammar/Cosmos.g4 by ANTLR 4.6.6
+// Generated from C:\Users\jonmelly\kDrive\data\etml\codespace\csharp\cosmos\src\lib/../grammar/Cosmos.g4 by ANTLR 4.6.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -528,6 +528,18 @@ public partial class CosmosBaseListener : ICosmosListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitAtome_numerique([NotNull] Cosmos.Atome_numeriqueContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Cosmos.pi"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterPi([NotNull] Cosmos.PiContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Cosmos.pi"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitPi([NotNull] Cosmos.PiContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="Cosmos.chaine_de_caractere"/>.
 	/// <para>The default implementation does nothing.</para>

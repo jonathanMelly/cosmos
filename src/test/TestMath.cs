@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
+using lib.extension;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -64,6 +66,48 @@ namespace test
 
             //assert
             parser.Variables[varName].Value.Number().Value.Should().Be(1);
+        }
+        
+        [Fact]
+        public void TestSinus()
+        {
+            //arrange
+            var varName = "#number";
+            BuildSnippetInterpreter(BuildAllocationSnippet(varName,"  sin 3 == le sinus de 3"));
+
+            //act
+            interpreter.Execute().Should().BeTrue();
+
+            //assert
+            parser.Variables[varName].Value.Boolean().Value.Should().Be(true);
+        }
+        
+        [Fact]
+        public void TestCosinus()
+        {
+            //arrange
+            var varName = "#number";
+            BuildSnippetInterpreter(BuildAllocationSnippet(varName," cos 3 == le cosinus de 3"));
+
+            //act
+            interpreter.Execute().Should().BeTrue();
+
+            //assert
+            parser.Variables[varName].Value.Boolean().Value.Should().Be(true);
+        }
+        
+        [Fact]
+        public void TestPi()
+        {
+            //arrange
+            var varName = "#number";
+            BuildSnippetInterpreter(BuildAllocationSnippet(varName," pi"));
+
+            //act
+            interpreter.Execute().Should().BeTrue();
+
+            //assert
+            parser.Variables[varName].Value.Number().Should().Be(Math.PI.AsCosmosNumber());
         }
     }
 }

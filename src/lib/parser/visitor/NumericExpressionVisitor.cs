@@ -1,5 +1,6 @@
 using System;
 using lib.antlr;
+using lib.extension;
 using lib.parser.exception;
 using lib.parser.type;
 using static lib.antlr.CosmosLexer;
@@ -44,6 +45,10 @@ namespace lib.parser.visitor
                     };
 
 
+                case Cosmos.Atome_numeriqueContext atomeNumeriqueContext when atomeNumeriqueContext.pi() != null:
+                {
+                    return Math.PI.AsCosmosNumber();
+                }
                 case Cosmos.Atome_numeriqueContext atomeNumeriqueContext:
                     return Visit(atomeNumeriqueContext.nombre());
 
@@ -71,6 +76,8 @@ namespace lib.parser.visitor
                             OPERATEUR_MATH_MOINS => -Visit(context.sousExpression),
                             OPERATEUR_MATH_PLUS  => Visit(context.sousExpression),
                             OPERATEUR_MATH_RACINE_CARREE => Visit(context.gauche).Nroot(),
+                            OPERATEUR_MATH_SINUS => Math.Sin(Convert.ToDouble(Visit(context.gauche).Value)).AsCosmosNumber(),
+                            OPERATEUR_MATH_COSINUS => Math.Cos(Convert.ToDouble(Visit(context.gauche).Value)).AsCosmosNumber(),
                             OPERATEUR_MATH_MODULO1 => Visit(context.gauche)%Visit(context.droite),
 
                             _ => throw new MissingTokenHandlerException(context.operateur)
