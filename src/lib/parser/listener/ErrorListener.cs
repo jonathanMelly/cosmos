@@ -30,7 +30,7 @@ namespace lib.parser.listener
 
         public void Error(string message)
         {
-            string finalMessage = Translate(message);
+            string finalMessage = Enhance(Translate(message));
             Errors.Add(finalMessage);
             console.WriteLine(finalMessage, IConsole.Channel.Error);
         }
@@ -51,6 +51,16 @@ namespace lib.parser.listener
                 Replace("missing", "il manque").
                 Replace("extraneous input","élément inconnu").
                 Replace("no viable alternative","pas d'alternative viable");
+        }
+
+        private string Enhance(string message)
+        {
+            if (message.Contains("élément invalide 'Fin' attendu TABULATION") )
+            {
+                return $"{message} (Auriez-vous oublié de terminer une condition ou une boucle ?)";
+            }
+
+            return message;
         }
     }
 }
