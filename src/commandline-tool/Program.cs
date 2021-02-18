@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ImGuiNET;
+using lib;
 using lib.data;
 using lib.interpreter;
 using lib.parser;
@@ -49,6 +50,8 @@ namespace commandline_tool
         private static readonly CliOption OptVersion = new CliOption("v", "version", "Affiche la version");
 
         private static readonly CliOption OptNewProgram = new CliOption("n", "nouveau", "Créee un fichier pour un nouveau programme");
+        
+        private static readonly CliOption OptUpdate = new CliOption("u","update","Met à jour cosmos vers la dernière version");
 
         private static readonly CliOption[] Options = new CliOption[]
         {
@@ -58,7 +61,8 @@ namespace commandline_tool
             OptDirect,
             OptRam,
             OptHelp,
-            OptVersion
+            OptVersion,
+            OptUpdate
         };
 
         private static ConsoleColor _defaultForeColor = ConsoleColor.White;
@@ -79,9 +83,14 @@ namespace commandline_tool
         /// Interpréteur du langage Cosmos
         /// </summary>
         /// <returns>Un code d'erreur selon ExitCode</returns>
-        public static int Main(string[] args)
+        public static int Main(string[] rawArgs)
         {
-
+            var args = rawArgs;
+            if (Debugger.IsAttached)
+            {
+                args = rawArgs.Skip(1).ToArray();
+            }
+            
             try
             {
                 _defaultForeColor = Console.ForegroundColor;
@@ -190,6 +199,20 @@ namespace commandline_tool
                     }
 
 
+                }
+                else if ((args[0].IsMatch(OptUpdate)))
+                {
+                    try
+                    {
+                        UpdateCosmos();
+                        return (int) ExitCode.Ok;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Impossible de mettre à jour : "+e);
+                        return (int) ExitCode.ErreurInconnue;
+                    }
+                    
                 }
                 //Devrait être un fichier passé en paramètre
                 else
@@ -326,6 +349,26 @@ namespace commandline_tool
 
         }
 
+        private static void UpdateCosmos()
+        {
+            var currentVersion = GetVersion();
+            var updater = new Updater(currentVersion,GetAppPath());
+            if (updater.IsUpdateAvailable())
+            {
+                Console.WriteLine($"NOUVELLE VERSION {updater.LatestVersion} DISPONIBLE");
+                Console.WriteLine($"Appuyez sur ENTER pour mettre à jour votre version {currentVersion} vers la version {updater.LatestVersion} ou appuyez sur CTRL-C pour annuler");
+
+                if (updater.DoUpdate())
+                {
+                    Console.WriteLine($"Version {updater.LatestVersion} installée avec succès :-)");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Votre version {currentVersion} est la plus récente");
+            }
+        }
+
         public static void ShowVariablesGui()
         {
             // Create window, GraphicsDevice, and all resources necessary for the demo.
@@ -460,6 +503,11 @@ namespace commandline_tool
                 ?.InformationalVersion;
 
             return version;
+        }
+
+        public static string GetAppPath()
+        {
+            return Process.GetCurrentProcess().MainModule?.FileName;
         }
 
     }

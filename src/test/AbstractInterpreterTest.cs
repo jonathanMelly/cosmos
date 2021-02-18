@@ -13,10 +13,7 @@ namespace test
 {
     public abstract class AbstractInterpreterTest
     {
-        protected const string DataFilePath = "../../../data/";
-
-
-
+        protected static readonly string DataFilePath = TestUtils.ToDataPath();
 
         protected const string TrueCondition = "1 vaut 1";
         protected const string FalseCondition = "2 vaut 3";

@@ -20,8 +20,8 @@ namespace test
             "->Afficher un nombre, par exemple quarante-quatre : 44";
 
 
-        public const string ValidProgramFile = DataFilePath + "ValidProgram.cosmos";
-        public const string InvalidDateProgramFile = DataFilePath + "MissingDate.cosmos";
+        public static readonly string ValidProgramFile = DataFilePath + "ValidProgram.cosmos";
+        public static readonly string InvalidDateProgramFile = DataFilePath + "MissingDate.cosmos";
 
         [Fact]
         public void TestExecuteValidProgram()
