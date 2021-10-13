@@ -303,7 +303,7 @@ namespace commandline_tool
                             {
                                 Console.CursorTop = parser.Console.BiggestRow;
                             }
-                            catch (Exception e)
+                            catch (Exception)
                             {
                                 //never mind if console was not well allocated
                             }
