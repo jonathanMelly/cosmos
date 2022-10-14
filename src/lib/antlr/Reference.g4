@@ -60,17 +60,19 @@ lire_touche: RECUPERER_TOUCHE la_zone_memoire;
 effacer_ecran: EFFACER_ECRAN;
 
 
-variable : (LA VALEUR DE)? la_zone_memoire;
+variable : (LA VALEUR DE)? la_zone_memoire index?;
 
-la_zone_memoire : (LA ZONE_MEMOIRE ZONE_NOM?)? VARIABLE;
-une_zone_memoire : (UNE ZONE_MEMOIRE ZONE_NOM?)? VARIABLE;
+index : CROCHET_GAUCHE expression CROCHET_DROITE;
+
+la_zone_memoire : (LA ZONE_MEMOIRE ZONE_NOM?)? NOM_VARIABLE ;
+une_zone_memoire : (UNE ZONE_MEMOIRE ZONE_NOM?)? NOM_VARIABLE;
 
 boucle :
      REPETER (expression_numerique FOIS | TANT_QUE expression_booleenne | boucle_avec_variable) RETOUR_DE_CHARIOT
     (instruction|noop)+
     TABULATION+ SUIVANT RETOUR_DE_CHARIOT ;
 
-boucle_avec_variable : AUTANT_DE_FOIS VARIABLE | LE_NOMBRE_DE_FOIS  variable;
+boucle_avec_variable : AUTANT_DE_FOIS NOM_VARIABLE | LE_NOMBRE_DE_FOIS  variable;
 
 
 selection :
@@ -79,9 +81,9 @@ selection :
     sinon?
     TABULATION+ POINT_INTERROGATION TABULATION* RETOUR_DE_CHARIOT ;
 
-base_si : condition=expression_booleenne ALORS RETOUR_DE_CHARIOT (instruction|noop)+ ;
+base_si : condition=expression_booleenne ALORS TABULATION* RETOUR_DE_CHARIOT (instruction|noop)+ ;
 sinon_si : TABULATION+ SINON_SI base_si ;
-sinon : TABULATION+ (ET_SINON|SINON) RETOUR_DE_CHARIOT (instruction|noop)+ ;
+sinon : TABULATION+ (ET_SINON|SINON) TABULATION* RETOUR_DE_CHARIOT (instruction|noop)+ ;
 
 //Variable doublé pour éviter que la première règle de sous-expression prenne le dessus
 expression
@@ -90,7 +92,7 @@ expression
         | expression_booleenne
         ;
 
-//Variable doublé pour éviter que la première règle de sous-expression prenne le dessus
+//Variable doublé pour éviter que la première règle de sous-expression prenne le dessus 
 expression_comparable
         : variable
         | expression_textuelle

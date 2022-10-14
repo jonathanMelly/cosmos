@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\jonmelly\kDrive\data\etml\codespace\csharp\cosmos\src\lib/../grammar/Cosmos.g4 by ANTLR 4.6.6
+// Generated from W:\ws\code\csharp\cosmos\src\lib/../grammar/Cosmos.g4 by ANTLR 4.6.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -189,6 +189,12 @@ public interface ICosmosVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitVariable([NotNull] Cosmos.VariableContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="Cosmos.index"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitIndex([NotNull] Cosmos.IndexContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="Cosmos.la_zone_memoire"/>.
 	/// </summary>

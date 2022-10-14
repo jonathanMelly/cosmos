@@ -75,7 +75,7 @@
         <!-- Copy source grammar for incremental build -->
         <Copy SourceFiles="$(ParserGrammar)" DestinationFiles="$(ReferenceParserGrammar)" SkipUnchangedFiles="true" />
 
-        <RemoveDir Directories="$(MSBuildProjectDirectory)/../../gen" />
+        <RemoveDir Directories="$(MSBuildProjectDirectory)/../gen" />
     </Target>
 
 </Project>

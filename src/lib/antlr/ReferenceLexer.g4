@@ -60,7 +60,10 @@ INITIALISATION_TERME : 'avec ' | 'et y enregistrer ' ;
 LA:'la ';
 UNE:'une ';
 VALEUR:'valeur ';
-VARIABLE : PREFIXE_VARIABLE PREFIXE_VARIABLE? (MOT|VALEUR_NOMBRE|(LETTRE (POINT? (LETTRE|CHIFFRE))*)) ; //double préfixe pour les variables internes...
+NOM_VARIABLE : PREFIXE_VARIABLE PREFIXE_VARIABLE? //double préfixe pour les variables internes...
+           (MOT|VALEUR_NOMBRE|(LETTRE (POINT? (LETTRE|CHIFFRE))*)) 
+           ;
+
 DE: 'de ' | 'enregistrée dans ';
 
 ZONE_MEMOIRE : 'zone mémoire ' ;
@@ -110,6 +113,12 @@ PREFIXE_VARIABLE : '#' ;
 PARENTHESE_GAUCHE : '(' ;
 PARENTHESE_DROITE : ')' ;
 
+CROCHET_GAUCHE: '[' ;
+CROCHET_DROITE: ']' ;
+
+ELEMENT : 'l\'élément';
+DE_LA_LISTE : 'de la liste';
+
 LE_TEXTE : 'le texte ' ;
 VALEUR_TEXTE : '"' ~["]* '"' ;
 
@@ -141,9 +150,9 @@ fragment SYMBOLES_LETTRE : [_] ;
 fragment LETTRE : MINUSCULE | MAJUSCULE | SYMBOLES_LETTRE ;
 
 VIRGULE : ',' ;
-POINT: '.' ;
-POINT_INTERROGATION: '?' ;
-SUIVANT : '>>' ;
+POINT: '.' TABULATION* ;
+POINT_INTERROGATION: '?' TABULATION* ;
+SUIVANT : '>>' TABULATION* ;
 DEUX_POINT: ':' ;
 FOIS: 'x' ;
 

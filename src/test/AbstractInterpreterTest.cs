@@ -49,6 +49,11 @@ namespace test
             interpreter = new Interpreter(parser);
         }
 
+        protected virtual void BuildSnippetInterpreter(string[] lines)
+        {
+            BuildSnippetInterpreter("\t"+String.Join("\n\t",lines));
+        }
+
         protected virtual void BuildSnippetInterpreter(string content, bool expectedParseResult = true)
         {
             var program = $"{Parser.ValidHeaderSnippet}{content}{Parser.ValidEnd}";

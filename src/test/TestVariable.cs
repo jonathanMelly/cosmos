@@ -270,7 +270,7 @@ namespace test
 
             //Assert
             testConsole.ErrorContent.Should()
-                .Be("Erreur, ligne 7:7 élément invalide 'la ' attendu {'une ', VARIABLE}\n");
+                .Be("Erreur, ligne 7:7 élément invalide 'la ' attendu {'une ', NOM_VARIABLE}\n");
         }
 
         [Fact]

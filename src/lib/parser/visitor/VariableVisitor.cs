@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Antlr4.Runtime;
 using lib.antlr;
 using lib.console;
@@ -51,12 +52,32 @@ namespace lib.parser.visitor
 
         public override CosmosVariable VisitVariable(Cosmos.VariableContext context)
         {
+            //array
+            var indexData = context.index();
+            if (indexData != null)
+            {
+                var indexExpression = expressionVisitor.VisitExpression(indexData.expression());
+
+                var collection = VisitLa_zone_memoire(context.la_zone_memoire());
+                //Auto init collections upon use...
+                if (collection.Value == null)
+                {
+                    collection = collection.UpdatedTo(new CosmosCollection());
+                    Fill(parser.Variables, collection.Name, collection.Value);
+                    //parser.Variables[collection.Name] = collection;
+                }
+                
+                var itemValue = collection.Value.Collection().Value.GetValueOrDefault(indexExpression,null);
+                
+                //Always return end value AND link it to collection for affectations...
+                return new CosmosVariable($"{collection.Name}[{indexExpression}]",itemValue).WithCollection(collection.Value.Collection(),indexExpression);
+            }
             return VisitLa_zone_memoire(context.la_zone_memoire());
         }
 
         public override CosmosVariable VisitLa_zone_memoire(Cosmos.La_zone_memoireContext context)
         {
-            return GetVariable(context.VARIABLE().GetText(), context);
+            return GetVariable(context.NOM_VARIABLE().GetText(), context);
         }
 
         public CosmosVariable GetVariable(string varName, ParserRuleContext context)
@@ -84,7 +105,7 @@ namespace lib.parser.visitor
                 var key = console.ReadKey();
                 Fill(parser.Variables,KEY_VAR_KEY,key?.AsCosmosString());
             }
-
+            
             if (parser.Variables.ContainsKey(varName))
             {
                 return parser.Variables[varName];
@@ -97,7 +118,7 @@ namespace lib.parser.visitor
         {
             return new CosmosVariable
             (
-                context.une_zone_memoire().VARIABLE().GetText(),
+                context.une_zone_memoire().NOM_VARIABLE().GetText(),
                 context.expression() != null
                     ? ExpressionVisitor.Visit(context.expression())
                     : null

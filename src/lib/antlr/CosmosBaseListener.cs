@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\jonmelly\kDrive\data\etml\codespace\csharp\cosmos\src\lib/../grammar/Cosmos.g4 by ANTLR 4.6.6
+// Generated from W:\ws\code\csharp\cosmos\src\lib/../grammar/Cosmos.g4 by ANTLR 4.6.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -348,6 +348,18 @@ public partial class CosmosBaseListener : ICosmosListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitVariable([NotNull] Cosmos.VariableContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Cosmos.index"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterIndex([NotNull] Cosmos.IndexContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Cosmos.index"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitIndex([NotNull] Cosmos.IndexContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="Cosmos.la_zone_memoire"/>.
 	/// <para>The default implementation does nothing.</para>

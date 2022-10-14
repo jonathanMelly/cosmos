@@ -15,8 +15,6 @@ namespace lib.parser.type
             rawValue = value;
         }
 
-        private string ExceptionBaseMessage => $"{RawValue} [{RawValue.GetType()}] n'est pas";
-
         public virtual bool IsString => false;
 
         protected object RawValue => rawValue;
@@ -64,6 +62,8 @@ namespace lib.parser.type
         }
 
         //Runtime checked getters
+        private string ExceptionBaseMessage => $"{RawValue} [{RawValue.GetType()}] n'est pas typé !!!";
+        
         public virtual CosmosBoolean Boolean()
         {
             throw new WrongTypeException($"{ExceptionBaseMessage} {typeof(CosmosBoolean)}");
@@ -77,6 +77,11 @@ namespace lib.parser.type
         public virtual CosmosString String()
         {
             throw new WrongTypeException($"{ExceptionBaseMessage} {typeof(CosmosString)}");
+        }
+        
+        public virtual CosmosCollection Collection()
+        {
+            throw new WrongTypeException($"{ExceptionBaseMessage} {typeof(CosmosCollection)}");
         }
 
         public override string ToString()
