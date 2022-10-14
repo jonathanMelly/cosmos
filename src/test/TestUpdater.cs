@@ -4,6 +4,7 @@ using System.IO.Compression;
 using FluentAssertions;
 using lib;
 using Xunit;
+using OperatingSystem = lib.OperatingSystem;
 
 namespace test
 {
@@ -132,7 +133,8 @@ namespace test
             Action act = () => updater.DoUpdate();
 
             //Assert
-            act.Should().Throw<ApplicationException>("Updater should report unsuccessfull update").WithMessage("Archive provenant de https://github.com/jonathanMelly/cosmos/releases/latest/download/cosmos-win-x64.zip invalide");
+            var platformIdentifier = OperatingSystem.GetPlatformIdentifier();
+            act.Should().Throw<ApplicationException>("Updater should report unsuccessfull update").WithMessage($"Archive provenant de https://github.com/jonathanMelly/cosmos/releases/latest/download/cosmos-{platformIdentifier}-x64.zip invalide");
             File.ReadAllBytes(appPath).Should().NotBeEquivalentTo(newContent,"new version should not have replaced original version");
             File.ReadAllText(appPath).Should().BeEquivalentTo(ORIGINAL_CONTENT,"original version should have been put back");
         }

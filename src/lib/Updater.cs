@@ -77,9 +77,8 @@ namespace lib
                 var currentRunningAppFilename = Path.GetFileName(appPath);
                 
                 var oldVersion = $"{appPath}.{currentVersion}";
-                
-                var platformIdentifier =
-                    OperatingSystem.IsLinux() ? "linux" : OperatingSystem.IsMacOS() ? "osx" : "win";
+
+                var platformIdentifier = OperatingSystem.GetPlatformIdentifier();
                 var uri =
                     $"{RELEASE_DOWNLOAD_ENDPOINT}-{platformIdentifier}-x64.zip";
                 
@@ -156,5 +155,10 @@ namespace lib
 
         public static bool IsLinux() =>
             RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+
+        public static string GetPlatformIdentifier()
+        {
+            return IsLinux() ? "linux" : OperatingSystem.IsMacOS() ? "osx" : "win";
+        }
     }
 }
