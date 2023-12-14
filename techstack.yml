@@ -1,11 +1,11 @@
 repo_name: jonathanMelly/cosmos
-report_id: 52146e5fd18cf57a8e6b4f0b9db61450
+report_id: 05cb0505926dd85183063f8d7c0106d3
 repo_type: Public
-timestamp: '2023-11-13T13:09:28+00:00'
+timestamp: '2023-12-14T10:35:23+00:00'
 requested_by: jonathanMelly
 provider: github
 branch: integration
-detected_tools_count: 15
+detected_tools_count: 17
 tools:
 - name: C#
   description: Simple, general-purpose, object-oriented programming language for the
@@ -50,8 +50,8 @@ tools:
   category: Languages & Frameworks
   sub_category: Frameworks (Full Stack)
   image_url: https://img.stackshare.io/service/6403/default_91fc1f0ee315262794273aa1387eaf8fed8436e6.png
-  detection_source_url: src/commandline-tool/commandline-tool.csproj
-  detection_source: src/test/test.csproj
+  detection_source_url: https://github.com/jonathanMelly/cosmos/blob/integration/src/commandline-tool/commandline-tool.csproj
+  detection_source: src/commandline-tool/commandline-tool.csproj
   last_updated_by: Jonathan Melly
   last_updated_on: 2020-10-03 18:17:47.000000000 Z
 - name: ASP.NET Core
@@ -65,10 +65,21 @@ tools:
   category: Languages & Frameworks
   sub_category: Frameworks (Full Stack)
   image_url: https://img.stackshare.io/service/11331/asp.net-core.png
-  detection_source_url: src/commandline-tool/commandline-tool.csproj
-  detection_source: src/test/test.csproj
+  detection_source_url: https://github.com/jonathanMelly/cosmos/blob/integration/src/commandline-tool/commandline-tool.csproj
+  detection_source: src/commandline-tool/commandline-tool.csproj
   last_updated_by: Jonathan Melly
   last_updated_on: 2020-10-03 18:17:47.000000000 Z
+- name: pgvector
+  description: Open-source vector similarity search for Postgres
+  website_url: https://github.com/pgvector/pgvector/
+  open_source: false
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Database Tools
+  image_url: https://img.stackshare.io/service/109221/default_b888cdf5617d936aa6aacf130911906955508639.png
+  detection_source: doc/workflow.txt
+  last_updated_by: Jonathan Melly
+  last_updated_on: 2020-05-11 14:07:35.000000000 Z
 - name: Git
   description: Fast, scalable, distributed revision control system
   website_url: http://git-scm.com/
@@ -121,7 +132,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Testing Frameworks
   image_url: https://img.stackshare.io/service/3077/ca5a327feb49ddfe1f4b11548907e5a1_400x400.png
-  detection_source_url: src/test/test.csproj
+  detection_source_url: https://github.com/jonathanMelly/cosmos/blob/integration/src/test/test.csproj
   detection_source: src/test/test.csproj
   last_updated_by: Jonathan Melly
   last_updated_on: 2020-04-04 09:45:30.000000000 Z
@@ -133,6 +144,17 @@ tools:
   hosted_saas: false
   image_url: https://img.stackshare.io/service/8585/a159037c4838e54e93d9f630a295c396_normal.jpeg
   detection_source: Repo Metadata
+- name: LangChain
+  description: Build AI apps with LLMs through composability
+  website_url: https://github.com/hwchase17/langchain
+  open_source: true
+  hosted_saas: false
+  category: Communications
+  sub_category: Large Language Model Tools
+  image_url: https://img.stackshare.io/service/48790/default_5b6c6b73f1ff3775c85d2a1ba954cb87e30cbf13.jpg
+  detection_source: doc/workflow.txt
+  last_updated_by: Jonathan Melly
+  last_updated_on: 2020-05-11 14:07:35.000000000 Z
 - name: Metal
   description: https://t.co/jw2s2L0RLt
   website_url: https://developer.apple.com/metal/
@@ -151,7 +173,7 @@ tools:
   category: Libraries
   sub_category: NuGet Packages
   image_url: https://img.stackshare.io/package/13581/default_6710fb39a5bd4fc2a0e5ffcefafd8c66c9f14192.png
-  detection_source_url: src/lib/lib.csproj
+  detection_source_url: https://github.com/jonathanMelly/cosmos/blob/integration/src/lib/lib.csproj
   detection_source: src/lib/lib.csproj
   last_updated_by: Jonathan Melly
   last_updated_on: 2020-08-29 13:41:18.000000000 Z
@@ -166,7 +188,7 @@ tools:
   category: Libraries
   sub_category: NuGet Packages
   image_url: https://img.stackshare.io/package/13059/default_ed36ff3c005af695725e05bb15ea5b1f03de31f3.png
-  detection_source_url: src/test/test.csproj
+  detection_source_url: https://github.com/jonathanMelly/cosmos/blob/integration/src/test/test.csproj
   detection_source: src/test/test.csproj
   last_updated_by: Jonathan Melly
   last_updated_on: 2020-04-04 14:44:22.000000000 Z
@@ -180,7 +202,7 @@ tools:
   category: Libraries
   sub_category: NuGet Packages
   image_url: https://img.stackshare.io/package/13260/default_d2db5a200c4fe2d08cbdb2174cc230708973870b.png
-  detection_source_url: src/test/test.csproj
+  detection_source_url: https://github.com/jonathanMelly/cosmos/blob/integration/src/test/test.csproj
   detection_source: src/test/test.csproj
   last_updated_by: Jonathan Melly
   last_updated_on: 2020-04-04 09:45:30.000000000 Z
