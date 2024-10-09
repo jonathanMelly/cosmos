@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Antlr4.Runtime;
 using lib.antlr;
@@ -106,12 +107,50 @@ namespace lib.parser.visitor
                 Fill(parser.Variables,KEY_VAR_KEY,key?.AsCosmosString());
             }
             
-            if (parser.Variables.ContainsKey(varName))
+            //direct
+            if (parser.Variables.TryGetValue(varName,out var variable))
             {
-                return parser.Variables[varName];
+                return variable;
+            }
+            if(varName.Contains('['))
+            {
+                return new CosmosVariable("__transient__hopefully_used_only_for_value__",WalkIndexed(varName, context));
             }
 
             throw new UnknownVariableException(varName,context);
+        }
+
+        /// <summary>
+        /// Recursively do the same as VariableVisitor for arrays...
+        /// </summary>
+        /// <param name="indexed"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private CosmosTypedValue WalkIndexed(string indexed,ParserRuleContext context)
+        {
+            if (indexed.Contains('['))
+            {
+                var firstArray = indexed.Substring(0,indexed.IndexOf("[", StringComparison.Ordinal));
+                var rest = indexed[(indexed.IndexOf('[', StringComparison.Ordinal) + 1)..^1]; //removes corresponding [ ... ]
+                
+                var collection = parser.Variables[firstArray].Value as CosmosCollection;
+                return collection?.Value[WalkIndexed(rest,context)];
+            }
+            else if (indexed.StartsWith('#'))
+            {
+                return GetVariable(indexed,context).Value;
+            }
+            else
+            {
+                if (int.TryParse(indexed, out var intValue))
+                {
+                    return intValue.AsCosmosNumber();
+                }
+
+                return indexed.AsCosmosString();
+
+            }
+            
         }
 
         public override CosmosVariable VisitAllouer(Cosmos.AllouerContext context)
