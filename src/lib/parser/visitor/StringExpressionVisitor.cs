@@ -12,7 +12,7 @@ namespace lib.parser.visitor
         private readonly VariableVisitor variableVisitor;
 
         //For simple cases, # prefix is enough... When not, one can use {} delimiters...
-        private readonly Regex variableRegex = new Regex(@"{?(##?\w(\.?\w)*)}?");
+        private readonly Regex variableRegex = new Regex(@"{?(##?\w(\.?[\w\[\]#])*)}?");
 
         public StringExpressionVisitor(Parser parser,VariableVisitor variableVisitor)
         {
@@ -41,6 +41,7 @@ namespace lib.parser.visitor
                         try
                         {
                             var storedVariable = variableVisitor.GetVariable(varName, atomeTextuelContext);
+                            
                             return storedVariable.Value==null ?"<NÉANT>":storedVariable.Value.ToString();
                         }
                         catch (UnknownVariableException e)
