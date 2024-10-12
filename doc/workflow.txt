@@ -1,4 +1,6 @@
-TODO changes à partir de commit message...
+à faire: changes à partir de commit message...
+en updatant et utilisant un template basé sur les commits plutôt que sur les stories:
+https://github.com/rfennell/AzurePipelines/wiki/GenerateReleaseNotes---Node-based-Cross-Platform-Task
 
 1. Create UserStory AB#1 on azure board
 
