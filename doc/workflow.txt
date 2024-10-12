@@ -1,9 +1,27 @@
+TODO changes à partir de commit message...
+
 1. Create UserStory AB#1 on azure board
+
+PLUS SIMPLE finalement:
+
+git switch change/currentflow
+git commit AB#XXX
+git push
+...
+git switch integration
+git merge change/currentflow
+git push --> tests --> autopush on master if tests are ok
+...
+git tag release/1.X.0
+git push origin tag release/1.X.0
+
+
+
 2. Create branch change/AB#1-SmallDescr
   2.1 Commit AB#TaskN
   2.2 Push => Validated by ci-change.yaml
   etc..
-3. git co integration
+3. git switch integration
    git merge --squash change/AB#1-SmallDescr
    git commit => Set AB#1 in commit msg
    git push => Validated by ci-integration.yaml which also pushes onto master (upon success)
@@ -20,4 +38,6 @@ etc..
    git merge master(or until specified treeish) --no-commit --no-ff
    git commit -m "features set for release 1.0.0"
    git tag release/2.0.0
-   git push => cd-create-artifacts => release
+   git push origin tag release/X.Y.Z => cd-create-artifacts => release
+
+
